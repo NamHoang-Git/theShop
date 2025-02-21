@@ -1,0 +1,257 @@
+
+<div id="main">
+    <div class="grid">
+        <div class="container__admin row no-gutters">
+            <nav class="nav">
+                <div class="nav__explore">
+                    <ul class="nav__explore-list">
+                        <div class="nav__list-item active">
+                            <a href="/me/admin/data">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <p>Sản phẩm</p>
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/create">
+                                <i class="fa-regular fa-square-plus"></i>
+                                <p>Thêm sản phẩm</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-headphones-simple"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-download"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-download"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item trash-item">
+                            <a href="/me/admin/trash">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Thùng Rác
+                                {{#if deletedCount}}
+                                <span class="translate-middle badge rounded-pill bg-danger">
+                                    {{deletedCount}}
+                                </span>
+                                {{/if}}
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container__admin-content col">
+                <div class="bar">
+                    <div class="admin__media-form__logo">
+                        <a href="/me" class="media-form__logo-link">
+                            <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
+                        </a>
+                        <p>Danh sách sản phẩm</p>
+                    </div>
+
+                    <div class="search">
+                        <input type="text" placeholder="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    
+                    <li class="account">
+                        <img src="/img/tak.jpg" alt="">
+                        <div class="account__info">
+                            <h4>Nam Hoang</h4>
+                            <p>Developer</p>
+                        </div>
+
+                        <div class="account__options header_arrow-language">
+                            <ul class="account__options-list">
+                                <a href="/me/account/profile">
+                                    <li>Tài khoản của tôi</li>
+                                </a>
+                                <a href="/">
+                                    <li>Đăng xuất</li>
+                                </a>
+                            </ul>
+                        </div>
+                    </li>
+                </div>
+
+                <div class="container__admin-data">
+
+                    <table class="table">
+                        <thead> 
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col">Đơn giá</th>
+                                <th scope="col">Thời gian tạo</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.name}}</td>
+                                <td>{{formatCurrency this.price}}</td>
+                                <td>{{this.createdAt}}</td>
+                                <td>
+                                    <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="/me/admin/data/edit/{{this._id}}" class="btn btn-warning">Sửa</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
+                                                Xóa
+                                            </button>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn open-detail-modal" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#detailModal"
+                                                    data-bs-id="{{this._id}}"
+                                                    data-bs-name="{{this.name}}"
+                                                    data-bs-price="{{formatCurrency this.price}}"
+                                                    data-bs-price-origin="{{formatCurrency this.priceOrigin}}"
+                                                    data-bs-discount="{{this.discount}}"
+                                                    data-bs-sold="{{formatNumber this.sold}}"
+                                                    data-bs-star="{{this.star}}"
+                                                    data-bs-reviews="{{formatNumber this.reviews}}"
+                                                    data-bs-stock="{{this.stock}}"
+                                                    data-bs-created="{{this.createdAt}}">
+                                                <i class="fa-solid fa-list"></i> Chi tiết
+                                            </button>
+                                        </li>   
+                                    </ul>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    Chưa có sản phẩm nào.
+                                    <a href="/me/admin/create">Đăng sản phẩm</a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                {{!-- Modal Detail --}}
+                <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="detailModalLabel">Chi tiết sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Tên sản phẩm:</strong> <span id="detailProductName"></span></p>
+                                <p><strong>Đơn giá:</strong> <span id="detailProductPrice"></span></p>
+                                <p><strong>Giá gốc:</strong> <span id="detailProductPriceOrigin"></span></p>
+                                <p><strong>Giảm giá:</strong> <span id="detailProductDiscount"></span>%</p>
+                                <p><strong>Số lượng đã bán:</strong> <span id="detailProductSold"></span></p>
+                                <p><strong>Số sao đánh giá:</strong> <span id="detailProductStar"></span></p>
+                                <p><strong>Lượt đánh giá:</strong> <span id="detailProductReviews"></span></p>
+                                <p><strong>Sản phẩm trong kho:</strong> <span id="detailProductStock"></span></p>
+                                <p><strong>Ngày tạo:</strong> <span id="detailProductCreated"></span></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Delete -->
+                <div class="modal fade" id="deleteProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="deleteProductModalLabel">Xóa sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Bạn chắc chắn muốn xóa sản phẩm này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden Form for Delete -->
+                <form name="deleteForm" method="POST"></form>
+
+                <script>
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const deleteModal = document.getElementById('deleteProductModal');
+                        const confirmDeleteBtn = document.getElementById('confirmDelete');
+                        const deleteForm = document.forms['deleteForm'];
+                        let productId;
+                        
+                        const detailProductName = document.getElementById("detailProductName");
+                        const detailProductPrice = document.getElementById("detailProductPrice");
+                        const detailProductPriceOrigin = document.getElementById("detailProductPriceOrigin");
+                        const detailProductDiscount = document.getElementById("detailProductDiscount");
+                        const detailProductSold = document.getElementById("detailProductSold");
+                        const detailProductStar = document.getElementById("detailProductStar");
+                        const detailProductReviews = document.getElementById("detailProductReviews");
+                        const detailProductStock = document.getElementById("detailProductStock");
+                        const detailProductCreated = document.getElementById("detailProductCreated");
+
+                        {{!-- Deatail --}}
+                        document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                            button.addEventListener("click", function () {
+                                // Gán dữ liệu vào modal
+                                detailProductName.textContent = this.getAttribute("data-bs-name");
+                                detailProductPrice.textContent = this.getAttribute("data-bs-price") + '₫';
+                                detailProductPriceOrigin.textContent = this.getAttribute("data-bs-price-origin")+ '₫';
+                                detailProductDiscount.textContent = this.getAttribute("data-bs-discount");
+                                detailProductSold.textContent = this.getAttribute("data-bs-sold");
+                                detailProductStar.textContent = this.getAttribute("data-bs-star");
+                                detailProductReviews.textContent = this.getAttribute("data-bs-reviews");
+                                detailProductStock.textContent = this.getAttribute("data-bs-stock");
+                                detailProductCreated.textContent = this.getAttribute("data-bs-created");
+                            });
+                        });
+
+                        {{!-- Delete --}}
+                        if (deleteModal) {
+                            // Khi modal hiển thị, lấy ID của khóa học từ button
+                            deleteModal.addEventListener('show.bs.modal', function (event) {
+                                const button = event.relatedTarget; // Button kích hoạt modal
+                                productId = button.getAttribute('data-bs-id'); // Lấy ID từ data-bs-id
+                            });
+
+                            // Khi nhấn nút "Xóa" trong modal
+                            confirmDeleteBtn.addEventListener('click', function () {
+                                // Cập nhật action của form và gửi yêu cầu DELETE
+                                deleteForm.action = `/me/admin/${productId}?_method=DELETE`;
+                                deleteForm.submit();
+                            });
+                        };
+                    });
+
+                </script>
+
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,1 @@
+Fonts used in this design: \r\n\r\nThird party Fonts: \r\n\r\nFont: Archivo \r\nAuthor: Omnibus-Type \r\nUrl: https://fonts.google.com/specimen/Archivo \r\n\r\nFont: Sofia Sans Extra Condensed \r\nAuthor: Lettersoup,Botio Nikoltchev,Ani Petrova \r\nUrl: https://fonts.google.com/specimen/Sofia+Sans+Extra+Condensed \r\n\r\n

@@ -1,0 +1,186 @@
+
+<div id="main">
+    <div class="grid">
+        <div class="container__admin row no-gutters">
+            <nav class="nav">
+                <div class="nav__explore">
+                    <ul class="nav__explore-list">
+                        <div class="nav__list-item">
+                            <a href="/me/admin/data">
+                                <i class="fa-solid fa-table-list"></i>
+                                <p>Sản phẩm</p>
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/create">
+                                <i class="fa-regular fa-square-plus"></i>
+                                <p>Thêm sản phẩm</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-headphones-simple"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-download"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-download"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item trash-item active">
+                            <a href="/me/admin/trash">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Thùng Rác
+                                {{#if deletedCount}}
+                                <span class="translate-middle badge rounded-pill bg-danger">
+                                    {{deletedCount}}
+                                </span>
+                                {{/if}}
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container__admin-content col">
+                <div class="bar">
+                    <div class="admin__media-form__logo">
+                        <a href="/me" class="media-form__logo-link">
+                            <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
+                        </a>
+                        <p>Thùng rác</p>
+                    </div>
+
+                    <div class="search">
+                        <input type="text" placeholder="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    
+                    <li class="account">
+                        <img src="/img/tak.jpg" alt="">
+                        <div class="account__info">
+                            <h4>Nam Hoang</h4>
+                            <p>Developer</p>
+                        </div>
+
+                        <div class="account__options header_arrow-language">
+                            <ul class="account__options-list">
+                                <a href="/me/account/profile">
+                                    <li>Tài khoản của tôi</li>
+                                </a>
+                                <a href="/">
+                                    <li>Đăng xuất</li>
+                                </a>
+                            </ul>
+                        </div>
+                    </li>
+                </div>
+
+                <div class="container__admin-data">
+                    <table class="table">
+                        <thead> 
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col">Đơn giá</th>
+                                <th scope="col">Thời gian tạo</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.name}}</td>
+                                <td>{{formatCurrency this.price}}</td>
+                                <td>{{this.createdAt}}</td>
+                                <td>
+                                    <a href="" class="btn btn-outline-success btn-restore" data-id="{{this._id}}">Khôi phục</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
+                                        Xóa vĩnh viễn
+                                    </button>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
+                                    {{!-- <p class="mt-4">Thùng rác trống</p> --}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="deleteProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="deleteProductModalLabel">Xóa sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Thao tác này sẽ không thể khôi phục. Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa vĩnh viễn</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden Form for Delete -->
+                <form name="deleteForm" method="POST"></form>
+                <form name="restoreForm" method="POST"></form>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const deleteModal = document.getElementById('deleteProductModal');
+                        const confirmDeleteBtn = document.getElementById('confirmDelete');
+                        const deleteForm = document.forms['deleteForm'];
+                        const restoreForm = document.forms['restoreForm'];
+                        let productId;
+
+                        // Xử lý khi modal hiển thị
+                        if (deleteModal) {
+                            deleteModal.addEventListener('show.bs.modal', function (event) {
+                                const button = event.relatedTarget;
+                                productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
+                            });
+
+                            // Khi nhấn nút "Xóa vĩnh viễn"
+                            confirmDeleteBtn.addEventListener('click', function () {
+                                deleteForm.action = `/me/admin/force/${productId}?_method=DELETE`;
+                                deleteForm.submit();
+                            });
+                        }
+
+                        // Xử lý nút khôi phục sản phẩm
+                        document.querySelectorAll('.btn-restore').forEach(button => {
+                            button.addEventListener('click', function (event) {
+                                event.preventDefault(); // Ngăn trang reload
+
+                                const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
+                                restoreForm.action = `/me/admin/restore/${productId}?_method=PATCH`;
+                                restoreForm.submit();
+                            });
+                        });
+                    });
+                </script>
+
+            </div>
+        </div>
+    </div>
+</div>
+

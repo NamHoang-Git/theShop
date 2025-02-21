@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>The Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="/img/app__shop.png" type="image/x-icon" />
+    
+    <!-- Css -->
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/grid.css">
+
+    <!-- Pages -->
+    <link rel="stylesheet" href="/css/products.css">
+    
+    <link rel="stylesheet" href="/css/me/account/profile.css">
+    <link rel="stylesheet" href="/css/me/account/password.css">
+    <link rel="stylesheet" href="/css/me/account/edit.css">
+    
+    <link rel="stylesheet" href="/css/me/admin/data.css">
+    <link rel="stylesheet" href="/css/me/admin/create.css">
+    <link rel="stylesheet" href="/css/me/admin/trash.css">
+
+    <!-- Icon & Font -->
+    <script src="https://kit.fontawesome.com/d6f473b114.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+</head>
+<body>
+    
+    <div class="root">
+        {{#if isAuthPage}}
+            {{{body}}} <!-- Render body without header và footer -->
+        {{else if isFooterOnlyPage}}
+            {{{body}}}
+            {{> footer}} <!-- Render footer -->
+        {{else}}
+            {{> header}} <!-- Render header -->
+            {{{body}}}   <!-- Render nội dung chính -->
+            {{> footer}} <!-- Render footer -->
+        {{/if}}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/admin.js"></script>
+    <script src="/js/Components/snippets.js"></script>
+</body>
+</html>

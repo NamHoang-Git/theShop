@@ -1,0 +1,245 @@
+<div class="container__product">
+  <div class="grid wide">
+      <div class="container-content">
+         <ul class="mb-4 container-content__link">
+            <a class="hover:underline" href="/">
+               The Shop
+            </a>
+            {{!-- <i class="fa-solid fa-caret-right"></i>
+            <a class="hover:underline" href="#">
+               Điện Thoại &amp; Phụ Kiện
+            </a>
+            <i class="fa-solid fa-caret-right"></i>
+            <a class="hover:underline" href="#">
+               Điện thoại
+            </a>
+            <i class="fa-solid fa-caret-right"></i>
+            <a class="hover:underline" href="#">
+               Apple
+            </a> --}}
+            <i class="fa-solid fa-caret-right"></i>
+            <a class="hover:underline" href="#">
+               {{product.name}}
+            </a>
+         </ul>
+
+         <div class="content row no-gutters p-4">
+            <div class="items-center col l-5">
+               <img
+                  alt="Apple iPhone 16 Pro Max in various colors"
+                  class="mb-4"
+                  src="/{{product.image}}"
+               />
+               <div class="item-center__sub-img">
+                  <img
+                  class="active"
+                  alt="Apple iPhone 16 Pro Max in gold"
+                  src="https://storage.googleapis.com/a1aa/image/MVjpS2nrvVDnSQiJeyVyoY6zy93Tik4SCQNcDs_AEFY.jpg"
+                  />
+                  <img
+                  alt="Apple iPhone 16 Pro Max in black"
+                  src="https://storage.googleapis.com/a1aa/image/YKc54DFi6TujexIM5-uCwqJjP_71Ew279IItOo-8Y6g.jpg"
+                  />
+                  <img
+                  alt="Apple iPhone 16 Pro Max in white"
+                  src="https://storage.googleapis.com/a1aa/image/bTfYvJJQmlA3XKQ-Y4JXNUgXe2IuJFmzs88rTyux3rQ.jpg"
+                  />
+               </div>
+            </div>
+
+            <div class="item-content col l-7">
+                  <h1>{{product.name}}</h1>
+
+                  <div class="item-center mb-2">
+                     <div class="item-rank">
+                        <a href="">{{product.star}}</a>
+                        <ul class="item-rank__star">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                        </ul>
+                     </div>
+
+                     <div class="item-rank">
+                        <a href="">{{formatNumber product.reviews}}</a>
+                        <p>Đánh Giá</p>
+                     </div>
+
+                     <div class="item-rank">
+                        <a href="">{{formatNumber product.sold}}</a>
+                        <p>Sold</p>
+                     </div>
+                  </div>
+
+                  <div class="item-price">
+                     <div class="price-offical">
+                        ₫{{formatCurrency product.price}}
+                     </div>
+
+                     <div class="price-origin">
+                        ₫{{formatCurrency product.priceOrigin}}
+                     </div>
+
+                     <div class="sale-percent">
+                        -{{product.discount}}%
+                     </div>
+                  </div>
+
+                  <div class="item-center__contain">
+                     <h4 class="item-content__e-header">
+                        Vận Chuyển
+                     </h4>
+                     <div class="shipping-description">
+                        <p class="shipping-description__detail">
+                           <i class="fa-solid fa-truck-fast"></i>
+                           Nhận từ 14 Th02 - 15 Th02, phí giao ₫0
+                        </p>
+                        <p class="shipping-description__voucher">
+                           Tặng Voucher ₫15.000 nếu đơn giao sau thời gian trên.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="item-center__contain-center">
+                     <h4 class="item-content__e-header">
+                        Màu Sắc
+                     </h4>
+                     <div class="item-button">
+                        <button class="active">
+                           <img
+                              src="https://storage.googleapis.com/a1aa/image/MVjpS2nrvVDnSQiJeyVyoY6zy93Tik4SCQNcDs_AEFY.jpg"
+                              alt=""
+                           />
+                           Titan Đen
+                           <i class="fa-solid fa-square-check"></i>
+                        </button>
+                        <button>
+                           <img
+                              src="https://storage.googleapis.com/a1aa/image/YKc54DFi6TujexIM5-uCwqJjP_71Ew279IItOo-8Y6g.jpg"
+                              alt=""
+                           />
+                           Titan Trắng
+                           <i class="fa-solid fa-square-check"></i>
+                        </button>
+                        <button>
+                           <img
+                              src="https://storage.googleapis.com/a1aa/image/bTfYvJJQmlA3XKQ-Y4JXNUgXe2IuJFmzs88rTyux3rQ.jpg"
+                              alt=""
+                           />
+                           Titan Tự Nhiên
+                           <i class="fa-solid fa-square-check"></i>
+                        </button>
+                     </div>
+                  </div>
+
+                  <div class="item-center__contain-center">
+                     <h4 class="item-content__e-header">
+                        Số Lượng
+                     </h4>
+                     <div class="item-center__quantity">
+                        <div class="item-center__quantity-btn">
+                           <button class="border">
+                              <i class="fa-solid fa-minus"></i>
+                           </button>
+
+                           <input class="border" type="text" value="1" />
+
+                           <button class="border">
+                              <i class="fa-solid fa-plus"></i>
+                           </button>
+                        </div>
+                     <p>{{product.stock}} sản phẩm có sẵn</p>
+                  </div>
+               </div>
+
+               <div class="high-end-btn">
+                  <button class="high-end-btn__add">
+                  <i class="fa-solid fa-cart-plus"></i>
+                  Thêm Vào Giỏ Hàng
+                  </button>
+                  <button class="high-end-btn__buy">
+                  Mua Với Voucher ₫{{formatCurrency product.price}}
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="container-details">
+         <div class="detail p-4">
+            <h2>CHI TIẾT SẢN PHẨM</h2>
+            <div class="detail-content">
+               <ul class="container-details__header">
+                  <h4>Danh Mục</h4>
+                  <h4>Thương hiệu</h4>
+                  <h4>Số sản phẩm còn lại</h4>
+                  <h4>Bảo hành</h4>
+                  <h4>Gửi từ</h4>
+               </ul>
+
+               <ul class="container-details__content">
+                  <li>
+                     <a class="hover:underline" href="/">
+                        The Shop
+                     </a>
+                     {{!-- <i class="fa-solid fa-caret-right"></i>
+                     <a class="hover:underline" href="#">
+                        Điện Thoại &amp; Phụ Kiện
+                     </a>
+                     <i class="fa-solid fa-caret-right"></i>
+                     <a class="hover:underline" href="#">
+                        Điện thoại
+                     </a>
+                     <i class="fa-solid fa-caret-right"></i>
+                     <a class="hover:underline" href="#">
+                        Apple
+                     </a> --}}
+                  </li>
+                  <li>
+                     <a href="">Apple</a>
+                  </li>
+                  <li>{{product.stock}}</li>
+                  <li>12 tháng</li>
+                  <li>Hà Nội</li>
+               </ul>
+            </div>
+         <div class="description">
+            <h2>MÔ TẢ SẢN PHẨM</h2>
+            <ul>
+               <p>
+                  {{product.name}}. Sở hữu thiết kế titan tuyệt đẹp. Điều Khiển Camera. 4K Dolby Vision tốc độ 120 fps. Và chip A18 Pro.
+               </p>
+
+               <p>   </p>
+
+               <p>
+                  Tính năng nổi bật: 
+               </p>
+               <p>
+                  - THIẾT KẾ TITAN TUYỆT ĐẸP – {{product.name}} có thiết kế titan nhẹ và cứng cáp với màn hình Super Retina XDR 6,9 inch lớn hơn. Thiết bị bền bỉ tuyệt vời với chất liệu Ceramic Shield thế hệ mới nhất, bền chắc gấp 2 lần mặt kính các điện thoại thông minh khác.
+               </p>
+               <p>
+                  - NẮM TOÀN QUYỀN ĐIỀU KHIỂN CAMERA – Điều Khiển Camera giúp bạn truy cập nhanh các công cụ camera dễ dàng hơn, như thu phóng hoặc độ sâu trường ảnh, nhờ vậy bạn có thể chụp ảnh hoàn hảo siêu nhanh.
+               </p>
+               <p>
+                  - QUAY CHỤP ẤN TƯỢNG – Với camera Ultra Wide 48MP tiên tiến hơn, bạn có thể ghi lại những chi tiết đầy mê hoặc trong những tấm ảnh chụp cận cảnh và ảnh chụp góc rộng bao quát. Bạn muốn ảnh chụp sắc nét hơn từ khoảng cách xa hơn? Camera Telephoto 5x giúp bạn dễ dàng làm điều đó.        
+               </p>
+               <p>
+                  - QUAY VIDEO ĐẲNG CẤP PRO – Nâng tầm video bạn quay lên đẳng cấp hoàn toàn mới với 4K Dolby Vision tốc độ 120 fps, nhờ sự hỗ trợ của camera Fusion 48MP, và các micrô chất lượng chuẩn studio để thu âm chất lượng cao hơn. Một studio Pro ngay trong túi bạn.
+               </p>
+               <p>
+                  - SỨC MẠNH CỦA A18 PRO – Chip A18 Pro hỗ trợ các tính năng chụp ảnh và quay video tiên tiến như Điều Khiển Camera, đồng thời mang đến hiệu năng đồ họa vượt trội để chơi game AAA.
+               </p>
+               <p>
+                  - BƯỚC NHẢY VỌT VỀ THỜI LƯỢNG PIN – {{product.name}} mang lại hiệu năng tiết kiệm điện đáng kinh ngạc với thời gian xem video lên đến 33 giờ. Sạc qua USB-C hoặc gắn vào bộ sạc MagSafe để sạc không dây nhanh hơn.
+               </p>
+               <p>
+                  - CÁC TÍNH NĂNG AN TOÀN QUAN TRỌNG – Với tính năng Phát Hiện Va Chạm, iPhone có thể phát hiện va chạm ô tô nghiêm trọng và gọi trợ giúp khi cần kíp.
+               </p>
+            </ul>
+         </div>
+      </div>
+  </div>
+</div>

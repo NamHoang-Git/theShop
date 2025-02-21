@@ -1,0 +1,131 @@
+<div id="main">
+    <div class="grid">
+        <div class="container__admin row no-gutters">
+            <nav class="nav">
+                <div class="nav__explore">
+                    <ul class="nav__explore-list">
+                        <div class="nav__list-item active">
+                            <a href="/me/admin/data">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <p>Sản phẩm</p>
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/create">
+                                <i class="fa-regular fa-square-plus"></i>
+                                <p>Thêm sản phẩm</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-headphones-simple"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-download"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="#">
+                                <i class="fa-solid fa-download"></i>
+                                <p>______________</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item trash-item">
+                            <a href="/me/admin/trash">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Thùng Rác
+                                {{#if deletedCount}}
+                                <span class="translate-middle badge rounded-pill bg-danger">
+                                    {{deletedCount}}
+                                </span>
+                                {{/if}}
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container__admin-content col">
+                <div class="bar">
+                    <div class="admin__media-form__logo">
+                        <a href="/me" class="media-form__logo-link">
+                            <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
+                        </a>
+                        <p>Chỉnh sửa</p>
+                    </div>
+
+                    <div class="search">
+                        <input type="text" placeholder="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    
+                    <li class="account">
+                        <img src="/img/tak.jpg" alt="">
+                        <div class="account__info">
+                            <h4>Nam Hoang</h4>
+                            <p>Developer</p>
+                        </div>
+
+                        <div class="account__options header_arrow-language">
+                            <ul class="account__options-list">
+                                <a href="/me/account/profile">
+                                    <li>Tài khoản của tôi</li>
+                                </a>
+                                <a href="/">
+                                    <li>Đăng xuất</li>
+                                </a>
+                            </ul>
+                        </div>
+                    </li>
+                </div>
+
+                <div class="create__product">
+                    <form class="mt-4" method="POST" action="/me/admin/{{product._id}}?_method=PUT">
+                        <div class="create__product-item">
+                            <label for="name" class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="form-control" value="{{product.name}}" id="name" name="name">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="imageURL" class="form-label">URL Hình ảnh</label>
+                            <input type="text" class="form-control" value="{{product.imageURL}}" id="imageURL" name="imageURL">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="=discount" class="form-label">Giảm giá</label>
+                            <input type="text" class="form-control" value="{{product.discount}}" id="discount" name="=discount">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="sold" class="form-label">Số lượng đã bán</label>
+                            <input type="text" class="form-control" value="{{product.sold}}" id="sold" name="sold">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="price" class="form-label">Giá bán</label>
+                            <input type="text" class="form-control" value="{{product.price}}" id="price" name="price">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="priceOrigin" class="form-label">Giá gốc</label>
+                            <input type="text" class="form-control" value="{{product.priceOrigin}}" id="priceOrigin" name="priceOrigin">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="star" class="form-label">Sao đánh giá</label>
+                            <input type="text" class="form-control" value="{{product.star}}" id="star" name="star">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="reviews" class="form-label">Lượt đánh giá</label>
+                            <input type="text" class="form-control" value="{{product.reviews}}" id="reviews" name="reviews">
+                        </div>
+                        <div class="create__product-item">
+                            <label for="stock" class="form-label">Sản phẩm trong kho</label>
+                            <input type="text" class="form-control" value="{{product.stock}}" id="stock" name="stock">
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Lưu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<!-- Biểu mẫu Đăng ký -->
+<div class="modal__overlay">
+    <!-- Biểu mẫu Đăng ký -->
+    <div class="grid">
+        <div class="register">
+            <div class="row no-gutters">
+                <div class="col l-7">
+                    <div class="reg__form">
+                        <div class="modal__login-header">
+                            <h3 class="modal__auth-heading">ĐĂNG KÝ</h3>
+                        </div>
+                        <form>
+                            <div class="reg__name mb-4">
+                                <div class="form-floating reg__name-box">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Họ">
+                                    <label for="floatingInput">Họ</label>
+                                </div>
+                                <div class="form-floating reg__name-box">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Tên">
+                                    <label for="floatingInput">Tên</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                <label for="floatingInput">Địa chỉ Email</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="tel" class="form-control" id="floatingInput" placeholder="Số điện thoại" pattern="[0-9]{10}">
+                                <label for="floatingInput">Số điện thoại</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Mật khẩu">
+                                <label for="floatingPassword">Mật khẩu</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Xác nhận mật khẩu">
+                                <label for="floatingPassword">Xác nhận mật khẩu</label>
+                            </div>
+                            <a href="/me" class="btn__reg btn btn-primary">Đăng ký</a>
+
+                            <div class="modal__auth-or">_____________________HOẶC_____________________</div>
+                            <div class="modal__auth-or-button">
+                                <button class="modal__auth-or-but">
+                                    <img src="/img/Facebook-Logo.png" alt="" class="modal__auth-or-but-img">
+                                    <p class="modal__auth-or-but-text">Facebook</p>
+                                </button>
+                                <button class="modal__auth-or-but">
+                                    <img src="/img/Google__G__Logo.svg.png" alt="" class="modal__auth-or-but-img">
+                                    <p class="modal__auth-or-but-text">Google</p>
+                                </button>
+                            </div>
+                            <div class="modal__auth-rules">
+                                <p class="modal__auth-rule-text">
+                                    Bằng cách đăng ký, bạn đồng ý với
+                                    <a href="javascript:void(0)" class="modal__auth-rule-link">Điều khoản dịch vụ</a> &
+                                    <a href="javascript:void(0)" class="modal__auth-rule-link">Chính sách bảo mật</a>
+                                </p>
+                            </div>
+                            <div class="modal__login-footer">
+                                <p class="modal__auth-footer-text">
+                                    Bạn đã có tài khoản?
+                                    <a id="link__login" href="/login" class="footer__link-log modal__auth-footer-link">Đăng nhập</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col l-5">
+                    <div class="mess_log">
+                        <h1>Chào mừng đến với website</h1>
+                        <p>Hãy đăng ký với thông tin cá nhân của bạn để sử dụng đầy đủ các tính năng của trang web</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/" class="modal__auth-close-reg">
+        <i class="modal__auth-close-but fa-solid fa-left-long"></i>
+    </a>
+</div>
