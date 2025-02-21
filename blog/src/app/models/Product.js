@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const Product = new Schema({
     name: { type: String, required: true },
     image: { type: String },
-    discount: { type: Number, default: 0 },
+    discount: { type: Number, required: true },
     sold: { type: Number, required: true },
     price: { type: Number, required: true },
     priceOrigin: { type: Number, required: true },
