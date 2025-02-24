@@ -12,6 +12,7 @@ const Client = new Schema({
     time: { type: String, required: true },
     totalPrice: { type: Number, required: true },
     code: { type: String, required: true },
+    codeBill: { type: String, required: true },
     paymentStatus: { type: String, required: true },
     shippingStatus: { type: String, required: true },
 }, { timestamps: true, },);

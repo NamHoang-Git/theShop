@@ -15,6 +15,7 @@ router.get('/admin/create', meController.create);
 router.get('/admin/trash', meController.trash);
 router.get('/admin/stored', meController.stored);
 router.get('/admin/shipping', meController.shipping);
+router.get('/admin/bill', meController.bill);
 
 router.post('/admin/store', meController.store);
 router.put('/admin/:id', meController.update);

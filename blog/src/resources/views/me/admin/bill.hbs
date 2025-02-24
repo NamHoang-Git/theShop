@@ -5,7 +5,7 @@
             <nav class="nav">
                 <div class="nav__explore">
                     <ul class="nav__explore-list">
-                        <div class="nav__list-item active">
+                        <div class="nav__list-item">
                             <a href="/me/admin/data">
                                 <i class="fa-solid fa-clipboard-list"></i>
                                 <p>Sản phẩm</p>
@@ -29,7 +29,7 @@
                                 <p>Giao hàng</p> 
                             </a>
                         </div>
-                        <div class="nav__list-item">
+                        <div class="nav__list-item active">
                             <a href="/me/admin/bill">
                                 <i class="fa-solid fa-scroll"></i>
                                 <p>Hoá đơn</p> 
@@ -56,7 +56,7 @@
                         <a href="/me" class="media-form__logo-link">
                             <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
                         </a>
-                        <p>Danh sách sản phẩm</p>
+                        <p>Hoá đơn</p>
                     </div>
 
                     <div class="search">
@@ -84,64 +84,60 @@
                     </li>
                 </div>
 
-                <div class="container__admin-data">
+                <div class="container__admin-bill">
+
                     <table class="table">
                         <thead> 
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Sản phẩm</th>
-                                <th scope="col">Đơn giá</th>
-                                <th scope="col">Thời gian tạo</th>
+                                <th scope="col">Mã đơn</th>
+                                <th scope="col">Thời gian</th>
+                                <th scope="col">Thành tiền</th>
                                 <th scope="col"></th>
+                                <th class="option" scope="col">
+                                    <button type="button" class="btn btn-outline-primary add-btn">
+                                        <i class="fa-solid fa-circle-plus"></i> Thêm mới
+                                    </button>
+                                </th>
+                                <th>
+                                    <button type="button" class="btn filter-btn">
+                                        <i class="fa-solid fa-filter"></i>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each products}}
+                            {{#each clients}}
                             <tr>
                                 <th scope="row">{{sum @index 1}}</th>
-                                <td>{{this.name}}</td>
-                                <td>{{formatCurrency this.price}}₫</td>
-                                <td>{{this.createdAt}}</td>
+                                <td>{{this.codeBill}}</td>
                                 <td>
-                                    <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis"></i>
+                                    <div class="time">
+                                        <p>{{this.date}}</p>
+                                        <p>{{this.time}}</p>
+                                    </div>
+                                </td>
+                                <td>{{formatCurrency this.totalPrice}}₫</td>
+                                <td>
+                                    <button type="button" class="btn btn-info update">
+                                        Chi tiết
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="/me/admin/data/edit/{{this._id}}" class="btn btn-warning">Sửa</a>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
-                                                Xóa
-                                            </button>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <button type="button" class="btn open-detail-modal" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#detailModal"
-                                                    data-bs-id="{{this._id}}"
-                                                    data-bs-name="{{this.name}}"
-                                                    data-bs-price="{{formatCurrency this.price}}"
-                                                    data-bs-price-origin="{{formatCurrency this.priceOrigin}}"
-                                                    data-bs-discount="{{this.discount}}"
-                                                    data-bs-sold="{{formatNumber this.sold}}"
-                                                    data-bs-star="{{this.star}}"
-                                                    data-bs-reviews="{{formatNumber this.reviews}}"
-                                                    data-bs-stock="{{this.stock}}"
-                                                    data-bs-created="{{this.createdAt}}">
-                                                <i class="fa-solid fa-list"></i> Chi tiết
-                                            </button>
-                                        </li>   
-                                    </ul>
+                                </td>
+                                <td class="option">
+                                    <button type="button" class="btn btn-secondary update">
+                                        Cập nhật
+                                    </button>
+                                </td>
+                                <td class="close">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
                                 </td>
                             </tr>
                             {{else}}
                             <tr>
                                 <td colspan="5" class="text-center">
-                                    Chưa có sản phẩm nào.
-                                    <a href="/me/admin/create">Thêm sản phẩm</a>
+                                    Chưa có sản phẩm nào trong kho.
                                 </td>
                             </tr>
                             {{/each}}
@@ -149,29 +145,17 @@
                     </table>
                 </div>
 
-                {{!-- Modal Detail --}}
-                <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title" id="detailModalLabel">Chi tiết sản phẩm</h1>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Tên sản phẩm:</strong> <span id="detailProductName"></span></p>
-                                <p><strong>Đơn giá:</strong> <span id="detailProductPrice"></span></p>
-                                <p><strong>Giá gốc:</strong> <span id="detailProductPriceOrigin"></span></p>
-                                <p><strong>Giảm giá:</strong> <span id="detailProductDiscount"></span>%</p>
-                                <p><strong>Số lượng đã bán:</strong> <span id="detailProductSold"></span></p>
-                                <p><strong>Số sao đánh giá:</strong> <span id="detailProductStar"></span></p>
-                                <p><strong>Lượt đánh giá:</strong> <span id="detailProductReviews"></span></p>
-                                <p><strong>Sản phẩm trong kho:</strong> <span id="detailProductStock"></span></p>
-                                <p><strong>Ngày tạo:</strong> <span id="detailProductCreated"></span></p>
-                            </div>
+                <div class="item-center__quantity">
+                    <div class="item-center__quantity-btn">
+                        <button class="border">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                            </div>
-                        </div>
+                        <input class="border" type="text" value="1" />
+
+                        <button class="border">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -246,7 +230,6 @@
                             });
                         };
                     });
-
                 </script>
 
             </div>

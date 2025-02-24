@@ -102,6 +102,22 @@ class MeController {
       .catch(next);
   }
 
+  // [GET] /me/admin/bill
+  bill(req, res, next) {
+    Promise.all([
+      Client.find({}),
+      Client.countDocumentsWithDeleted({ deleted: true }),
+    ])
+      .then(([clients, deletedCount]) =>
+        res.render("me/admin/bill.hbs", {
+          isAuthPage: true,
+          deletedCount,
+          clients: mongooseUtil.multipleMongooseToObj(clients),
+        })
+      )
+      .catch(next);
+  }
+
   // [GET] me/admin/data/edit/:id
   edit(req, res, next) {
     Promise.all([

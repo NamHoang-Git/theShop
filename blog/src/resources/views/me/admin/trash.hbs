@@ -30,9 +30,9 @@
                             </a>
                         </div>
                         <div class="nav__list-item">
-                            <a href="#">
-                                <i class="fa-solid fa-download"></i>
-                                <p>______________</p> 
+                            <a href="/me/admin/bill">
+                                <i class="fa-solid fa-scroll"></i>
+                                <p>Hoá đơn</p> 
                             </a>
                         </div>
                         <div class="nav__list-item trash-item active">
@@ -100,7 +100,7 @@
                             <tr>
                                 <th scope="row">{{sum @index 1}}</th>
                                 <td>{{this.name}}</td>
-                                <td>{{formatCurrency this.price}}</td>
+                                <td>{{formatCurrency this.price}}₫</td>
                                 <td>{{this.createdAt}}</td>
                                 <td>
                                     <a href="" class="btn btn-outline-success btn-restore" data-id="{{this._id}}">Khôi phục</a>

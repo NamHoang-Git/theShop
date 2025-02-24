@@ -30,9 +30,9 @@
                             </a>
                         </div>
                         <div class="nav__list-item">
-                            <a href="#">
-                                <i class="fa-solid fa-download"></i>
-                                <p>______________</p> 
+                            <a href="/me/admin/bill">
+                                <i class="fa-solid fa-scroll"></i>
+                                <p>Hoá đơn</p> 
                             </a>
                         </div>
                         <div class="nav__list-item trash-item">
@@ -56,7 +56,7 @@
                         <a href="/me" class="media-form__logo-link">
                             <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
                         </a>
-                        <p>Kho hàng</p>
+                        <p>Giao hàng</p>
                     </div>
 
                     <div class="search">
@@ -113,7 +113,7 @@
                             <tr>
                                 <th scope="row">{{sum @index 1}}</th>
                                 <td>{{this.code}}</td>
-                                <td>
+                                <td class="client_box-info">
                                     <div class="client__info">
                                         <p>{{this.name}}</p>
                                         <div class="client__sub-info">
@@ -130,13 +130,15 @@
                                 </td>
                                 <td>{{formatCurrency this.totalPrice}}₫</td>
                                 <td>{{this.paymentStatus}}</td>
-                                <td>{{this.shippingStatus}}</td>
+                                <td>
+                                    <i class="fa-solid fa-circle-check"></i> {{this.shippingStatus}}
+                                </td>
                                 <td class="option">
                                     <button type="button" class="btn btn-secondary update">
                                         Cập nhật
                                     </button>
                                 </td>
-                                <td>
+                                <td class="close">
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
