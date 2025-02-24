@@ -7,7 +7,7 @@
                     <ul class="nav__explore-list">
                         <div class="nav__list-item">
                             <a href="/me/admin/data">
-                                <i class="fa-solid fa-table-list"></i>
+                                <i class="fa-solid fa-clipboard-list"></i>
                                 <p>Sản phẩm</p>
                             </a>
                         </div>
@@ -17,7 +17,7 @@
                                 <p>Thêm sản phẩm</p> 
                             </a>
                         </div>
-                        <div class="nav__list-item">
+                        <div class="nav__list-item active">
                             <a href="/me/admin/stored">
                                 <i class="fa-solid fa-box-open"></i>
                                 <p>Kho hàng</p> 
@@ -35,7 +35,7 @@
                                 <p>______________</p> 
                             </a>
                         </div>
-                        <div class="nav__list-item trash-item active">
+                        <div class="nav__list-item trash-item">
                             <a href="/me/admin/trash">
                                 <i class="fa-solid fa-trash-can"></i>
                                 Thùng Rác
@@ -56,7 +56,7 @@
                         <a href="/me" class="media-form__logo-link">
                             <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
                         </a>
-                        <p>Thùng rác</p>
+                        <p>Kho hàng</p>
                     </div>
 
                     <div class="search">
@@ -84,37 +84,56 @@
                     </li>
                 </div>
 
-                <div class="container__admin-data">
+                <div class="container__admin-stored">
+
                     <table class="table">
                         <thead> 
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Sản phẩm</th>
+                                <th scope="col">Có thể bán</th>
+                                <th scope="col">Tồn kho</th>
                                 <th scope="col">Đơn giá</th>
-                                <th scope="col">Thời gian tạo</th>
-                                <th scope="col"></th>
+                                <th class="option" scope="col">
+                                    <button type="button" class="btn btn-outline-primary add-btn">
+                                        <i class="fa-solid fa-circle-plus"></i> Thêm mới
+                                    </button>
+                                </th>
+                                <th>
+                                    <button type="button" class="btn filter-btn">
+                                        <i class="fa-solid fa-filter"></i>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each products}}
+                            {{#each storeds}}
                             <tr>
                                 <th scope="row">{{sum @index 1}}</th>
-                                <td>{{this.name}}</td>
-                                <td>{{formatCurrency this.price}}</td>
-                                <td>{{this.createdAt}}</td>
                                 <td>
-                                    <a href="" class="btn btn-outline-success btn-restore" data-id="{{this._id}}">Khôi phục</a>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
-                                        Xóa vĩnh viễn
+                                    <div class="stored__product">
+                                        <img src="/{{this.image}}" alt="">
+                                        <p>{{this.name}}</p>
+                                    </div>
+                                </td>
+                                <td>{{this.stock}}</td>
+                                <td>{{this.inventory}}</td>
+                                <td>{{formatCurrency this.priceOrigin}}</td>
+                                <td class="option">
+                                    <button type="button" class="btn btn-secondary update">
+                                        Cập nhật
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
+                                        <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </td>
                             </tr>
                             {{else}}
                             <tr>
                                 <td colspan="5" class="text-center">
-                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
-                                    {{!-- <p class="mt-4">Thùng rác trống</p> --}}
+                                    Chưa có sản phẩm nào trong kho.
                                 </td>
                             </tr>
                             {{/each}}
@@ -122,7 +141,21 @@
                     </table>
                 </div>
 
-                <!-- Modal -->
+                <div class="item-center__quantity">
+                    <div class="item-center__quantity-btn">
+                        <button class="border">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+
+                        <input class="border" type="text" value="1" />
+
+                        <button class="border">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Delete -->
                 <div class="modal fade" id="deleteProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -130,11 +163,11 @@
                                 <h1 class="modal-title" id="deleteProductModalLabel">Xóa sản phẩm</h1>
                             </div>
                             <div class="modal-body">
-                                <p>Thao tác này sẽ không thể khôi phục. Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+                                <p>Bạn chắc chắn muốn xóa sản phẩm này?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa vĩnh viễn</button>
+                                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
                             </div>
                         </div>
                     </div>
@@ -142,40 +175,56 @@
 
                 <!-- Hidden Form for Delete -->
                 <form name="deleteForm" method="POST"></form>
-                <form name="restoreForm" method="POST"></form>
 
                 <script>
+
                     document.addEventListener('DOMContentLoaded', function () {
                         const deleteModal = document.getElementById('deleteProductModal');
                         const confirmDeleteBtn = document.getElementById('confirmDelete');
                         const deleteForm = document.forms['deleteForm'];
-                        const restoreForm = document.forms['restoreForm'];
                         let productId;
+                        
+                        const detailProductName = document.getElementById("detailProductName");
+                        const detailProductPrice = document.getElementById("detailProductPrice");
+                        const detailProductPriceOrigin = document.getElementById("detailProductPriceOrigin");
+                        const detailProductDiscount = document.getElementById("detailProductDiscount");
+                        const detailProductSold = document.getElementById("detailProductSold");
+                        const detailProductStar = document.getElementById("detailProductStar");
+                        const detailProductReviews = document.getElementById("detailProductReviews");
+                        const detailProductStock = document.getElementById("detailProductStock");
+                        const detailProductCreated = document.getElementById("detailProductCreated");
 
-                        // Xử lý khi modal hiển thị
-                        if (deleteModal) {
-                            deleteModal.addEventListener('show.bs.modal', function (event) {
-                                const button = event.relatedTarget;
-                                productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
-                            });
-
-                            // Khi nhấn nút "Xóa vĩnh viễn"
-                            confirmDeleteBtn.addEventListener('click', function () {
-                                deleteForm.action = `/me/admin/force/${productId}?_method=DELETE`;
-                                deleteForm.submit();
-                            });
-                        }
-
-                        // Xử lý nút khôi phục sản phẩm
-                        document.querySelectorAll('.btn-restore').forEach(button => {
-                            button.addEventListener('click', function (event) {
-                                event.preventDefault(); // Ngăn trang reload
-
-                                const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
-                                restoreForm.action = `/me/admin/restore/${productId}?_method=PATCH`;
-                                restoreForm.submit();
+                        {{!-- Deatail --}}
+                        document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                            button.addEventListener("click", function () {
+                                // Gán dữ liệu vào modal
+                                detailProductName.textContent = this.getAttribute("data-bs-name");
+                                detailProductPrice.textContent = this.getAttribute("data-bs-price") + '₫';
+                                detailProductPriceOrigin.textContent = this.getAttribute("data-bs-price-origin")+ '₫';
+                                detailProductDiscount.textContent = this.getAttribute("data-bs-discount");
+                                detailProductSold.textContent = this.getAttribute("data-bs-sold");
+                                detailProductStar.textContent = this.getAttribute("data-bs-star");
+                                detailProductReviews.textContent = this.getAttribute("data-bs-reviews");
+                                detailProductStock.textContent = this.getAttribute("data-bs-stock");
+                                detailProductCreated.textContent = this.getAttribute("data-bs-created");
                             });
                         });
+
+                        {{!-- Delete --}}
+                        if (deleteModal) {
+                            // Khi modal hiển thị, lấy ID của khóa học từ button
+                            deleteModal.addEventListener('show.bs.modal', function (event) {
+                                const button = event.relatedTarget; // Button kích hoạt modal
+                                productId = button.getAttribute('data-bs-id'); // Lấy ID từ data-bs-id
+                            });
+
+                            // Khi nhấn nút "Xóa" trong modal
+                            confirmDeleteBtn.addEventListener('click', function () {
+                                // Cập nhật action của form và gửi yêu cầu DELETE
+                                deleteForm.action = `/me/admin/${productId}?_method=DELETE`;
+                                deleteForm.submit();
+                            });
+                        };
                     });
                 </script>
 

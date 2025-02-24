@@ -1,4 +1,6 @@
 import Product from "../models/Product.js";
+import Stored from "../models/Stored.js";
+import Client from "../models/Client.js";
 import mongooseUtil from "../../util/mongoose.js";
 import mongooseObj from "../../util/mongoose.js";
 
@@ -63,6 +65,38 @@ class MeController {
           isAuthPage: true,
           deletedCount,
           products: mongooseUtil.multipleMongooseToObj(products),
+        })
+      )
+      .catch(next);
+  }
+
+  // [GET] /me/admin/stored
+  stored(req, res, next) {
+    Promise.all([
+      Stored.find({}),
+      Stored.countDocumentsWithDeleted({ deleted: true }),
+    ])
+      .then(([storeds, deletedCount]) =>
+        res.render("me/admin/stored.hbs", {
+          isAuthPage: true,
+          deletedCount,
+          storeds: mongooseUtil.multipleMongooseToObj(storeds),
+        })
+      )
+      .catch(next);
+  }
+
+  // [GET] /me/admin/shipping
+  shipping(req, res, next) {
+    Promise.all([
+      Client.find({}),
+      Client.countDocumentsWithDeleted({ deleted: true }),
+    ])
+      .then(([clients, deletedCount]) =>
+        res.render("me/admin/shipping.hbs", {
+          isAuthPage: true,
+          deletedCount,
+          clients: mongooseUtil.multipleMongooseToObj(clients),
         })
       )
       .catch(next);

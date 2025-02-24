@@ -13,6 +13,9 @@ router.get('/admin/data', meController.data);
 router.get('/admin/data/edit/:id', meController.edit);
 router.get('/admin/create', meController.create);
 router.get('/admin/trash', meController.trash);
+router.get('/admin/stored', meController.stored);
+router.get('/admin/shipping', meController.shipping);
+
 router.post('/admin/store', meController.store);
 router.put('/admin/:id', meController.update);
 router.delete('/admin/:id', meController.delete);
