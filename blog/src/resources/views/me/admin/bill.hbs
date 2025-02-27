@@ -90,14 +90,79 @@
                         <thead> 
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Mã đơn</th>
+                                <th scope="col">Mã hoá đơn</th>
                                 <th scope="col">Thời gian</th>
                                 <th scope="col">Thành tiền</th>
+                                <th scope="col">Trạng thái thanh toán</th>
                                 <th scope="col"></th>
                                 <th class="option" scope="col">
-                                    <button type="button" class="btn btn-outline-primary add-btn">
+                                    <button type="button" class="btn btn-outline-primary add-btn" data-bs-toggle="modal" data-bs-target="#staticCreate">
                                         <i class="fa-solid fa-circle-plus"></i> Thêm mới
                                     </button>
+
+                                    <!-- Modal Create-->
+                                    <div class="modal fade" id="staticCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCreateLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <form class="modal-content" method="POST" action="/me/admin/bill/createBill">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title" id="staticCreateLabel">Thêm mới</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="create__product-item">
+                                                        <label for="code" class="form-label">Mã đơn</label>
+                                                        <input type="text" class="form-control" id="code" name="code">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="codeBill" class="form-label">Mã hoá đơn</label>
+                                                        <input type="text" class="form-control" id="codeBill" name="codeBill">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="name" class="form-label">Khách hàng</label>
+                                                        <input type="text" class="form-control" id="name" name="name">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="phone" class="form-label">Số điện thoại</label>
+                                                        <input type="text" class="form-control" id="phone" name="phone">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="location" class="form-label">Địa điểm</label>
+                                                        <input type="text" class="form-control" id="location" name="location">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="date" class="form-label">Ngày</label>
+                                                        <input type="text" class="form-control" id="date" name="date">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="time" class="form-label">Thời gian</label>
+                                                        <input type="text" class="form-control" id="time" name="time">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="totalPrice" class="form-label">Thành tiền</label>
+                                                        <input type="text" class="form-control" id="totalPrice" name="totalPrice">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="paymentStatus" class="form-label">Trạng thái thanh toán</label>
+                                                        <select class="form-control" name="paymentStatus" id="paymentStatus">
+                                                            <option value="Đã thanh toán">Đã thanh toán</option>
+                                                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="shippingStatus" class="form-label">Trạng thái giao hàng</label>
+                                                        <select class="form-control" name="shippingStatus" id="shippingStatus">
+                                                            <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                                            <option value="Đang giao hàng">Đang giao hàng</option>
+                                                            <option value="Chưa giao hàng">Chưa giao hàng</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </th>
                                 <th>
                                     <button type="button" class="btn filter-btn">
@@ -119,12 +184,45 @@
                                 </td>
                                 <td>{{formatCurrency this.totalPrice}}₫</td>
                                 <td>
-                                    <button type="button" class="btn btn-info update">
+                                    {{#if (eq this.paymentStatus "Đã thanh toán")}}
+                                        <i class="fa-solid fa-wallet text-success"></i>
+                                    {{else if (eq this.paymentStatus "Chưa thanh toán")}}
+                                        <i class="fa-solid fa-clock text-warning"></i>
+                                    {{/if}}
+                                    {{this.paymentStatus}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info update text-light open-detail-modal" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#detailBillModal"
+                                            data-bs-id="{{this._id}}"
+                                            data-bs-codeBill="{{this.codeBill}}"
+                                            data-bs-name="{{this.name}}"
+                                            data-bs-phone="{{this.phone}}"
+                                            data-bs-location="{{this.location}}"
+                                            data-bs-date="{{this.date}}"
+                                            data-bs-totalPrice="{{formatCurrency this.totalPrice}}"
+                                            data-bs-paymentStatus="{{this.paymentStatus}}"
+                                            data-bs-shippingStatus="{{this.shippingStatus}}"
+                                            data-bs-created="{{this.createdAt}}">
                                         Chi tiết
                                     </button>
                                 </td>
                                 <td class="option">
-                                    <button type="button" class="btn btn-secondary update">
+                                    <button type="button" class="btn btn-secondary update open-update-modal"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#staticUpdate"
+                                        data-bs-id="{{this._id}}"
+                                        data-bs-code="{{this.code}}"
+                                        data-bs-codeBill="{{this.codeBill}}"
+                                        data-bs-name="{{this.name}}"
+                                        data-bs-phone="{{this.phone}}"
+                                        data-bs-location="{{this.location}}"
+                                        data-bs-date="{{this.date}}"
+                                        data-bs-time="{{this.time}}"
+                                        data-bs-totalPrice="{{this.totalPrice}}"
+                                        data-bs-paymentStatus="{{this.paymentStatus}}"
+                                        data-bs-shippingStatus="{{this.shippingStatus}}">
                                         Cập nhật
                                     </button>
                                 </td>
@@ -136,8 +234,8 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="5" class="text-center">
-                                    Chưa có sản phẩm nào trong kho.
+                                <td colspan="9" class="text-center">
+                                    Chưa có hoá đơn nào.
                                 </td>
                             </tr>
                             {{/each}}
@@ -156,6 +254,98 @@
                         <button class="border">
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
+                    </div>
+                </div>
+
+                {{!-- Modal Detail --}}
+                <div class="modal fade" id="detailBillModal" tabindex="-1" aria-labelledby="detailBillModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="detailBillModalLabel">Chi tiết sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Mã hoá đơn:</strong> <span id="detailBillCodeBill"></span></p>
+                                <p><strong>Khách hàng:</strong> <span id="detailBillName"></span></p>
+                                <p><strong>Số điện thoại:</strong> <span id="detailBillPhone"></span></p>
+                                <p><strong>Địa điểm:</strong> <span id="detailBillLocation"></span></p>
+                                <p><strong>Ngày:</strong> <span id="detailBillDate"></span></p>
+                                <p><strong>Thành tiền:</strong> <span id="detailBillTotalPrice"></span></p>
+                                <p><strong>Trạng thái thanh toán:</strong> <span id="detailBillPaymentStatus"></span></p>
+                                <p><strong>Trạng thái giao hàng:</strong> <span id="detailBillShippingStatus"></span></p>
+                                <p><strong>Ngày tạo:</strong> <span id="detailBillCreated"></span></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Update-->
+                <div class="modal fade modalUpdate" id="staticUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticUpdateLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="staticUpdateLabel">Cập nhật</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="updateForm" method="POST">
+                                    <div class="create__product-item">
+                                        <label for="code" class="form-label">Mã đơn</label>
+                                        <input type="text" class="form-control" id="updateCode" name="code">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="codeBill" class="form-label">Mã hoá đơn</label>
+                                        <input type="text" class="form-control" id="updateCodeBill" name="codeBill">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="name" class="form-label">Khách hàng</label>
+                                        <input type="text" class="form-control" id="updateName" name="name">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="phone" class="form-label">Số điện thoại</label>
+                                        <input type="text" class="form-control" id="updatePhone" name="phone">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="location" class="form-label">Địa điểm</label>
+                                        <input type="text" class="form-control" id="updateLocation" name="location">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="date" class="form-label">Ngày</label>
+                                        <input type="text" class="form-control" id="updateDate" name="date">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="time" class="form-label">Thời gian</label>
+                                        <input type="text" class="form-control" id="updateTime" name="time">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="totalPrice" class="form-label">Thành tiền</label>
+                                        <input type="text" class="form-control" id="updateTotalPrice" name="totalPrice">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="paymentStatus" class="form-label">Trạng thái thanh toán</label>
+                                        <select class="form-control" id="updatePaymentStatus" name="paymentStatus">
+                                            <option value="Đã thanh toán">Đã thanh toán</option>
+                                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                        </select>
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="shippingStatus" class="form-label">Trạng thái giao hàng</label>
+                                        <select class="form-control" id="updateShippingStatus" name="shippingStatus" >
+                                            <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                            <option value="Đang giao hàng">Đang giao hàng</option>
+                                            <option value="Chưa giao hàng">Chưa giao hàng</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" form="updateForm">Lưu</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -183,38 +373,73 @@
                 <script>
 
                     document.addEventListener('DOMContentLoaded', function () {
-                        const deleteModal = document.getElementById('deleteProductModal');
-                        const confirmDeleteBtn = document.getElementById('confirmDelete');
-                        const deleteForm = document.forms['deleteForm'];
                         let productId;
-                        
-                        const detailProductName = document.getElementById("detailProductName");
-                        const detailProductPrice = document.getElementById("detailProductPrice");
-                        const detailProductPriceOrigin = document.getElementById("detailProductPriceOrigin");
-                        const detailProductDiscount = document.getElementById("detailProductDiscount");
-                        const detailProductSold = document.getElementById("detailProductSold");
-                        const detailProductStar = document.getElementById("detailProductStar");
-                        const detailProductReviews = document.getElementById("detailProductReviews");
-                        const detailProductStock = document.getElementById("detailProductStock");
-                        const detailProductCreated = document.getElementById("detailProductCreated");
 
-                        {{!-- Deatail --}}
-                        document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                        {{!-- Update --}}
+                        const staticUpdate = document.getElementById("staticUpdate");
+                        const updateForm = document.getElementById("updateForm");
+                        const updateCode = document.getElementById("updateCode");
+                        const updateCodeBill = document.getElementById("updateCodeBill");
+                        const updateName = document.getElementById("updateName");
+                        const updatePhone = document.getElementById("updatePhone");
+                        const updateLocation = document.getElementById("updateLocation");
+                        const updateDate = document.getElementById("updateDate");
+                        const updateTime = document.getElementById("updateTime");
+                        const updateTotalPrice = document.getElementById("updateTotalPrice");
+                        const updatePaymentStatus = document.getElementById("updatePaymentStatus");
+                        const updateShippingStatus = document.getElementById("updateShippingStatus");
+
+                        document.querySelectorAll(".open-update-modal").forEach((button) => {
                             button.addEventListener("click", function () {
                                 // Gán dữ liệu vào modal
-                                detailProductName.textContent = this.getAttribute("data-bs-name");
-                                detailProductPrice.textContent = this.getAttribute("data-bs-price") + '₫';
-                                detailProductPriceOrigin.textContent = this.getAttribute("data-bs-price-origin")+ '₫';
-                                detailProductDiscount.textContent = this.getAttribute("data-bs-discount");
-                                detailProductSold.textContent = this.getAttribute("data-bs-sold");
-                                detailProductStar.textContent = this.getAttribute("data-bs-star");
-                                detailProductReviews.textContent = this.getAttribute("data-bs-reviews");
-                                detailProductStock.textContent = this.getAttribute("data-bs-stock");
-                                detailProductCreated.textContent = this.getAttribute("data-bs-created");
+                                updateCode.value = this.getAttribute("data-bs-code");
+                                updateCodeBill.value = this.getAttribute("data-bs-codeBill");
+                                updateName.value = this.getAttribute("data-bs-name");
+                                updatePhone.value = this.getAttribute("data-bs-phone");
+                                updateLocation.value = this.getAttribute("data-bs-location");
+                                updateDate.value = this.getAttribute("data-bs-date");
+                                updateTime.value = this.getAttribute("data-bs-time");
+                                updateTotalPrice.value = this.getAttribute("data-bs-totalPrice");
+                                updatePaymentStatus.value = this.getAttribute("data-bs-paymentStatus");
+                                updateShippingStatus.value = this.getAttribute("data-bs-shippingStatus");
+
+                                // Cập nhật action của form với ID sản phẩm
+                                let productId = this.getAttribute("data-bs-id");
+                                updateForm.action = `/me/admin/bill/${productId}?_method=PUT`;
                             });
                         });
 
+                        {{!-- Detail Bill --}}
+                        const detailBillCodeBill = document.getElementById("detailBillCodeBill");
+                        const detailBillName = document.getElementById("detailBillName");
+                        const detailBillPhone = document.getElementById("detailBillPhone");
+                        const detailBillLocation = document.getElementById("detailBillLocation");
+                        const detailBillDate = document.getElementById("detailBillDate");
+                        const detailBillTotalPrice = document.getElementById("detailBillTotalPrice");
+                        const detailBillPaymentStatus = document.getElementById("detailBillPaymentStatus");
+                        const detailBillShippingStatus = document.getElementById("detailBillShippingStatus");
+                        const detailBillCreated = document.getElementById("detailBillCreated");
+
+                            document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    // Gán dữ liệu vào modal
+                                    detailBillCodeBill.textContent = this.getAttribute("data-bs-codeBill");
+                                    detailBillName.textContent = this.getAttribute("data-bs-name");
+                                    detailBillPhone.textContent = this.getAttribute("data-bs-phone");
+                                    detailBillLocation.textContent = this.getAttribute("data-bs-location");
+                                    detailBillDate.textContent = this.getAttribute("data-bs-date");
+                                    detailBillTotalPrice.textContent = this.getAttribute("data-bs-totalPrice") + '₫';
+                                    detailBillPaymentStatus.textContent = this.getAttribute("data-bs-paymentStatus");
+                                    detailBillShippingStatus.textContent = this.getAttribute("data-bs-shippingStatus");
+                                    detailBillCreated.textContent = this.getAttribute("data-bs-created");
+                                });
+                            });
+
                         {{!-- Delete --}}
+                        const deleteModal = document.getElementById('deleteProductModal');
+                        const confirmDeleteBtn = document.getElementById('confirmDelete');
+                        const deleteForm = document.forms['deleteForm'];
+
                         if (deleteModal) {
                             // Khi modal hiển thị, lấy ID của khóa học từ button
                             deleteModal.addEventListener('show.bs.modal', function (event) {
@@ -225,7 +450,7 @@
                             // Khi nhấn nút "Xóa" trong modal
                             confirmDeleteBtn.addEventListener('click', function () {
                                 // Cập nhật action của form và gửi yêu cầu DELETE
-                                deleteForm.action = `/me/admin/${productId}?_method=DELETE`;
+                                deleteForm.action = `/me/admin/bill/${productId}?_method=DELETE`;
                                 deleteForm.submit();
                             });
                         };

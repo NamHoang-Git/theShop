@@ -85,14 +85,16 @@
                 </div>
 
                 <div class="container__admin-data">
-                    <table class="table">
+                    <table class="table"> {{!-- DATA --}}
                         <thead> 
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Sản phẩm</th>
-                                <th scope="col">Đơn giá</th>
-                                <th scope="col">Thời gian tạo</th>
-                                <th scope="col"></th>
+                                {{#if deletedCount}}
+                                    <th scope="col">#</th>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col">Thời gian tạo</th>
+                                    <th scope="col"></th>
+                                {{/if}}
                             </tr>
                         </thead>
                         <tbody>
@@ -102,19 +104,251 @@
                                 <td>{{this.name}}</td>
                                 <td>{{formatCurrency this.price}}₫</td>
                                 <td>{{this.createdAt}}</td>
-                                <td>
-                                    <a href="" class="btn btn-outline-success btn-restore" data-id="{{this._id}}">Khôi phục</a>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
-                                        Xóa vĩnh viễn
+                                <td class="detail__option">
+                                    <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
                                     </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="" class="btn btn-outline-success btn-data-restore" data-id="{{this._id}}">Khôi phục</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteDataModal">
+                                                Xóa vĩnh viễn
+                                            </button>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn open-detail-modal" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#detailModal"
+                                                    data-bs-id="{{this._id}}"
+                                                    data-bs-name="{{this.name}}"
+                                                    data-bs-price="{{formatCurrency this.price}}"
+                                                    data-bs-price-origin="{{formatCurrency this.priceOrigin}}"
+                                                    data-bs-discount="{{this.discount}}"
+                                                    data-bs-sold="{{formatNumber this.sold}}"
+                                                    data-bs-star="{{this.star}}"
+                                                    data-bs-reviews="{{formatNumber this.reviews}}"
+                                                    data-bs-stock="{{this.stock}}"
+                                                    data-bs-created="{{this.createdAt}}">
+                                                <i class="fa-solid fa-list"></i> Chi tiết
+                                            </button>
+                                        </li>   
+                                    </ul>
                                 </td>
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="5" class="text-center">
+                                <td colspan="5" class="empty__page text-center">
                                     <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
-                                    {{!-- <p class="mt-4">Thùng rác trống</p> --}}
+                                    <p class="mt-4">Không có sản phẩm nào được xoá !</p>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                    <table class="table"> {{!-- STORED --}}
+                        <thead> 
+                            <tr>
+                                {{#if deletedCount}}
+                                    <th scope="col">#</th>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Có thể bán</th>
+                                    <th scope="col">Tồn kho</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col">Thời gian tạo</th>
+                                    <th scope="col"></th>
+                                {{/if}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each storeds}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.name}}</td>
+                                <td>{{this.stock}}</td>
+                                <td>{{this.inventory}}</td>
+                                <td>{{formatCurrency this.priceOrigin}}₫</td>
+                                <td>{{this.createdAt}}</td>
+                                <td class="detail__option">
+                                    <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="" class="btn btn-outline-success btn-stored-restore" data-id="{{this._id}}">Khôi phục</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteStoredModal">
+                                                Xóa vĩnh viễn
+                                            </button>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn open-detail-modal" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#detailStoredModal"
+                                                    data-bs-id="{{this._id}}"
+                                                    data-bs-name="{{this.name}}"
+                                                    data-bs-stock="{{this.stock}}"
+                                                    data-bs-inventory="{{formatNumber this.inventory}}"
+                                                    data-bs-priceOrigin="{{formatCurrency this.priceOrigin}}"
+                                                    data-bs-created="{{this.createdAt}}">
+                                                <i class="fa-solid fa-list"></i> Chi tiết
+                                            </button>
+                                        </li>   
+                                    </ul>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="7" class="empty__page text-center">
+                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
+                                    <p class="mt-4">Không có hàng nào trong kho được xoá !</p>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                    <table class="table"> {{!-- SHIPPING --}}
+                        <thead> 
+                            <tr>
+                                {{#if deletedCount}}
+                                    <th scope="col">#</th>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Khách hàng</th>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Thành tiền</th>
+                                    <th scope="col">Trạng thái giao hàng</th>
+                                    <th scope="col">Thời gian tạo</th>
+                                    <th scope="col"></th>
+                                {{/if}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each clients}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.code}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.date}}</td>
+                                <td>{{formatCurrency this.totalPrice}}</td>
+                                <td>{{this.shippingStatus}}</td>
+                                <td>{{this.createdAt}}</td>
+                                <td class="detail__option">
+                                    <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="" class="btn btn-outline-success btn-shipping-restore" data-id="{{this._id}}">Khôi phục</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteShippingModal">
+                                                Xóa vĩnh viễn
+                                            </button>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn open-detail-modal" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#detailShippingModal"
+                                                    data-bs-id="{{this._id}}"
+                                                    data-bs-code="{{this.code}}"
+                                                    data-bs-name="{{this.name}}"
+                                                    data-bs-phone="{{this.phone}}"
+                                                    data-bs-location="{{this.location}}"
+                                                    data-bs-date="{{this.date}}"
+                                                    data-bs-totalPrice="{{formatCurrency this.totalPrice}}"
+                                                    data-bs-paymentStatus="{{this.paymentStatus}}"
+                                                    data-bs-shippingStatus="{{this.shippingStatus}}"
+                                                    data-bs-created="{{this.createdAt}}">
+                                                <i class="fa-solid fa-list"></i> Chi tiết
+                                            </button>
+                                        </li>   
+                                    </ul>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="7" class="empty__page text-center">
+                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
+                                    <p class="mt-4">Không có đơn hàng nào được xoá !</p>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                    <table class="table"> {{!-- BILL --}}
+                        <thead> 
+                            <tr>
+                                {{#if deletedCount}}
+                                    <th scope="col">#</th>
+                                    <th scope="col">Mã hoá đơn</th>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Thành tiền</th>
+                                    <th scope="col">Trạng thái thanh toán</th>
+                                    <th scope="col">Thời gian tạo</th>
+                                    <th scope="col"></th>
+                                {{/if}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each clients}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.codeBill}}</td>
+                                <td>{{this.date}}</td>
+                                <td>{{formatCurrency this.totalPrice}}</td>
+                                <td>{{this.paymentStatus}}</td>
+                                <td>{{this.createdAt}}</td>
+                                <td class="detail__option">
+                                    <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="" class="btn btn-outline-success btn-bill-restore" data-id="{{this._id}}">Khôi phục</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteBillModal">
+                                                Xóa vĩnh viễn
+                                            </button>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn open-detail-modal" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#detailBillModal"
+                                                    data-bs-id="{{this._id}}"
+                                                    data-bs-codeBill="{{this.codeBill}}"
+                                                    data-bs-name="{{this.name}}"
+                                                    data-bs-phone="{{this.phone}}"
+                                                    data-bs-location="{{this.location}}"
+                                                    data-bs-date="{{this.date}}"
+                                                    data-bs-totalPrice="{{formatCurrency this.totalPrice}}"
+                                                    data-bs-paymentStatus="{{this.paymentStatus}}"
+                                                    data-bs-shippingStatus="{{this.shippingStatus}}"
+                                                    data-bs-created="{{this.createdAt}}">
+                                                <i class="fa-solid fa-list"></i> Chi tiết
+                                            </button>
+                                        </li>   
+                                    </ul>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="7" class="empty__page text-center">
+                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
+                                    <p class="mt-4">Không có hoá đơn nào được xoá !</p>
                                 </td>
                             </tr>
                             {{/each}}
@@ -122,63 +356,412 @@
                     </table>
                 </div>
 
-                <!-- Modal -->
-                <div class="modal fade" id="deleteProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+                {{!-- Modal Detail Data--}}
+                <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="detailModalLabel">Chi tiết sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Tên sản phẩm:</strong> <span id="detailProductName"></span></p>
+                                <p><strong>Đơn giá:</strong> <span id="detailProductPrice"></span></p>
+                                <p><strong>Giá gốc:</strong> <span id="detailProductPriceOrigin"></span></p>
+                                <p><strong>Giảm giá:</strong> <span id="detailProductDiscount"></span>%</p>
+                                <p><strong>Số lượng đã bán:</strong> <span id="detailProductSold"></span></p>
+                                <p><strong>Số sao đánh giá:</strong> <span id="detailProductStar"></span></p>
+                                <p><strong>Lượt đánh giá:</strong> <span id="detailProductReviews"></span></p>
+                                <p><strong>Sản phẩm trong kho:</strong> <span id="detailProductStock"></span></p>
+                                <p><strong>Ngày tạo:</strong> <span id="detailProductCreated"></span></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- Modal Detail Stored--}}
+                <div class="modal fade" id="detailStoredModal" tabindex="-1" aria-labelledby="detailStoredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="detailStoredModalLabel">Chi tiết sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Tên sản phẩm:</strong> <span id="detailStoredName"></span></p>
+                                <p><strong>Có thể bán:</strong> <span id="detailStoredStock"></span></p>
+                                <p><strong>Tồn kho:</strong> <span id="detailStoredInventory"></span></p>
+                                <p><strong>Đơn giá:</strong> <span id="detailStoredPriceOrigin"></span></p>
+                                <p><strong>Ngày tạo:</strong> <span id="detailStoredCreated"></span></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- Modal Detail Shipping--}}
+                <div class="modal fade" id="detailShippingModal" tabindex="-1" aria-labelledby="detailShippingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="detailShippingModalLabel">Chi tiết sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Mã đơn:</strong> <span id="detailShippingCode"></span></p>
+                                <p><strong>Khách hàng:</strong> <span id="detailShippingName"></span></p>
+                                <p><strong>Số điện thoại:</strong> <span id="detailShippingPhone"></span></p>
+                                <p><strong>Địa điểm:</strong> <span id="detailShippingLocation"></span></p>
+                                <p><strong>Ngày:</strong> <span id="detailShippingDate"></span></p>
+                                <p><strong>Thành tiền:</strong> <span id="detailShippingTotalPrice"></span></p>
+                                <p><strong>Trạng thái thanh toán:</strong> <span id="detailShippingPaymentStatus"></span></p>
+                                <p><strong>Trạng thái giao hàng:</strong> <span id="detailShippingShippingStatus"></span></p>
+                                <p><strong>Ngày tạo:</strong> <span id="detailShippingCreated"></span></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- Modal Detail Bill--}}
+                <div class="modal fade" id="detailBillModal" tabindex="-1" aria-labelledby="detailBillModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="detailBillModalLabel">Chi tiết sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Mã hoá đơn:</strong> <span id="detailBillCodeBill"></span></p>
+                                <p><strong>Khách hàng:</strong> <span id="detailBillName"></span></p>
+                                <p><strong>Số điện thoại:</strong> <span id="detailBillPhone"></span></p>
+                                <p><strong>Địa điểm:</strong> <span id="detailBillLocation"></span></p>
+                                <p><strong>Ngày:</strong> <span id="detailBillDate"></span></p>
+                                <p><strong>Thành tiền:</strong> <span id="detailBillTotalPrice"></span></p>
+                                <p><strong>Trạng thái thanh toán:</strong> <span id="detailBillPaymentStatus"></span></p>
+                                <p><strong>Trạng thái giao hàng:</strong> <span id="detailBillShippingStatus"></span></p>
+                                <p><strong>Ngày tạo:</strong> <span id="detailBillCreated"></span></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{!--  --}}
+
+                <!-- Modal Delete Data-->
+                <div class="modal fade" id="deleteDataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDataModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title" id="deleteProductModalLabel">Xóa sản phẩm</h1>
+                                <h1 class="modal-title" id="deleteDataModalLabel">Xóa sản phẩm</h1>
                             </div>
                             <div class="modal-body">
                                 <p>Thao tác này sẽ không thể khôi phục. Bạn có chắc chắn muốn xóa sản phẩm này?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa vĩnh viễn</button>
+                                <button type="button" class="btn btn-danger" id="confirmDataDelete">Xóa vĩnh viễn</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Delete Stored-->
+                <div class="modal fade" id="deleteStoredModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteStoredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="deleteStoredModalLabel">Xóa sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Thao tác này sẽ không thể khôi phục. Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" id="confirmStoredDelete">Xóa vĩnh viễn</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Delete Shipping-->
+                <div class="modal fade" id="deleteShippingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteShippingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="deleteShippingModalLabel">Xóa sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Thao tác này sẽ không thể khôi phục. Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" id="confirmShippingDelete">Xóa vĩnh viễn</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Delete Bill-->
+                <div class="modal fade" id="deleteBillModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBillModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="deleteBillModalLabel">Xóa sản phẩm</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Thao tác này sẽ không thể khôi phục. Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" id="confirmBillDelete">Xóa vĩnh viễn</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Hidden Form for Delete -->
-                <form name="deleteForm" method="POST"></form>
-                <form name="restoreForm" method="POST"></form>
+                <form name="deleteDataForm" method="POST"></form>
+                <form name="deleteStoredForm" method="POST"></form>
+                <form name="deleteShippingForm" method="POST"></form>
+                <form name="deleteBillForm" method="POST"></form>
+
+                <form name="restoreDataForm" method="POST"></form>
+                <form name="restoreStoredForm" method="POST"></form>
+                <form name="restoreShippingForm" method="POST"></form>
+                <form name="restoreBillForm" method="POST"></form>
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
-                        const deleteModal = document.getElementById('deleteProductModal');
-                        const confirmDeleteBtn = document.getElementById('confirmDelete');
-                        const deleteForm = document.forms['deleteForm'];
-                        const restoreForm = document.forms['restoreForm'];
                         let productId;
 
-                        // Xử lý khi modal hiển thị
-                        if (deleteModal) {
-                            deleteModal.addEventListener('show.bs.modal', function (event) {
-                                const button = event.relatedTarget;
-                                productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
+                        {{!-- Detail Data --}}
+                        const detailProductName = document.getElementById("detailProductName");
+                        const detailProductPrice = document.getElementById("detailProductPrice");
+                        const detailProductPriceOrigin = document.getElementById("detailProductPriceOrigin");
+                        const detailProductDiscount = document.getElementById("detailProductDiscount");
+                        const detailProductSold = document.getElementById("detailProductSold");
+                        const detailProductStar = document.getElementById("detailProductStar");
+                        const detailProductReviews = document.getElementById("detailProductReviews");
+                        const detailProductStock = document.getElementById("detailProductStock");
+                        const detailProductCreated = document.getElementById("detailProductCreated");
+
+                            document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    // Gán dữ liệu vào modal
+                                    detailProductName.textContent = this.getAttribute("data-bs-name");
+                                    detailProductPrice.textContent = this.getAttribute("data-bs-price") + '₫';
+                                    detailProductPriceOrigin.textContent = this.getAttribute("data-bs-price-origin")+ '₫';
+                                    detailProductDiscount.textContent = this.getAttribute("data-bs-discount");
+                                    detailProductSold.textContent = this.getAttribute("data-bs-sold");
+                                    detailProductStar.textContent = this.getAttribute("data-bs-star");
+                                    detailProductReviews.textContent = this.getAttribute("data-bs-reviews");
+                                    detailProductStock.textContent = this.getAttribute("data-bs-stock");
+                                    detailProductCreated.textContent = this.getAttribute("data-bs-created");
+                                });
                             });
 
-                            // Khi nhấn nút "Xóa vĩnh viễn"
-                            confirmDeleteBtn.addEventListener('click', function () {
-                                deleteForm.action = `/me/admin/force/${productId}?_method=DELETE`;
-                                deleteForm.submit();
-                            });
-                        }
+                        {{!-- Detail Stored --}}
+                        const detailStoredName = document.getElementById("detailStoredName");
+                        const detailStoredStock = document.getElementById("detailStoredStock");
+                        const detailStoredInventory = document.getElementById("detailStoredInventory");
+                        const detailStoredPriceOrigin = document.getElementById("detailStoredPriceOrigin");
+                        const detailStoredCreated = document.getElementById("detailStoredCreated");
 
-                        // Xử lý nút khôi phục sản phẩm
-                        document.querySelectorAll('.btn-restore').forEach(button => {
-                            button.addEventListener('click', function (event) {
-                                event.preventDefault(); // Ngăn trang reload
-
-                                const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
-                                restoreForm.action = `/me/admin/restore/${productId}?_method=PATCH`;
-                                restoreForm.submit();
+                            document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    // Gán dữ liệu vào modal
+                                    detailStoredName.textContent = this.getAttribute("data-bs-name");
+                                    detailStoredStock.textContent = this.getAttribute("data-bs-stock");
+                                    detailStoredInventory.textContent = this.getAttribute("data-bs-inventory");
+                                    detailStoredPriceOrigin.textContent = this.getAttribute("data-bs-priceOrigin") + '₫';
+                                    detailStoredCreated.textContent = this.getAttribute("data-bs-created");
+                                });
                             });
-                        });
+
+                        {{!-- Detail Shipping --}}
+                        const detailShippingCode = document.getElementById("detailShippingCode");
+                        const detailShippingName = document.getElementById("detailShippingName");
+                        const detailShippingPhone = document.getElementById("detailShippingPhone");
+                        const detailShippingLocation = document.getElementById("detailShippingLocation");
+                        const detailShippingDate = document.getElementById("detailShippingDate");
+                        const detailShippingTotalPrice = document.getElementById("detailShippingTotalPrice");
+                        const detailShippingPaymentStatus = document.getElementById("detailShippingPaymentStatus");
+                        const detailShippingShippingStatus = document.getElementById("detailShippingShippingStatus");
+                        const detailShippingCreated = document.getElementById("detailShippingCreated");
+
+                            document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    // Gán dữ liệu vào modal
+                                    detailShippingCode.textContent = this.getAttribute("data-bs-code");
+                                    detailShippingName.textContent = this.getAttribute("data-bs-name");
+                                    detailShippingPhone.textContent = this.getAttribute("data-bs-phone");
+                                    detailShippingLocation.textContent = this.getAttribute("data-bs-location");
+                                    detailShippingDate.textContent = this.getAttribute("data-bs-date");
+                                    detailShippingTotalPrice.textContent = this.getAttribute("data-bs-totalPrice") + '₫';
+                                    detailShippingPaymentStatus.textContent = this.getAttribute("data-bs-paymentStatus");
+                                    detailShippingShippingStatus.textContent = this.getAttribute("data-bs-shippingStatus");
+                                    detailShippingCreated.textContent = this.getAttribute("data-bs-created");
+                                });
+                            });
+
+                        {{!-- Detail Bill --}}
+                        const detailBillCodeBill = document.getElementById("detailBillCodeBill");
+                        const detailBillName = document.getElementById("detailBillName");
+                        const detailBillPhone = document.getElementById("detailBillPhone");
+                        const detailBillLocation = document.getElementById("detailBillLocation");
+                        const detailBillDate = document.getElementById("detailBillDate");
+                        const detailBillTotalPrice = document.getElementById("detailBillTotalPrice");
+                        const detailBillPaymentStatus = document.getElementById("detailBillPaymentStatus");
+                        const detailBillShippingStatus = document.getElementById("detailBillShippingStatus");
+                        const detailBillCreated = document.getElementById("detailBillCreated");
+
+                            document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    // Gán dữ liệu vào modal
+                                    detailBillCodeBill.textContent = this.getAttribute("data-bs-codeBill");
+                                    detailBillName.textContent = this.getAttribute("data-bs-name");
+                                    detailBillPhone.textContent = this.getAttribute("data-bs-phone");
+                                    detailBillLocation.textContent = this.getAttribute("data-bs-location");
+                                    detailBillDate.textContent = this.getAttribute("data-bs-date");
+                                    detailBillTotalPrice.textContent = this.getAttribute("data-bs-totalPrice") + '₫';
+                                    detailBillPaymentStatus.textContent = this.getAttribute("data-bs-paymentStatus");
+                                    detailBillShippingStatus.textContent = this.getAttribute("data-bs-shippingStatus");
+                                    detailBillCreated.textContent = this.getAttribute("data-bs-created");
+                                });
+                            });
+
+                        {{!-- Data --}}
+                        const deleteDataModal = document.getElementById('deleteDataModal');
+                        const confirmDataDeleteBtn = document.getElementById('confirmDataDelete');
+                        const deleteDataForm = document.forms['deleteDataForm'];
+                        const restoreDataForm = document.forms['restoreDataForm'];
+                            // Xử lý khi modal hiển thị (Data)
+                            if (deleteDataModal) {
+                                deleteDataModal.addEventListener('show.bs.modal', function (event) {
+                                    const button = event.relatedTarget;
+                                    productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
+                                });
+
+                                // Khi nhấn nút "Xóa vĩnh viễn"
+                                confirmDataDeleteBtn.addEventListener('click', function () {
+                                    deleteDataForm.action = `/me/admin/force/${productId}?_method=DELETE`;
+                                    deleteDataForm.submit();
+                                });
+                            }
+
+                            // Xử lý nút khôi phục sản phẩm (Data)
+                            document.querySelectorAll('.btn-data-restore').forEach(button => {
+                                button.addEventListener('click', function (event) {
+                                    event.preventDefault(); // Ngăn trang reload
+
+                                    const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
+                                    restoreDataForm.action = `/me/admin/restore/${productId}?_method=PATCH`;
+                                    restoreDataForm.submit();
+                                });
+                            });
+
+                        {{!-- Stored --}}
+                        const deleteStoredModal = document.getElementById('deleteStoredModal');
+                        const confirmStoredDeleteBtn = document.getElementById('confirmStoredDelete');
+                        const deleteStoredForm = document.forms['deleteStoredForm'];
+                        const restoreStoredForm = document.forms['restoreStoredForm'];
+                            // Xử lý khi modal hiển thị (Stored)
+                            if (deleteStoredModal) {
+                                deleteStoredModal.addEventListener('show.bs.modal', function (event) {
+                                    const button = event.relatedTarget;
+                                    productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
+                                });
+
+                                // Khi nhấn nút "Xóa vĩnh viễn"
+                                confirmStoredDeleteBtn.addEventListener('click', function () {
+                                    deleteStoredForm.action = `/me/admin/stored/force/${productId}?_method=DELETE`;
+                                    deleteStoredForm.submit();
+                                });
+                            }
+
+                            // Xử lý nút khôi phục sản phẩm Stored)
+                                document.querySelectorAll('.btn-stored-restore').forEach(button => {
+                                button.addEventListener('click', function (event) {
+                                    event.preventDefault(); // Ngăn trang reload
+
+                                    const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
+                                    restoreStoredForm.action = `/me/admin/stored/restore/${productId}?_method=PATCH`;
+                                    restoreStoredForm.submit();
+                                });
+                            });
+
+                        {{!-- Shipping --}}
+                        const deleteShippingModal = document.getElementById('deleteShippingModal');
+                        const confirmShippingDeleteBtn = document.getElementById('confirmShippingDelete');
+                        const deleteShippingForm = document.forms['deleteShippingForm'];
+                        const restoreShippingForm = document.forms['restoreShippingForm'];
+                            // Xử lý khi modal hiển thị (Shipping)
+                            if (deleteShippingModal) {
+                                deleteShippingModal.addEventListener('show.bs.modal', function (event) {
+                                    const button = event.relatedTarget;
+                                    productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
+                                });
+
+                                // Khi nhấn nút "Xóa vĩnh viễn"
+                                confirmShippingDeleteBtn.addEventListener('click', function () {
+                                    deleteShippingForm.action = `/me/admin/shipping/force/${productId}?_method=DELETE`;
+                                    deleteShippingForm.submit();
+                                });
+                            }
+
+                            // Xử lý nút khôi phục sản phẩm (Shipping)
+                                document.querySelectorAll('.btn-shipping-restore').forEach(button => {
+                                button.addEventListener('click', function (event) {
+                                    event.preventDefault(); // Ngăn trang reload
+
+                                    const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
+                                    restoreShippingForm.action = `/me/admin/shipping/restore/${productId}?_method=PATCH`;
+                                    restoreShippingForm.submit();
+                                });
+                            });
+
+                        {{!-- Bill --}}
+                        const deleteBillModal = document.getElementById('deleteBillModal');
+                        const confirmBillDeleteBtn = document.getElementById('confirmBillDelete');
+                        const deleteBillForm = document.forms['deleteBillForm'];
+                        const restoreBillForm = document.forms['restoreBillForm'];
+                            // Xử lý khi modal hiển thị (Bill)
+                            if (deleteBillModal) {
+                                deleteBillModal.addEventListener('show.bs.modal', function (event) {
+                                    const button = event.relatedTarget;
+                                    productId = button.getAttribute('data-bs-id'); // Lấy ID sản phẩm
+                                });
+
+                                // Khi nhấn nút "Xóa vĩnh viễn"
+                                confirmBillDeleteBtn.addEventListener('click', function () {
+                                    deleteBillForm.action = `/me/admin/bill/force/${productId}?_method=DELETE`;
+                                    deleteBillForm.submit();
+                                });
+                            }
+
+                            // Xử lý nút khôi phục sản phẩm (Bill)
+                                document.querySelectorAll('.btn-bill-restore').forEach(button => {
+                                button.addEventListener('click', function (event) {
+                                    event.preventDefault(); // Ngăn trang reload
+
+                                    const productId = this.getAttribute('data-id'); // Lấy ID sản phẩm
+                                    restoreBillForm.action = `/me/admin/bill/restore/${productId}?_method=PATCH`;
+                                    restoreBillForm.submit();
+                                });
+                            });
                     });
                 </script>
-
             </div>
         </div>
     </div>

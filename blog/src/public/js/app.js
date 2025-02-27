@@ -23,6 +23,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let hideTimeout;
 
+    orders.forEach(order => {
+        if (order.shippingStatus === "Giao hàng thành công") {
+            order.shippingStatusIcon = "fa-circle-check text-success";
+        } else if (order.shippingStatus === "Đang giao hàng") {
+            order.shippingStatusIcon = "fa-truck text-warning";
+        } else {
+            order.shippingStatusIcon = "fa-circle text-secondary";
+        }
+    });    
+
     // Hiển thị dropdown khi focus vào input
     searchInput.addEventListener("focus", function () {
         dropdown.style.display = "block";

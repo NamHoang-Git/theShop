@@ -95,9 +95,46 @@
                                 <th scope="col">Tồn kho</th>
                                 <th scope="col">Đơn giá</th>
                                 <th class="option" scope="col">
-                                    <button type="button" class="btn btn-outline-primary add-btn">
+                                    <button type="button" class="btn btn-outline-primary add-btn" data-bs-toggle="modal" data-bs-target="#staticCreate">
                                         <i class="fa-solid fa-circle-plus"></i> Thêm mới
                                     </button>
+
+                                    <!-- Modal Create-->
+                                    <div class="modal fade" id="staticCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCreateLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <form class="modal-content" method="POST" action="/me/admin/stored/createStored">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title" id="staticCreateLabel">Thêm mới</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="create__product-item">
+                                                        <label for="name" class="form-label">Tên sản phẩm</label>
+                                                        <input type="text" class="form-control" id="name" name="name">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="imageURL" class="form-label">URL Hình ảnh</label>
+                                                        <input type="text" class="form-control" id="imageURL" name="imageURL">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="stock" class="form-label">Có thể bán</label>
+                                                        <input type="text" class="form-control" id="stock" name="stock">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="inventory" class="form-label">Tồn kho</label>
+                                                        <input type="text" class="form-control" id="inventory" name="inventory">
+                                                    </div>
+                                                    <div class="create__product-item">
+                                                        <label for="priceOrigin" class="form-label">Đơn giá</label>
+                                                        <input type="text" class="form-control" id="priceOrigin" name="priceOrigin">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </th>
                                 <th>
                                     <button type="button" class="btn filter-btn">
@@ -120,19 +157,27 @@
                                 <td>{{this.inventory}}</td>
                                 <td>{{formatCurrency this.priceOrigin}}₫</td>
                                 <td class="option">
-                                    <button type="button" class="btn btn-secondary update">
+                                    <button type="button" class="btn btn-secondary update open-update-modal"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#staticUpdate"
+                                        data-bs-id="{{this._id}}"
+                                        data-bs-name="{{this.name}}"
+                                        data-bs-imageURL="{{this.imageURL}}"
+                                        data-bs-stock="{{this.stock}}"
+                                        data-bs-inventory="{{this.inventory}}"
+                                        data-bs-priceOrigin="{{this.priceOrigin}}">
                                         Cập nhật
                                     </button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteStoredModal">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </td>
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="5" class="text-center">
+                                <td colspan="7" class="text-center">
                                     Chưa có sản phẩm nào trong kho.
                                 </td>
                             </tr>
@@ -155,12 +200,51 @@
                     </div>
                 </div>
 
+                <!-- Modal Update-->
+                <div class="modal fade" id="staticUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticUpdateLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="staticUpdateLabel">Cập nhật</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="updateForm" method="POST">
+                                    <div class="create__product-item">
+                                        <label for="name" class="form-label">Tên sản phẩm</label>
+                                        <input type="text" class="form-control" id="updateName" name="name">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="imageURL" class="form-label">URL Hình ảnh</label>
+                                        <input type="text" class="form-control" id="updateImageURL" name="imageURL">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="stock" class="form-label">Có thể bán</label>
+                                        <input type="text" class="form-control" id="updateStock" name="stock">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="inventory" class="form-label">Tồn kho</label>
+                                        <input type="text" class="form-control" id="updateInventory" name="inventory">
+                                    </div>
+                                    <div class="create__product-item">
+                                        <label for="priceOrigin" class="form-label">Đơn giá</label>
+                                        <input type="text" class="form-control" id="updatePriceOrigin" name="priceOrigin">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" form="updateForm">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Modal Delete -->
-                <div class="modal fade" id="deleteProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+                <div class="modal fade" id="deleteStoredModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteStoredModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title" id="deleteProductModalLabel">Xóa sản phẩm</h1>
+                                <h1 class="modal-title" id="deleteStoredModalLabel">Xóa sản phẩm</h1>
                             </div>
                             <div class="modal-body">
                                 <p>Bạn chắc chắn muốn xóa sản phẩm này?</p>
@@ -179,38 +263,36 @@
                 <script>
 
                     document.addEventListener('DOMContentLoaded', function () {
-                        const deleteModal = document.getElementById('deleteProductModal');
-                        const confirmDeleteBtn = document.getElementById('confirmDelete');
-                        const deleteForm = document.forms['deleteForm'];
-                        let productId;
-                        
-                        const detailProductName = document.getElementById("detailProductName");
-                        const detailProductPrice = document.getElementById("detailProductPrice");
-                        const detailProductPriceOrigin = document.getElementById("detailProductPriceOrigin");
-                        const detailProductDiscount = document.getElementById("detailProductDiscount");
-                        const detailProductSold = document.getElementById("detailProductSold");
-                        const detailProductStar = document.getElementById("detailProductStar");
-                        const detailProductReviews = document.getElementById("detailProductReviews");
-                        const detailProductStock = document.getElementById("detailProductStock");
-                        const detailProductCreated = document.getElementById("detailProductCreated");
+                        {{!-- Update --}}
+                        const staticUpdate = document.getElementById("staticUpdate");
+                        const updateForm = document.getElementById("updateForm");
+                        const updateName = document.getElementById("updateName");
+                        const updateImageURL = document.getElementById("updateImageURL");
+                        const updateStock = document.getElementById("updateStock");
+                        const updateInventory = document.getElementById("updateInventory");
+                        const updatePriceOrigin = document.getElementById("updatePriceOrigin");
 
-                        {{!-- Deatail --}}
-                        document.querySelectorAll(".open-detail-modal").forEach((button) => {
+                        document.querySelectorAll(".open-update-modal").forEach((button) => {
                             button.addEventListener("click", function () {
                                 // Gán dữ liệu vào modal
-                                detailProductName.textContent = this.getAttribute("data-bs-name");
-                                detailProductPrice.textContent = this.getAttribute("data-bs-price") + '₫';
-                                detailProductPriceOrigin.textContent = this.getAttribute("data-bs-price-origin")+ '₫';
-                                detailProductDiscount.textContent = this.getAttribute("data-bs-discount");
-                                detailProductSold.textContent = this.getAttribute("data-bs-sold");
-                                detailProductStar.textContent = this.getAttribute("data-bs-star");
-                                detailProductReviews.textContent = this.getAttribute("data-bs-reviews");
-                                detailProductStock.textContent = this.getAttribute("data-bs-stock");
-                                detailProductCreated.textContent = this.getAttribute("data-bs-created");
+                                updateName.value = this.getAttribute("data-bs-name");
+                                updateImageURL.value = this.getAttribute("data-bs-imageURL");
+                                updateStock.value = this.getAttribute("data-bs-stock");
+                                updateInventory.value = this.getAttribute("data-bs-inventory");
+                                updatePriceOrigin.value = this.getAttribute("data-bs-priceOrigin");
+
+                                // Cập nhật action của form với ID sản phẩm
+                                let productId = this.getAttribute("data-bs-id");
+                                updateForm.action = `/me/admin/stored/${productId}?_method=PUT`;
                             });
                         });
 
                         {{!-- Delete --}}
+                        const deleteModal = document.getElementById('deleteStoredModal');
+                        const confirmDeleteBtn = document.getElementById('confirmDelete');
+                        const deleteForm = document.forms['deleteForm'];
+                        let productId;
+
                         if (deleteModal) {
                             // Khi modal hiển thị, lấy ID của khóa học từ button
                             deleteModal.addEventListener('show.bs.modal', function (event) {
@@ -221,7 +303,7 @@
                             // Khi nhấn nút "Xóa" trong modal
                             confirmDeleteBtn.addEventListener('click', function () {
                                 // Cập nhật action của form và gửi yêu cầu DELETE
-                                deleteForm.action = `/me/admin/${productId}?_method=DELETE`;
+                                deleteForm.action = `/me/admin/stored/${productId}?_method=DELETE`;
                                 deleteForm.submit();
                             });
                         };

@@ -40,7 +40,10 @@ app.engine('hbs', engine({
                 return (number / 1000).toFixed(1) + 'k';
             }
             return number;
-        }
+        },
+
+        // ✅ Helper để so sánh hai giá trị
+        eq: (a, b) => a === b
     },
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
