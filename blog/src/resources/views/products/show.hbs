@@ -52,7 +52,7 @@
 
                   <div class="item-center mb-2">
                      <div class="item-rank">
-                        <a href="">{{product.star}}</a>
+                        <a href="#reviews">{{product.star}}</a>
                         <ul class="item-rank__star">
                            <i class="fa-solid fa-star"></i>
                            <i class="fa-solid fa-star"></i>
@@ -63,7 +63,7 @@
                      </div>
 
                      <div class="item-rank">
-                        <a href="">{{formatNumber product.reviews}}</a>
+                        <a href="#reviews">{{formatNumber product.reviews}}</a>
                         <p>Đánh Giá</p>
                      </div>
 
@@ -169,7 +169,7 @@
 
       <div class="container-details">
          <div class="detail p-4">
-            <h2>CHI TIẾT SẢN PHẨM</h2>
+            <h2>Chi tiết sản phẩm</h2>
             <div class="detail-content">
                <ul class="container-details__header">
                   <h4>Danh Mục</h4>
@@ -205,8 +205,9 @@
                   <li>Hà Nội</li>
                </ul>
             </div>
-         <div class="description">
-            <h2>MÔ TẢ SẢN PHẨM</h2>
+         </div>
+         <div class="description p-4 mt-4">
+            <h2>Mô tả sản phẩm</h2>
             <ul>
                <p>
                   {{product.name}}. Sở hữu thiết kế titan tuyệt đẹp. Điều Khiển Camera. 4K Dolby Vision tốc độ 120 fps. Và chip A18 Pro.
@@ -239,6 +240,305 @@
                   - CÁC TÍNH NĂNG AN TOÀN QUAN TRỌNG – Với tính năng Phát Hiện Va Chạm, iPhone có thể phát hiện va chạm ô tô nghiêm trọng và gọi trợ giúp khi cần kíp.
                </p>
             </ul>
+         </div>
+         <div class="reviews p-4 mt-4" id="reviews">
+            <h2>Phản hồi</h2>
+            <div class="rank">
+               <div class="rank__star">
+                  <div class="rank__star-value">
+                     <p class="main_star">4.5</p>
+                     <p>trên 5</p>
+                  </div>
+                  <div class="star">
+                     <i class="fa-solid fa-star"></i>
+                     <i class="fa-solid fa-star"></i>
+                     <i class="fa-solid fa-star"></i>
+                     <i class="fa-solid fa-star"></i>
+                     <i class="fa-solid fa-star-half-stroke"></i>
+                  </div>
+               </div>
+               <div class="filter__star">
+                  <button type="button" class="btn">Tất Cả</button>
+                  <button type="button" class="btn">5 Sao</button>
+                  <button type="button" class="btn">4 Sao</button>
+                  <button type="button" class="btn">3 Sao</button>
+                  <button type="button" class="btn">2 Sao</button>
+                  <button type="button" class="btn">1 Sao</button>
+               </div>
+            </div>
+            <div class="comments__container mt-4">
+               <div class="comment">
+                  <div class="comment__detail">
+                     <a href="">
+                        <img src="http://localhost:3000/img/tak.jpg" alt="">
+                     </a>
+                     <div class="comment__detail-content">
+                        <p>Nam Hoang</p>
+                        <div class="star">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <ul>
+                           <li class="separation--line">28/12/2024</li>
+                           <li class="separation--line">8:32</li>
+                           <li>Phân loại hàng: Titan Tự Nhiên</li>
+                        </ul>
+                        <p>Đúng với mô tả: Đúng</p>
+                        <p>Chất lượng sản phẩm: Oke</p>
+                        <p>Sản phẩm tốt</p>
+                     </div>
+                  </div>
+                  <div class="comment__feedback">
+                     <div class="comment__feedback-img">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                     </div>
+                     <button>
+                        <i class="fa-regular fa-thumbs-up"></i>
+                     </button>
+                  </div>
+                  <div class="detail__option">
+                     <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="fa-solid fa-ellipsis"></i>
+                     </button>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <button type="button" class="btn btn-warning">
+                              Sửa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn btn-danger">
+                              Xóa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-regular fa-flag"></i> Báo cáo
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-solid fa-reply"></i> Phản hồi
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="comment">
+                  <div class="comment__detail">
+                     <a href="">
+                        <img src="http://localhost:3000/img/tak.jpg" alt="">
+                     </a>
+                     <div class="comment__detail-content">
+                        <p>Nam Hoang</p>
+                        <div class="star">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <ul>
+                           <li class="separation--line">28/12/2024</li>
+                           <li class="separation--line">8:32</li>
+                           <li>Phân loại hàng: Titan Tự Nhiên</li>
+                        </ul>
+                        <p>Đúng với mô tả: Đúng</p>
+                        <p>Chất lượng sản phẩm: Oke</p>
+                        <p>Sản phẩm tốt</p>
+                     </div>
+                  </div>
+                  <div class="comment__feedback">
+                     <div class="comment__feedback-img">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                     </div>
+                     <button>
+                        <i class="fa-regular fa-thumbs-up"></i>
+                     </button>
+                  </div>
+                  <div class="detail__option">
+                     <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="fa-solid fa-ellipsis"></i>
+                     </button>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <button type="button" class="btn btn-warning">
+                              Sửa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn btn-danger">
+                              Xóa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-regular fa-flag"></i> Báo cáo
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-solid fa-reply"></i> Phản hồi
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="comment">
+                  <div class="comment__detail">
+                     <a href="">
+                        <img src="http://localhost:3000/img/tak.jpg" alt="">
+                     </a>
+                     <div class="comment__detail-content">
+                        <p>Nam Hoang</p>
+                        <div class="star">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <ul>
+                           <li class="separation--line">28/12/2024</li>
+                           <li class="separation--line">8:32</li>
+                           <li>Phân loại hàng: Titan Tự Nhiên</li>
+                        </ul>
+                        <p>Đúng với mô tả: Đúng</p>
+                        <p>Chất lượng sản phẩm: Oke</p>
+                        <p>Sản phẩm tốt</p>
+                     </div>
+                  </div>
+                  <div class="comment__feedback">
+                     <div class="comment__feedback-img">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                     </div>
+                     <button>
+                        <i class="fa-regular fa-thumbs-up"></i>
+                     </button>
+                  </div>
+                  <div class="detail__option">
+                     <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="fa-solid fa-ellipsis"></i>
+                     </button>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <button type="button" class="btn btn-warning">
+                              Sửa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn btn-danger">
+                              Xóa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-regular fa-flag"></i> Báo cáo
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-solid fa-reply"></i> Phản hồi
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="comment">
+                  <div class="comment__detail">
+                     <a href="">
+                        <img src="http://localhost:3000/img/tak.jpg" alt="">
+                     </a>
+                     <div class="comment__detail-content">
+                        <p>Nam Hoang</p>
+                        <div class="star">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <ul>
+                           <li class="separation--line">28/12/2024</li>
+                           <li class="separation--line">8:32</li>
+                           <li>Phân loại hàng: Titan Tự Nhiên</li>
+                        </ul>
+                        <p>Đúng với mô tả: Đúng</p>
+                        <p>Chất lượng sản phẩm: Oke</p>
+                        <p>Sản phẩm tốt</p>
+                     </div>
+                  </div>
+                  <div class="comment__feedback">
+                     <div class="comment__feedback-img">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                        <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                     </div>
+                     <button>
+                        <i class="fa-regular fa-thumbs-up"></i>
+                     </button>
+                  </div>
+                  <div class="detail__option">
+                     <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="fa-solid fa-ellipsis"></i>
+                     </button>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <button type="button" class="btn btn-warning">
+                              Sửa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn btn-danger">
+                              Xóa
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-regular fa-flag"></i> Báo cáo
+                           </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                           <button type="button" class="btn open-detail-modal">
+                              <i class="fa-solid fa-reply"></i> Phản hồi
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="page__change grid wide">
+            <div class="item-center__quantity">
+               <div class="item-center__quantity-btn">
+                  <button class="border">
+                        <i class="fa-solid fa-angle-left"></i>
+                  </button>
+
+                  <input class="border" type="text" value="1" />
+
+                  <button class="border">
+                        <i class="fa-solid fa-angle-right"></i>
+                  </button>
+               </div>
+            </div>
          </div>
       </div>
   </div>

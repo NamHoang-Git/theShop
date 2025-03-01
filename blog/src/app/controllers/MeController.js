@@ -5,7 +5,7 @@ import mongooseUtil from "../../util/mongoose.js";
 import mongooseObj from "../../util/mongoose.js";
 import { getDeletedData } from "../../util/databaseHelper.js";
 
-class MeController {
+class MeController { 
   /* ACCOUNT */
     // [GET] /account/profile
     profile(req, res, next) {
@@ -346,6 +346,11 @@ class MeController {
           })
           .catch(next);
       }
+  
+  // [GET] /cart
+  cart(req, res, next) {
+    res.render("me/cart.hbs", { isFooterOnlyPage: true });
+  }
 
   // [GET] / (HOME)
   index(req, res, next) {

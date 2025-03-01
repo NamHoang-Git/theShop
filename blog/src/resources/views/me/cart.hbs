@@ -1,0 +1,111 @@
+<div class="container__cart">
+    <div class="bar">
+        <div class="bar__container grid wide">
+            <div class="admin__media-form__logo">
+                <a href="/me" class="media-form__logo-link">
+                    <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
+                </a>
+                <p>Giỏ hàng</p>
+            </div>
+
+            <div class="search">
+                <input type="text" placeholder="Tìm kiếm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            
+            <li class="account">
+                <img src="/img/tak.jpg" alt="">
+                <div class="account__info">
+                    <h4>Nam Hoang</h4>
+                    <p>User</p>
+                </div>
+
+                <div class="account__options header_arrow-language">
+                    <ul class="account__options-list">
+                        <a href="/me/account/profile">
+                            <li>Tài khoản của tôi</li>
+                        </a>
+                        <a href="/">
+                            <li>Đăng xuất</li>
+                        </a>
+                    </ul>
+                </div>
+            </li>
+        </div>
+    </div>
+
+    <div class="container__cart-content">
+        <div class="grid wide">
+            <table class="table">
+                <thead> 
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Số tiền</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="cart__product">
+                                <input type="checkbox" class="cart__check-input" name="" id="">
+                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                <div class="dropdown option">
+                                    <button class="btn" type="button">
+                                        Loại sản phẩm <i class="fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <select class="form-control">
+                                        <option>Titan Sa Mạc</option>
+                                        <option>Titan Sa Mạc 2</option>
+                                        <option>Titan Sa Mạc 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                        <td>3.490.000₫</td>
+                        <td>
+                            <div class="cart__product-quantity">
+                                <button class="border">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+
+                                <input class="border" type="text" value="1" />
+
+                                <button class="border">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>3.490.000₫</td>
+                        <td class="operation">
+                            <div class="cart__product-operation">
+                                <button class="operation__close-btn">
+                                    Xoá
+                                </button>
+                                <button class="similar-product">
+                                    <p>Tìm sản phẩm tương tự</p>
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>                    
+                </tbody>
+            </table>
+
+            <div class="container__cart-footer">
+                <div class="option">
+                    <input type="checkbox" class="cart__check-input" name="" id="cart_option-check">
+                    <label for="cart_option-check">Chọn tất cả</label>
+                </div>
+
+                <div class="cart__submit">
+                    <p>Tổng thanh toán (3 sản phẩm):  4.288.000đ</p>
+                    <button type="button" class="btn">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

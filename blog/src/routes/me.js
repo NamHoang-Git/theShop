@@ -45,6 +45,7 @@ router.get('/admin/trash', meController.trash);
     router.delete('/admin/bill/force/:id', meController.forceBill);
     router.patch('/admin/bill/restore/:id', meController.restoreBill);
 
+router.get('/cart', meController.cart);
 router.get('/', meController.index);
 
 export default router;

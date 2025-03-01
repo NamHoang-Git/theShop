@@ -1739,17 +1739,11 @@
   padding-bottom: 1.5rem;
 }
 
-.modal__login-qr {
-  user-select: none;
-  position: relative;
-}
-
 .modal__login-header {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
-  gap: 20px;
 }
 
 .modal__auth-heading {
@@ -1761,20 +1755,26 @@
   flex-shrink: 0;
 }
 
-.modal__login-qr--arrow::before {
+.modal__login-qr {
+  user-select: none;
+  position: relative;
+  border: 2px solid #ffbf00;
+  width: 110px;
+}
+
+.modal__login-qr::before {
   content: "";
   border-style: solid;
   border-width: 8px 10px;
   border-color: transparent transparent transparent #ffbf00;
   position: absolute;
-  right: -5%;
-  top: 18px;
+  right: -20px;
+  top: 15px;
 }
 
 .modal__login-qr-heading {
   margin: 0;
-  width: 90%;
-  border: 2px solid #ffbf00;
+  // border: 2px solid #ffbf00;
   color: #ffbf00;
   background-color: #fefaec;
   font-size: 1.2rem;
@@ -1785,6 +1785,7 @@
 .modal__login-qr-form {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .modal__auth-or {

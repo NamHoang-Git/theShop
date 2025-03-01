@@ -12,6 +12,7 @@ const $$ = document.querySelectorAll.bind(document)
     const menu = $('.bar i')
     const nav = $('.nav')
     const bar = $('.bar')
+    const containerCartFooter = $('.container__cart-footer')
     const container = $('.container')
 
     const imgSongBar = $('.song__bar-img') 
@@ -351,6 +352,15 @@ const $$ = document.querySelectorAll.bind(document)
                 };
             };
         },
+        // scrollBorderCartFooter: function() {
+        //     window.addEventListener("scroll", function () {
+        //         if (containerCartFooter.getBoundingClientRect().top >= window.innerHeight) {
+        //             containerCartFooter.classList.add("active");
+        //         } else {
+        //             containerCartFooter.classList.remove("active");
+        //         }
+        //     });
+        // },
         navListClick: function() {
             // NavList 
             navLists.forEach((item) => {
@@ -603,6 +613,7 @@ const $$ = document.querySelectorAll.bind(document)
         start: function() {
             this.navListClick();
             this.scrollBorderBar();
+            this.scrollBorderCartFooter();
             this.activeToMenu();
 
             this.renderRecently();
