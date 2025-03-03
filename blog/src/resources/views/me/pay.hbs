@@ -1,0 +1,249 @@
+<div class="container__pay">
+    <div class="bar">
+        <div class="bar__container grid wide">
+            <div class="admin__media-form__logo">
+                <a href="/me" class="media-form__logo-link">
+                    <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
+                </a>
+                <p>Thanh toán</p>
+            </div>
+
+            <div class="search">
+                <input type="text" placeholder="Tìm kiếm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            
+            <li class="account">
+                <img src="/img/tak.jpg" alt="">
+                <div class="account__info">
+                    <h4>Nam Hoang</h4>
+                    <p>User</p>
+                </div>
+
+                <div class="account__options header_arrow-language">
+                    <ul class="account__options-list">
+                        <a href="/me/account/profile">
+                            <li>Tài khoản của tôi</li>
+                        </a>
+                        <a href="/">
+                            <li>Đăng xuất</li>
+                        </a>
+                    </ul>
+                </div>
+            </li>
+        </div>
+    </div>
+
+    <div class="container__pay-content">
+        <div class="grid wide">
+            <div class="pay__content">
+                <div class="row">
+                    <div class="col l-4">
+                        <div class="info">
+                            <h3>Thông tin khách hàng</h3>
+                            <div class="content__info">
+                                <form action="">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <h4>Email</h4>
+                                            </td>
+
+                                            <td>
+                                                <li>
+                                                    <input disabled type="email" id="email" name="email" value="ngokhoangnam4268@gmail.com">
+                                                </li>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <h4>Họ và tên</h4>
+                                            </td>
+
+                                            <td>
+                                                <li>
+                                                    <input disabled type="text" id="name" name="name" value="Ngô Kim Hoàng Nam">
+                                                </li>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <h4>Số điện thoại</h4>
+                                            </td>
+
+                                            <td>
+                                                <li>
+                                                    <input disabled type="tel" id="tel" name="tel" value="0383376601">
+                                                </li>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="btn-change">
+                                <button type="button" class="btn">Thay đổi</button>
+                            </div>
+
+                            <div class="line"></div>
+
+                            <h3>
+                                <i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng
+                            </h3>
+                            <div class="content__info">
+                                <form action="">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <h4>Địa chỉ</h4>
+                                            </td>
+
+                                            <td>
+                                                <li>
+                                                    <input disabled type="text" id="address" name="address" value="......................">
+                                                </li>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                                <div class="location">
+                                    <li>
+                                        <p>Phường</p>
+                                        <select id="ward" name="ward">
+                                            <option value="">.....</option>
+                                            <script>
+                                                for (let i = 1; i <= 31; i++) {
+                                                    document.write(`<option value="${i}">${i}</option>`);
+                                                }
+                                            </script>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <p>Huyện</p>
+                                        <select id="district" name="district">
+                                            <option value="">.....</option>
+                                            <script>
+                                                for (let i = 1; i <= 31; i++) {
+                                                    document.write(`<option value="${i}">${i}</option>`);
+                                                }
+                                            </script>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <p>Thành phố</p>
+                                        <select id="city" name="city">
+                                            <option value="">.....</option>
+                                            <script>
+                                                for (let i = 1; i <= 31; i++) {
+                                                    document.write(`<option value="${i}">${i}</option>`);
+                                                }
+                                            </script>
+                                        </select>
+                                    </li>
+                                </div>
+                                <div class="payment__method">
+                                    <p>Phương thức thanh toán:</p>
+                                    <div class="method">
+                                        <p>Thanh toán khi nhận hàng</p>
+                                        <input type="checkbox" class="cart__check-input" name="" id="" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-change">
+                                <button type="button" class="btn">Thay đổi</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col l-8">
+                        <div class="product">
+                            <table class="table">
+                                <thead> 
+                                    <tr>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Đơn giá</th>
+                                        <th scope="col">Số lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="col">
+                                            <div class="pay__product">
+                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                            </div>
+                                        </td>
+                                        <td scope="col">3.490.000₫</td>
+                                        <td scope="col">2</td>
+                                    </tr>
+                                    <tr class="total__price">
+                                        <td></td>
+                                        <td colspan="">Thành tiền:</td>
+                                        <td colspan="">6.980.000₫</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="pay__product">
+                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                            </div>
+                                        </td>
+                                        <td>3.490.000₫</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr class="total__price">
+                                        <td></td>
+                                        <td colspan="">Thành tiền:</td>
+                                        <td colspan="">6.980.000₫</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="pay__product">
+                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                            </div>
+                                        </td>
+                                        <td>3.490.000₫</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr class="total__price">
+                                        <td></td>
+                                        <td colspan="">Thành tiền:</td>
+                                        <td colspan="">6.980.000₫</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="pay__product">
+                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                            </div>
+                                        </td>
+                                        <td>3.490.000₫</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr class="total__price">
+                                        <td></td>
+                                        <td colspan="">Thành tiền:</td>
+                                        <td colspan="">6.980.000₫</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pay__product-footer">
+                                <div class="line"></div>
+                                <div class="total__payment">
+                                    <p>Tổng thanh toán</p>
+                                    <p>6.980.000₫</p>
+                                </div>
+                                <button type="submit" class="btn">Thanh toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

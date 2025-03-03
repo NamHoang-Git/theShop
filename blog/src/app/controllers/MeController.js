@@ -352,6 +352,11 @@ class MeController {
     res.render("me/cart.hbs", { isFooterOnlyPage: true });
   }
 
+  // [GET] /pay
+  pay(req, res, next) {
+    res.render("me/pay.hbs", { isFooterOnlyPage: true });
+  }
+
   // [GET] / (HOME)
   index(req, res, next) {
     Product.find({})
