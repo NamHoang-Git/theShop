@@ -1,0 +1,199 @@
+
+<div id="main">
+    <div class="grid">
+        <div class="container__admin row no-gutters">
+            <nav class="nav">
+                <div class="nav__explore">
+                    <ul class="nav__explore-list">
+                        <div class="nav__list-item">
+                            <a href="/me/admin/data">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <p>Sản phẩm</p>
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/create">
+                                <i class="fa-regular fa-square-plus"></i>
+                                <p>Thêm sản phẩm</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/stored">
+                                <i class="fa-solid fa-box-open"></i>
+                                <p>Kho hàng</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/shipping">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                <p>Giao hàng</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item">
+                            <a href="/me/admin/bill">
+                                <i class="fa-solid fa-scroll"></i>
+                                <p>Hoá đơn</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item active">
+                            <a href="/me/admin/report">
+                                <i class="fa-solid fa-file-pen"></i>
+                                <p>Báo cáo</p> 
+                            </a>
+                        </div>
+                        <div class="nav__list-item trash-item">
+                            <a href="/me/admin/trash">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Thùng Rác
+                                {{#if deletedCount}}
+                                <span class="translate-middle badge rounded-pill bg-danger">
+                                    {{deletedCount}}
+                                </span>
+                                {{/if}}
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container__admin-content col">
+                <div class="bar">
+                    <div class="admin__media-form__logo">
+                        <a href="/me" class="media-form__logo-link">
+                            <img src="/img/logo__shop.png" alt="" class="media-form__logo-img">
+                        </a>
+                        <p>Báo cáo</p>
+                    </div>
+
+                    <div class="search">
+                        <input type="text" placeholder="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    
+                    <li class="account">
+                        <img src="/img/tak.jpg" alt="">
+                        <div class="account__info">
+                            <h4>Nam Hoang</h4>
+                            <p>Admin</p>
+                        </div>
+
+                        <div class="account__options header_arrow-language">
+                            <ul class="account__options-list">
+                                <a href="/me/account/profile">
+                                    <li>Tài khoản của tôi</li>
+                                </a>
+                                <a href="/">
+                                    <li>Đăng xuất</li>
+                                </a>
+                            </ul>
+                        </div>
+                    </li>
+                </div>
+
+                <div class="container__admin-report">
+                    <div class="grid wide">
+                        <div class="container__report">
+                            <div class="container__report-ctn row">
+                                <div class="account__nav col l-3">
+                                    <div class="report__nav-acc">
+                                        <div class="report__account__nav-acc">
+                                            <img src="/img/tak.jpg" alt="">
+                                        </div>
+                                        <div class="report__nav-acc-info">
+                                            <h4>Nam Hoang</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="account__nav-item">
+                                        <div class="account__nav-item-acc">
+                                            <a href="#">
+                                                <i class="fa-solid fa-book"></i>
+                                                Báo cáo doanh số
+                                            </a>
+                                            <ul>
+                                                <a href="/me/admin/report" class="active">Tổng quan báo cáo</a>
+                                                <li class="accordion" id="report__list">
+                                                    <div class="report__list-content accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                                                                    Danh sách doanh số
+                                                                </a>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseOne" class="report__list-content-item accordion-collapse collapse" data-bs-parent="#report__list">
+                                                            <a href="1" class="list-group-item list-group-item-action">Doanh số theo thời gian</a>
+                                                            <a href="2" class="list-group-item list-group-item-action">Doanh số theo sản phẩm</a>
+                                                            <a href="3" class="list-group-item list-group-item-action">Doanh số theo khách hàng</a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <a href="javascript:void(0)">
+                                            <i class="fa-solid fa-clipboard-list"></i>
+                                            Báo cáo kho
+                                        </a>
+                                    </div>
+                                    <div class="report__option">
+                                        <button type="button" class="btn btn-outline-primary">Chi tiết</button>
+                                        <button type="button" class="btn btn-outline-secondary">Cập nhật</button>
+                                    </div>
+                                </div>
+
+                                <div class="report__content col l-9">
+                                    <h3>Tổng quan báo cáo</h3>
+
+                                    <div class="report__content-detail">
+                                        <div class="report__content-detail-box">
+                                            <div class="row no-gutters">
+                                                <div class="item col l-3">
+                                                    <h5>Số lượng đơn hàng</h5>
+                                                    <p>14268</p>
+                                                </div>
+                                                <div class="item col l-3">
+                                                    <h5>Tổng chi phí</h5>
+                                                    <p>210 triệu VNĐ</p>
+                                                </div>
+                                                <div class="item col l-3">
+                                                    <h5>Doanh thu</h5>
+                                                    <p>336 triệu VNĐ</p>
+                                                </div>
+                                                <div class="item col l-3">
+                                                    <h5>Lợi nhuận</h5>
+                                                    <p>126 triệu VNĐ</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="report__content-detail-chart">
+                                            <div class="row no-gutters">
+                                                <div class="item col l-5">
+                                                    <h5>Doanh số theo thời gian</h5>
+                                                    <img src="/img/icon/bar-chart.png" alt="">
+                                                </div>
+                                                <div class="item col l-5">
+                                                    <h5>Doanh số theo đơn vị sản phẩm</h5>
+                                                    <img src="/img/icon/chart.png" alt="">
+                                                </div>
+                                                <div class="item-btn col l-2">
+                                                    <button type="button" class="btn">
+                                                        <i class="fa-solid fa-download"></i>
+                                                    </button>
+                                                    <button type="button" class="btn">
+                                                        <i class="fa-solid fa-print"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

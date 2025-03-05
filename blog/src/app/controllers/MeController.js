@@ -137,6 +137,23 @@ class MeController {
       }
     }
 
+    // [GET] /admin/report
+    async report(req, res, next) {
+      try {
+        const deletedData = await getDeletedData([Product, Stored, Client]);
+
+        res.render("me/admin/report.hbs", {
+          isAuthPage: true,
+          deletedCount:
+            deletedData.Product.deletedCount +
+            deletedData.Stored.deletedCount +
+            deletedData.Client.deletedCount,
+        });
+      } catch (error) {
+        next(error);
+      }
+    }
+
     // [GET] /admin/trash
     async trash(req, res, next) {
       try {

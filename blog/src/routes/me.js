@@ -15,6 +15,7 @@ router.get('/admin/create', meController.create);
 router.get('/admin/stored', meController.stored);
 router.get('/admin/shipping', meController.shipping);
 router.get('/admin/bill', meController.bill);
+router.get('/admin/report', meController.report);
 router.get('/admin/trash', meController.trash);
 
     // admin (data)
