@@ -34,7 +34,7 @@ app.engine('hbs', engine({
         // Helper định dạng giá thành 1.000.000
         formatCurrency: (number) => number.toLocaleString('vi-VN'),
 
-        // Helper hiển thị đánh giá 1700 -> 1.7k
+        // Helper hiển thị đánh giá 1000 -> 1k
         formatNumber: (number) => {
             if (number >= 1000) {
                 return (number / 1000).toFixed(1) + 'k';

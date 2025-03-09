@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* Header / Navigation */
 .header {
-  height: 124px;
+  height: 130px;
   background: linear-gradient(to top, #1f4361, #6c5b7b, #c06c84);
   position: fixed;
   top: 0;
@@ -12,7 +12,7 @@
 }
 
 .header-me {
-  height: 128px;
+  height: 138px;
   background: linear-gradient(to top, #1f4361, #6c5b7b, #c06c84);
   position: fixed;
   top: 0;
@@ -323,7 +323,7 @@
   justify-content: center;
   align-items: center;
   gap: 32px;
-  margin-top: 2px;
+  margin-top: 8px;
 }
 
 .media-form__logo-link:hover {
@@ -552,7 +552,7 @@
 }
 
 .slider__content {
-  padding-top: 24px;
+  padding-top: 30px;
 }
 
 .slider__content .row {
@@ -1185,7 +1185,7 @@
   background-color: var(--white-color);
   border-bottom: 6px solid var(--main-color);
   position: sticky;
-  top: 120px;
+  top: 124px;
   z-index: 3;
 }
 
@@ -1497,13 +1497,14 @@
 .modal__auth-or-but {
   width: 48%;
   font-size: 1.4rem;
-  padding: 7px;
+  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--white-color);
-  border: 1px solid #bdbdbd;
+  border: 1px solid var(--text-color);
   border-radius: 2px;
+  gap: 6px;
 }
 
 .modal__auth-or-but:hover {
@@ -1513,11 +1514,11 @@
 
 .modal__auth-or-but-img {
   width: 21px;
-  margin-right: 6px;
 }
 
 .modal__auth-or-but-text {
   margin: 0;
+  padding-top: 2px;
 }
 
 .modal__auth-rule-text {
@@ -1803,8 +1804,20 @@
   color: #302881;
 }
 
+.option__log .form-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.option__log .form-check label {
+  padding-top: 5px;
+}
+
 .option__log > a {
   text-decoration: none;
+  padding-top: 5px;
 }
 
 .btn__log,

@@ -379,7 +379,7 @@ class MeController {
     Product.find({})
       .then((products) => {
         res.render("me/me.hbs", {
-          isAuthPage: true,
+          isFooterOnlyPage: true,
           products: mongooseUtil.multipleMongooseToObj(products),
         });
       })
