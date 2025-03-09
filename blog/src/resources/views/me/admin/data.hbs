@@ -90,10 +90,26 @@
                     </li>
                 </div>
 
-                <div class="container__admin-data">
+                <form class="container__admin-data" method="POST" action="/me/admin/form-action-data">
+                    <div class="checkbox__all">
+                        <div class="checkbox__all-option">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+                                <label class="form-check-label" for="checkbox-all">
+                                    Chọn tất cả
+                                </label>
+                            </div>
+                            <button class="btn btn-danger btn-sm btn-checkAll-delete disabled">Xoá</button>
+                        </div>
+                        <button type="button" class="btn btn-outline-danger checkbox__all-close">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
                     <table class="table">
                         <thead> 
                             <tr>
+                                <th scope="col" class="input__check"></th>
                                 <th scope="col">#</th>
                                 <th scope="col">Sản phẩm</th>
                                 <th scope="col">Đơn giá</th>
@@ -104,6 +120,11 @@
                         <tbody>
                             {{#each products}}
                             <tr>
+                                <td class="input__check">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="productIds[]" value="{{this._id}}">
+                                    </div>
+                                </td>
                                 <th scope="row">{{sum @index 1}}</th>
                                 <td>{{this.name}}</td>
                                 <td>{{formatCurrency this.price}}₫</td>
@@ -139,7 +160,13 @@
                                                     data-bs-created="{{this.createdAt}}">
                                                 <i class="fa-solid fa-list"></i> Chi tiết
                                             </button>
-                                        </li>   
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-primary btn-option-box">
+                                                Tuỳ chọn
+                                            </button>
+                                        </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -153,7 +180,7 @@
                             {{/each}}
                         </tbody>
                     </table>
-                </div>
+                </form>
 
                 {{!-- Modal Detail --}}
                 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
@@ -205,10 +232,18 @@
                 <script>
 
                     document.addEventListener('DOMContentLoaded', function () {
+                        let productId;
+                        
                         const deleteModal = document.getElementById('deleteProductModal');
                         const confirmDeleteBtn = document.getElementById('confirmDelete');
                         const deleteForm = document.forms['deleteForm'];
-                        let productId;
+                        const checkboxAll = jQuery('#checkbox-all');
+                        const productItemCheckbox = jQuery('input[name="productIds[]"]');
+                        const checkAllDeleteBtn = jQuery('.btn-checkAll-delete');
+                        const btnOpenOptionBox = jQuery('.btn-option-box');
+                        const inputCheck = jQuery('.input__check');
+                        const checkBoxOption = jQuery('.checkbox__all');
+                        const checkBoxOptionClose = jQuery('.checkbox__all-close');
                         
                         const detailProductName = document.getElementById("detailProductName");
                         const detailProductPrice = document.getElementById("detailProductPrice");
@@ -251,8 +286,43 @@
                                 deleteForm.submit();
                             });
                         };
-                    });
 
+                        {{!-- Open/Close Option Checkbox --}}
+                        btnOpenOptionBox.click(function() {
+                            inputCheck.css('display', 'table-cell');
+                            checkBoxOption.css('display', 'flex');
+                        })
+
+                        checkBoxOptionClose.click(function() {
+                            inputCheck.css('display', 'none');
+                            checkBoxOption.css('display', 'none');
+                        })
+                        
+                        {{!-- Check all checkbox --}}
+                        //CheckboxAll Changed
+                        checkboxAll.change(function() {
+                            var isCheckedAll = jQuery(this).prop('checked');
+                            productItemCheckbox.prop('checked', isCheckedAll);
+                            renderCheckAllSubmitBtn();
+                        });
+
+                        //Course Item Checkbox Changed
+                        productItemCheckbox.change(function() {
+                            const isCheckedAll = productItemCheckbox.length === productItemCheckbox.filter(':checked').length;
+                            checkboxAll.prop('checked', isCheckedAll)
+                            renderCheckAllSubmitBtn();
+                        });
+
+                        // Re-render Check All Submit Button
+                        function renderCheckAllSubmitBtn() {
+                            const checkedProduct = productItemCheckbox.filter(':checked').length;
+                            if (checkedProduct > 0) {
+                                checkAllDeleteBtn.removeClass('disabled');
+                            } else {
+                                checkAllDeleteBtn.addClass('disabled');
+                            }
+                        }
+                    });
                 </script>
 
             </div>

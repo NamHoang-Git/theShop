@@ -19,6 +19,7 @@ router.get('/admin/report', meController.report);
 router.get('/admin/trash', meController.trash);
 
     // admin (data)
+    router.post('/admin/form-action-data', meController.formActionData);
     router.post('/admin/store', meController.store);
     router.put('/admin/:id', meController.update);
     router.delete('/admin/:id', meController.delete);

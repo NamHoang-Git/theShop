@@ -23,23 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let hideTimeout;
 
-    // Hiển thị dropdown khi focus vào input
-    searchInput.addEventListener("focus", function () {
-        dropdown.style.display = "block";
-    });
-
-    // Ngăn dropdown bị ẩn ngay khi click vào link bên trong nó
-    dropdown.addEventListener("mousedown", function (event) {
-        event.preventDefault(); // Ngăn mất focus
-    });
-
-    // Ẩn dropdown khi click ra ngoài
-    document.addEventListener("click", function (event) {
-        if (!searchInput.contains(event.target) && !dropdown.contains(event.target)) {
-            dropdown.style.display = "none";
-        }
-    });
-
     const app = {
         navListClick: function() {
             // NavList 

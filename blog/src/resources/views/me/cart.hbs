@@ -50,7 +50,7 @@
                     <tr>
                         <td>
                             <div class="cart__product">
-                                <input type="checkbox" class="cart__check-input" name="" id="">
+                                <input type="checkbox" class="cart__check-input" name="cartIds[]">
                                 <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
                                 <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
                                 <div class="dropdown option">
@@ -91,7 +91,52 @@
                                 </button>
                             </div>
                         </td>
-                    </tr>                    
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart__product">
+                                <input type="checkbox" class="cart__check-input" name="cartIds[]">
+                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
+                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                <div class="dropdown option">
+                                    <button class="btn" type="button">
+                                        Loại sản phẩm <i class="fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <select class="form-control">
+                                        <option>Titan Sa Mạc</option>
+                                        <option>Titan Sa Mạc 2</option>
+                                        <option>Titan Sa Mạc 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                        <td>3.490.000₫</td>
+                        <td>
+                            <div class="cart__product-quantity">
+                                <button class="border">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+
+                                <input class="border" type="text" value="1" />
+
+                                <button class="border">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>3.490.000₫</td>
+                        <td class="operation">
+                            <div class="cart__product-operation">
+                                <button class="operation__close-btn">
+                                    Xoá
+                                </button>
+                                <button class="similar-product">
+                                    <p>Tìm sản phẩm tương tự</p>
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>                  
                 </tbody>
             </table>
 
@@ -101,7 +146,7 @@
                         <input type="checkbox" class="cart__check-input" name="" id="cart_option-check">
                         <label for="cart_option-check">Chọn tất cả</label>
                     </div>
-                    <button type="button" class="btn">Xoá</button>
+                    <button type="button" class="btn btn-checkAll-delete">Xoá</button>
                 </div>
 
                 <div class="cart__submit">
@@ -114,3 +159,39 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cartOptionCheck = jQuery('#cart_option-check');
+        const cartItemCheckbox = jQuery('input[name="cartIds[]"]');
+        const checkAllDeleteBtn = jQuery('.btn-checkAll-delete');
+        const cartSubmit = jQuery('.container__cart-footer .cart__submit');
+
+        {{!-- Check all checkbox --}}
+        //CheckboxAll Changed
+        cartOptionCheck.change(function() {
+            var isCheckedAll = jQuery(this).prop('checked');
+            cartItemCheckbox.prop('checked', isCheckedAll);
+            renderCheckAllSubmitBtn();
+        });
+
+        //Course Item Checkbox Changed
+        cartItemCheckbox.change(function() {
+            const isCheckedAll = cartItemCheckbox.length === cartItemCheckbox.filter(':checked').length;
+            cartOptionCheck.prop('checked', isCheckedAll)
+            renderCheckAllSubmitBtn();
+        });
+
+        // Re-render Check All Submit Button
+        function renderCheckAllSubmitBtn() {
+            const checkedProduct = cartItemCheckbox.filter(':checked').length;
+            if (checkedProduct > 0) {
+                checkAllDeleteBtn.css('display', 'block');
+                cartSubmit.css('display', 'flex');
+            } else {
+                checkAllDeleteBtn.css('display', 'none');
+                cartSubmit.css('display', 'none');
+            }
+        }
+    });
+</script>
