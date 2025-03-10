@@ -35,9 +35,31 @@ class ProductController {
             }
 
             await cart.save();
-
-            // Redirect về trang sản phẩm hiện tại để render lại giỏ hàng
             res.redirect(`/products/${slug}`);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // [DELETE] /cart/remove/:productId
+    async removeFromCart(req, res, next) {
+        try {
+            const productId = req.params.productId;
+            const cartId = req.cookies.cartId;
+    
+            if (!cartId) {
+                return res.redirect(req.get('referrer') || '/');
+            }
+    
+            const cart = await Cart.findOne({ cartId });
+            if (!cart) {
+                return res.redirect(req.get('referrer') || '/');
+            }
+    
+            cart.items = cart.items.filter(item => item.productId.toString() !== productId);
+            await cart.save();
+    
+            res.redirect(req.get('referrer') || '/');
         } catch (error) {
             next(error);
         }
@@ -70,7 +92,7 @@ class ProductController {
             res.render("products/show.hbs", {
                 isAuthPage: true,
                 product: mongooseObj.mongooseToObj(product),
-                products: cartItems // Dữ liệu cho Handlebars
+                products: cartItems
             });
         } catch (error) {
             next(error);

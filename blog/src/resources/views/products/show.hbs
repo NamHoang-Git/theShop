@@ -181,35 +181,34 @@
             </div>
             <!-- Shopping Cart -->
             <div class="media-form__shopping-cart">
-                <a href="/me/cart" for="modal__log-checkbox"><i class="shopping-cart-but fa-solid fa-cart-shopping"></i></a>
-                <div class="header__shopping-cart header_arrow-shopping-cart">
-                    <div class="header__shopping-cart-content">
+               <a href="/me/cart" for="modal__log-checkbox"><i class="shopping-cart-but fa-solid fa-cart-shopping"></i></a>
+               <div class="header__shopping-cart header_arrow-shopping-cart">
+                  <div class="header__shopping-cart-content">
                         <h3>Sản phẩm trong giỏ hàng</h3>
                         <ul class="shopping-cart__content-items">
-                            {{#each products}}
-                            <li>
-                                <a href="/products/{{this.slug}}">
+                           {{#each products}}
+                           <li>
+                              <a href="/products/{{this.slug}}">
                                     <div class="shopping-cart__content-item-info">
-                                        <img src="/{{this.image}}" alt="">
-                                        <p>{{this.name}}</p>
+                                       <img src="/{{this.image}}" alt="">
+                                       <p>{{this.name}} <span class="quantity">{{this.quantity}}</span></p>
                                     </div>
                                     <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}</span>
-                                </a>
-                            </li>
-                            {{else}}
-                                <div class="header__shopping-cart-content__empty">
+                              </a>
+                              {{!-- <button class="remove-item" data-product-id="{{this.productId}}">Xóa</button> --}}
+                           </li>
+                           {{else}}
+                              <div class="header__shopping-cart-content__empty">
                                     <img src="/img/no-cart.png" alt="" class="header__shopping-cart-img">
                                     <p class="header__shopping-cart-text">Chưa Có Sản Phẩm</p>
-                                </div>
-                            {{/each}}
+                              </div>
+                           {{/each}}
                         </ul>
                         <div class="shopping-cart__content-btn">
-                            <a href="/me/cart">
-                                Xem giỏ hàng
-                            </a>
+                           <a href="/me/cart">Xem giỏ hàng</a>
                         </div>
-                    </div>
-                </div>
+                  </div>
+               </div>
             </div>
             <!---->
         </div>
@@ -795,6 +794,7 @@
       const addToListModal = document.getElementById('addToListModal');
       const confirmAddToListBtn = document.getElementById('confirmAddToList');
 
+      // Logic thêm sản phẩm
       if (addToListModal && confirmAddToListBtn) {
          addToListModal.addEventListener('show.bs.modal', function (event) {
                const button = event.relatedTarget;
@@ -813,18 +813,34 @@
                   return;
                }
 
-               // Gửi yêu cầu POST và để server redirect
                fetch(`/products/${slug}/${productId}`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                })
                .then(response => {
                   if (response.redirected) {
-                     window.location.href = response.url; // Tải lại trang theo URL redirect
+                     window.location.href = response.url;
                   }
                })
                .catch(error => console.error('Error:', error));
          });
       }
+
+      // Logic xóa sản phẩm
+      document.querySelectorAll('.remove-item').forEach(button => {
+         button.addEventListener('click', function () {
+            const productId = this.getAttribute('data-product-id');
+            fetch(`/products/remove/${productId}`, {
+                  method: 'DELETE',
+                  headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => {
+                  if (response.redirected) {
+                     window.location.href = response.url; // Reload trang sau khi xóa
+                  }
+            })
+            .catch(error => console.error('Error:', error));
+         });
+      });
    });
 </script>
