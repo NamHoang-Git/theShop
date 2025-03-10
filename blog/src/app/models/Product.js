@@ -16,6 +16,7 @@ const Product = new Schema({
     stock: { type: Number, default: 0 },
     inventory: { type: Number, default: 0 },
     imageURL: { type: String, required: true },
+    productType: { type: [String], required: true },
     slug: { type: String, slug: 'name', unique: true },
 }, { timestamps: true, },);
 
