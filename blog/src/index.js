@@ -8,6 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import route from './routes/index.js'; // Import route từ thư mục routes
 import db from './config/db/index.js';
 import methodOverride from 'method-override';
+import cookieParser from 'cookie-parser';
 
 // Connect to DB
 db.connect();
@@ -15,6 +16,7 @@ db.connect();
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
 // Middleware để xử lý dữ liệu từ form
 app.use(express.urlencoded({

@@ -187,7 +187,7 @@ class MeController {
       .catch(next);
   }
 
-  // [POST] /admin/store
+  // [POST] /admin/store(create)
   store(req, res, next) {
     req.body.image = `img/Products/${req.body.imageURL}`;
     const product = new Product(req.body);
