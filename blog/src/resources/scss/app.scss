@@ -512,7 +512,7 @@
 .header__shopping-cart-content .shopping-cart__content-items {
   padding: 0;
   margin: 0;
-  max-height: 320px;
+  max-height: 352px;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -539,6 +539,7 @@
 
 .shopping-cart__content-items > li:hover {
   opacity: 0.8;
+  box-shadow: 0 1px 2px 1px var(--highlight);
 }
 
 .header__shopping-cart-content .shopping-cart__content-items a {

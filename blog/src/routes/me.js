@@ -49,6 +49,8 @@ router.get('/admin/trash', meController.trash);
 
 router.get('/cart', meController.cart);
 router.get('/pay', meController.pay);
+router.patch('/cart/update-quantity/:productId', meController.updateQuantity);
+router.delete('/cart/remove/:productId', meController.removeFromCart);
 router.get('/', meController.index);
 
 export default router;

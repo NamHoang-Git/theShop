@@ -187,21 +187,23 @@
                     <div class="header__shopping-cart-content">
                         <h3>Sản phẩm trong giỏ hàng</h3>
                         <ul class="shopping-cart__content-items">
-                            {{#each products}}
+                            {{#each cartItems}} <!-- Dùng cartItems từ res.locals -->
                             <li>
                                 <a href="/products/{{this.slug}}">
                                     <div class="shopping-cart__content-item-info">
                                         <img src="/{{this.image}}" alt="">
                                         <p>{{this.name}}</p>
+                                        {{!-- <span class="quantity">{{this.quantity}}</span> --}}
                                     </div>
-                                    <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}</span>
+                                    <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}₫</span>
                                 </a>
+                                {{!-- <button class="remove-item" data-product-id="{{this.productId}}">Xóa</button> --}}
                             </li>
                             {{else}}
-                                <div class="header__shopping-cart-content__empty">
-                                    <img src="/img/no-cart.png" alt="" class="header__shopping-cart-img">
-                                    <p class="header__shopping-cart-text">Chưa Có Sản Phẩm</p>
-                                </div>
+                            <div class="header__shopping-cart-content__empty">
+                                <img src="/img/no-cart.png" alt="" class="header__shopping-cart-img">
+                                <p class="header__shopping-cart-text">Chưa Có Sản Phẩm</p>
+                            </div>
                             {{/each}}
                         </ul>
                         <div class="shopping-cart__content-btn">
@@ -863,10 +865,9 @@
             <div class="suggest-day__header">
                 <a href="javascript:void(0)" class="suggest-day__header-text">GỢI Ý HÔM NAY</a>
             </div>
-
             <div class="suggest-day__body">
                 <div id="products-container" class="row no-gutters">
-                    {{#each products}}
+                    {{#each products}} <!-- Dùng products từ MeController -->
                     <div class="col l-2 suggest-day__body-content-item">
                         <a href="/products/{{this.slug}}" class="suggest-day__body-link">
                             <img src="{{this.image}}" alt="{{this.name}}" class="suggest-day__body-link-img">
@@ -890,9 +891,7 @@
                     </div>
                     {{/each}}
                 </div>
-
             </div>
-
         </div>
     </div>
 
@@ -905,3 +904,35 @@
     <img src="https://cdn-icons-png.flaticon.com/512/4616/4616271.png" alt="">
     <span>Chat Live</span>
 </div>
+
+<script>
+    // public/js/main.js
+    document.addEventListener('DOMContentLoaded', function () {
+        // Xử lý xóa sản phẩm khỏi giỏ hàng
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+                if (!productId) return;
+
+                fetch(`/me/cart/remove/${productId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        // Reload trang để cập nhật giao diện
+                        window.location.href = response.url;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && data.message) {
+                        console.error('Error:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>

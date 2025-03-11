@@ -9,6 +9,7 @@ import route from './routes/index.js'; // Import route từ thư mục routes
 import db from './config/db/index.js';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
+import { loadCart } from './middleware/cart.js'; // Import middleware
 
 // Connect to DB
 db.connect();
@@ -17,6 +18,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
+app.use(loadCart); // Áp dụng middleware cho mọi request
 
 // Middleware để xử lý dữ liệu từ form
 app.use(express.urlencoded({
@@ -32,6 +34,7 @@ app.engine('hbs', engine({
     extname: '.hbs',
     helpers: {
         sum: (a, b) => a + b,
+        multiply: (a, b) => a * b,
 
         // Helper định dạng giá thành 1.000.000
         formatCurrency: (number) => number.toLocaleString('vi-VN'),

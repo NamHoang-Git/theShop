@@ -191,9 +191,10 @@
                               <a href="/products/{{this.slug}}">
                                     <div class="shopping-cart__content-item-info">
                                        <img src="/{{this.image}}" alt="">
-                                       <p>{{this.name}} <span class="quantity">{{this.quantity}}</span></p>
+                                       <p>{{this.name}}</p>
+                                       {{!-- <span class="quantity">{{this.quantity}}</span> --}}
                                     </div>
-                                    <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}</span>
+                                    <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}₫</span>
                               </a>
                               {{!-- <button class="remove-item" data-product-id="{{this.productId}}">Xóa</button> --}}
                            </li>

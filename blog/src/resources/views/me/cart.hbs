@@ -47,42 +47,45 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each cartItems}}
                     <tr>
                         <td>
                             <div class="cart__product">
-                                <input type="checkbox" class="cart__check-input" name="cartIds[]">
-                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
-                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                <div class="cart__product-info">
+                                    <input type="checkbox" class="cart__check-input" name="cartIds[]" data-price="{{this.price}}" data-quantity="{{this.quantity}}">
+                                    <img src="/{{this.image}}" alt="">
+                                    <p>{{this.name}}</p>
+                                </div>
+                                {{#if this.productType.length}}
                                 <div class="dropdown option">
                                     <button class="btn" type="button">
                                         Loại sản phẩm <i class="fa-solid fa-caret-down"></i>
                                     </button>
                                     <select class="form-control">
-                                        <option>Titan Sa Mạc</option>
-                                        <option>Titan Sa Mạc 2</option>
-                                        <option>Titan Sa Mạc 3</option>
+                                        {{#each this.productType}}
+                                        <option>{{this}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
+                                {{/if}}
                             </div>
                         </td>
-                        <td>3.490.000₫</td>
+                        <td>{{formatCurrency this.price}}₫</td>
                         <td>
                             <div class="cart__product-quantity">
-                                <button class="border">
+                                <button class="border decrease-btn" data-product-id="{{this.productId}}">
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
-
-                                <input class="border" type="text" value="1" />
-
-                                <button class="border">
+                                <input class="border quantity-input" type="text" value="{{this.quantity}}" data-product-id="{{this.productId}}" />
+                                <button class="border increase-btn" data-product-id="{{this.productId}}">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
                         </td>
-                        <td>3.490.000₫</td>
+                        <td class="total-per-item">{{formatCurrency (multiply this.price this.quantity)}}₫</td>
                         <td class="operation">
                             <div class="cart__product-operation">
-                                <button class="operation__close-btn">
+                                <button class="operation__close-btn" data-product-id="{{this.productId}}">
                                     Xoá
                                 </button>
                                 <button class="similar-product">
@@ -92,67 +95,23 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="cart__product">
-                                <input type="checkbox" class="cart__check-input" name="cartIds[]">
-                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
-                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
-                                <div class="dropdown option">
-                                    <button class="btn" type="button">
-                                        Loại sản phẩm <i class="fa-solid fa-caret-down"></i>
-                                    </button>
-                                    <select class="form-control">
-                                        <option>Titan Sa Mạc</option>
-                                        <option>Titan Sa Mạc 2</option>
-                                        <option>Titan Sa Mạc 3</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </td>
-                        <td>3.490.000₫</td>
-                        <td>
-                            <div class="cart__product-quantity">
-                                <button class="border">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-
-                                <input class="border" type="text" value="1" />
-
-                                <button class="border">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <td>3.490.000₫</td>
-                        <td class="operation">
-                            <div class="cart__product-operation">
-                                <button class="operation__close-btn">
-                                    Xoá
-                                </button>
-                                <button class="similar-product">
-                                    <p>Tìm sản phẩm tương tự</p>
-                                    <i class="fa-solid fa-caret-down"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>                  
+                    {{/each}}
                 </tbody>
             </table>
 
             <div class="container__cart-footer">
                 <div class="select__option">
                     <div class="option">
-                        <input type="checkbox" class="cart__check-input" name="" id="cart_option-check">
-                        <label for="cart_option-check">Chọn tất cả</label>
+                        <input type="checkbox" id="select-all" class="cart__check-input">
+                        <label for="select-all">Chọn tất cả</label>
                     </div>
                     <button type="button" class="btn btn-checkAll-delete">Xoá</button>
                 </div>
 
                 <div class="cart__submit">
-                    <p>Tổng thanh toán (3 sản phẩm):  4.288.000đ</p>
+                    <p>Tổng thanh toán (<span id="selected-count">0</span> sản phẩm): <span id="total-amount">0₫</span></p>
                     <a href="/me/pay">
-                        <button type="button" class="btn">Đặt hàng</button>
+                        <button type="button" class="btn checkout-btn">Đặt hàng</button>
                     </a>
                 </div>
             </div>
@@ -160,27 +119,51 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const cartOptionCheck = jQuery('#cart_option-check');
+    jQuery(document).ready(function () {
+        const cartOptionCheck = jQuery('#select-all');
         const cartItemCheckbox = jQuery('input[name="cartIds[]"]');
         const checkAllDeleteBtn = jQuery('.btn-checkAll-delete');
         const cartSubmit = jQuery('.container__cart-footer .cart__submit');
 
-        {{!-- Check all checkbox --}}
-        //CheckboxAll Changed
-        cartOptionCheck.change(function() {
-            var isCheckedAll = jQuery(this).prop('checked');
-            cartItemCheckbox.prop('checked', isCheckedAll);
-            renderCheckAllSubmitBtn();
-        });
+        // Hàm định dạng tiền tệ
+        function formatCurrency(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '₫';
+        }
 
-        //Course Item Checkbox Changed
-        cartItemCheckbox.change(function() {
-            const isCheckedAll = cartItemCheckbox.length === cartItemCheckbox.filter(':checked').length;
-            cartOptionCheck.prop('checked', isCheckedAll)
+        // Hàm cập nhật số tiền cho từng sản phẩm
+        function updateTotalPerItem(productId, quantity) {
+            const row = jQuery(`input[data-product-id="${productId}"]`).closest('tr');
+            if (row.length) {
+                const checkbox = row.find('.cart__check-input');
+                const price = parseInt(checkbox.data('price')) || 0;
+                const totalElement = row.find('.total-per-item');
+                if (totalElement.length) {
+                    const newTotal = price * quantity;
+                    totalElement.text(formatCurrency(newTotal));
+                    checkbox.data('quantity', quantity); // Cập nhật data-quantity
+                }
+            }
+        }
+
+        // Hàm tính tổng và số lượng sản phẩm được chọn
+        function updateSummary() {
+            const checkedItems = cartItemCheckbox.filter(':checked');
+            const totalCount = checkedItems.length; // Chỉ đếm checkbox sản phẩm
+            let totalAmount = 0;
+
+            checkedItems.each(function () {
+                const row = jQuery(this).closest('tr');
+                const price = parseInt(jQuery(this).data('price')) || 0;
+                const quantity = parseInt(jQuery(this).data('quantity')) || 1;
+                totalAmount += price * quantity;
+            });
+
+            jQuery('#selected-count').text(totalCount);
+            jQuery('#total-amount').text(formatCurrency(totalAmount));
             renderCheckAllSubmitBtn();
-        });
+        }
 
         // Re-render Check All Submit Button
         function renderCheckAllSubmitBtn() {
@@ -193,5 +176,154 @@
                 cartSubmit.css('display', 'none');
             }
         }
+
+        // Checkbox "Chọn tất cả" Changed
+        cartOptionCheck.change(function () {
+            const isCheckedAll = jQuery(this).prop('checked');
+            cartItemCheckbox.prop('checked', isCheckedAll);
+            updateSummary();
+        });
+
+        // Course Item Checkbox Changed
+        cartItemCheckbox.change(function () {
+            const isCheckedAll = cartItemCheckbox.length === cartItemCheckbox.filter(':checked').length;
+            cartOptionCheck.prop('checked', isCheckedAll);
+            updateSummary();
+        });
+
+        // Xử lý tăng/giảm số lượng
+        jQuery('.increase-btn, .decrease-btn').on('click', function () {
+            const productId = jQuery(this).data('product-id');
+            const quantityInput = jQuery(`.quantity-input[data-product-id="${productId}"]`);
+            let quantity = parseInt(quantityInput.val()) || 1;
+
+            if (jQuery(this).hasClass('increase-btn')) {
+                quantity += 1;
+            } else if (jQuery(this).hasClass('decrease-btn') && quantity > 1) {
+                quantity -= 1;
+            }
+
+            // Gửi yêu cầu cập nhật số lượng lên server
+            jQuery.ajax({
+                url: `/me/cart/update-quantity/${productId}`,
+                method: 'PATCH',
+                contentType: 'application/json',
+                data: JSON.stringify({ quantity }),
+                success: function (data) {
+                    if (data.success) {
+                        quantityInput.val(quantity);
+                        updateTotalPerItem(productId, quantity);
+                        updateSummary();
+                    } else {
+                        console.error('Cập nhật số lượng thất bại:', data.message);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // Xử lý nhập số lượng trực tiếp
+        jQuery('.quantity-input').on('change', function () {
+            const productId = jQuery(this).data('product-id');
+            let quantity = parseInt(jQuery(this).val()) || 1;
+            if (quantity < 1) quantity = 1;
+            jQuery(this).val(quantity);
+
+            // Gửi yêu cầu cập nhật số lượng lên server
+            jQuery.ajax({
+                url: `/me/cart/update-quantity/${productId}`,
+                method: 'PATCH',
+                contentType: 'application/json',
+                data: JSON.stringify({ quantity }),
+                success: function (data) {
+                    if (data.success) {
+                        updateTotalPerItem(productId, quantity);
+                        updateSummary();
+                    } else {
+                        console.error('Cập nhật số lượng thất bại:', data.message);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // Xử lý xóa một sản phẩm
+        document.querySelectorAll('.operation__close-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+                fetch(`/me/cart/remove/${productId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        console.log('Redirected to:', response.url);
+                        window.location.href = response.url; // Reload trang theo redirect
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && data.success) {
+                        console.log('Xóa sản phẩm thành công:', productId);
+                        window.location.reload(); // Reload trang nếu không redirect
+                    } else if (data) {
+                        console.error('Xóa sản phẩm thất bại:', data.message);
+                        alert('Không thể xóa sản phẩm. Vui lòng thử lại.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi xóa sản phẩm:', error);
+                    alert('Có lỗi xảy ra khi xóa sản phẩm. Vui lòng thử lại.');
+                });
+            });
+        });
+
+        // Xử lý xóa nhiều sản phẩm
+        document.querySelectorAll('.btn-checkAll-delete').forEach(button => {
+            button.addEventListener('click', function () {
+                const productIds = Array.from(cartItemCheckbox.filter(':checked')).map(checkbox => {
+                    return jQuery(checkbox).closest('tr').find('.operation__close-btn').data('product-id');
+                });
+
+                if (productIds.length > 0) {
+                    fetch('/me/cart/remove-multiple', {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ productIds })
+                    })
+                    .then(response => {
+                        if (response.redirected) {
+                            console.log('Redirected to:', response.url);
+                            window.location.href = response.url; // Reload trang theo redirect
+                        } else {
+                            return response.json();
+                        }
+                    })
+                    .then(data => {
+                        if (data && data.success) {
+                            console.log('Xóa nhiều sản phẩm thành công:', productIds);
+                            window.location.reload(); // Reload trang nếu không redirect
+                        } else if (data) {
+                            console.error('Xóa nhiều sản phẩm thất bại:', data.message);
+                            alert('Không thể xóa các sản phẩm. Vui lòng thử lại.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa nhiều sản phẩm:', error);
+                        alert('Có lỗi xảy ra khi xóa các sản phẩm. Vui lòng thử lại.');
+                    });
+                } else {
+                    alert('Vui lòng chọn ít nhất một sản phẩm để xóa.');
+                }
+            });
+        });
+
+        // Khởi tạo lần đầu
+        updateSummary();
     });
 </script>

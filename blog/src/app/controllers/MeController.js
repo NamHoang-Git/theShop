@@ -1,6 +1,7 @@
 import Product from "../models/Product.js";
 import Stored from "../models/Stored.js";
 import Client from "../models/Client.js";
+import Cart from "../models/Cart.js";
 import mongooseUtil from "../../util/mongoose.js";
 import mongooseObj from "../../util/mongoose.js";
 import { getDeletedData } from "../../util/databaseHelper.js";
@@ -205,13 +206,24 @@ class MeController {
   }
 
   // [DELETE] /admin/:id
-  delete(req, res, next) {
-    Product.delete({ _id: req.params.id })
-      .then(() => {
+  async delete(req, res, next) {
+    try {
+        const productId = req.params.id;
+
+        // Xóa sản phẩm trong Product
+        await Product.delete({ _id: productId });
+
+        // Xóa tham chiếu đến productId trong tất cả Cart
+        await Cart.updateMany(
+            { 'items.productId': productId },
+            { $pull: { items: { productId } } }
+        );
+
         const redirectUrl = req.get("Referrer") || "/me/admin/data";
         res.redirect(redirectUrl);
-      })
-      .catch(next);
+    } catch (error) {
+        next(error);
+    }
   }
 
   // [DELETE] /admin/force/:id
@@ -386,16 +398,86 @@ class MeController {
     res.render("me/pay.hbs", { isFooterOnlyPage: true });
   }
 
-  // [GET] / (HOME)
-  index(req, res, next) {
-    Product.find({})
-      .then((products) => {
+  // [PATCH] /me/cart/update-quantity/:productId
+  async updateQuantity(req, res, next) {
+    try {
+        const cartId = req.cookies.cartId;
+        const productId = req.params.productId;
+        const { quantity } = req.body;
+
+        if (!cartId || !productId || !quantity) {
+            return res.status(400).json({ message: 'Thiếu thông tin cần thiết' });
+        }
+
+        const cart = await Cart.findOneAndUpdate(
+            { cartId, 'items.productId': productId },
+            { $set: { 'items.$.quantity': quantity } },
+            { new: true }
+        ).populate('items.productId');
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Không tìm thấy giỏ hàng' });
+        }
+
+        const updatedCartItems = cart.items.map(item => ({
+            productId: item.productId._id,
+            name: item.productId.name,
+            price: item.productId.price,
+            image: item.productId.image,
+            slug: item.productId.slug,
+            quantity: item.quantity,
+            productType: item.productId.productType || []
+        }));
+
+        res.json({ success: true, cartItems: updatedCartItems });
+    } catch (error) {
+        next(error);
+    }
+  }
+
+  // [DELETE] /me/cart/remove/:productId
+  async removeFromCart(req, res, next) {
+    try {
+        const cartId = req.cookies.cartId;
+        const productId = req.params.productId;
+
+        if (!cartId || !productId) {
+            return res.status(400).json({ message: 'Thiếu cartId hoặc productId' });
+        }
+
+        // Tìm và cập nhật giỏ hàng: xóa sản phẩm có productId khỏi mảng items
+        const cart = await Cart.findOneAndUpdate(
+            { cartId },
+            { $pull: { items: { productId } } },
+            { new: true }
+        );
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Không tìm thấy giỏ hàng' });
+        }
+
+        // Redirect về trang hiện tại hoặc /me
+        const redirectUrl = req.get('Referrer') || '/me';
+        res.redirect(redirectUrl);
+    } catch (error) {
+        next(error);
+    }
+  }
+
+  // [GET] /
+  async index(req, res, next) {
+    try {
+        // Lấy tất cả sản phẩm từ Product cho body
+        const products = await Product.find({});
+
         res.render("me/me.hbs", {
-          isFooterOnlyPage: true,
-          products: mongooseUtil.multipleMongooseToObj(products),
+            isFooterOnlyPage: true,
+            products: mongooseUtil.multipleMongooseToObj(products) // Truyền products cho body
+            // cartItems được cung cấp bởi middleware loadCart qua res.locals
         });
-      })
-      .catch(next);
+    } catch (error) {
+        next(error);
+    }
   }
 }
 
