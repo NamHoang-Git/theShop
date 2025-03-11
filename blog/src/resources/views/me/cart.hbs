@@ -52,7 +52,12 @@
                         <td>
                             <div class="cart__product">
                                 <div class="cart__product-info">
-                                    <input type="checkbox" class="cart__check-input" name="cartIds[]" data-price="{{this.price}}" data-quantity="{{this.quantity}}">
+                                    <input type="checkbox" class="cart__check-input" name="cartIds[]"
+                                        data-product-id="{{this.productId}}"
+                                        data-price="{{this.price}}"
+                                        data-quantity="{{this.quantity}}"
+                                        data-name="{{this.name}}"
+                                        data-image="{{this.image}}">
                                     <img src="/{{this.image}}" alt="">
                                     <p>{{this.name}}</p>
                                 </div>
@@ -126,6 +131,7 @@
         const cartItemCheckbox = jQuery('input[name="cartIds[]"]');
         const checkAllDeleteBtn = jQuery('.btn-checkAll-delete');
         const cartSubmit = jQuery('.container__cart-footer .cart__submit');
+        const checkoutBtn = jQuery('.checkout-btn');
 
         // Hàm định dạng tiền tệ
         function formatCurrency(price) {
@@ -262,7 +268,7 @@
                 .then(response => {
                     if (response.redirected) {
                         console.log('Redirected to:', response.url);
-                        window.location.href = response.url; // Reload trang theo redirect
+                        window.location.href = response.url;
                     } else {
                         return response.json();
                     }
@@ -270,7 +276,7 @@
                 .then(data => {
                     if (data && data.success) {
                         console.log('Xóa sản phẩm thành công:', productId);
-                        window.location.reload(); // Reload trang nếu không redirect
+                        window.location.reload();
                     } else if (data) {
                         console.error('Xóa sản phẩm thất bại:', data.message);
                         alert('Không thể xóa sản phẩm. Vui lòng thử lại.');
@@ -299,7 +305,7 @@
                     .then(response => {
                         if (response.redirected) {
                             console.log('Redirected to:', response.url);
-                            window.location.href = response.url; // Reload trang theo redirect
+                            window.location.href = response.url;
                         } else {
                             return response.json();
                         }
@@ -307,7 +313,7 @@
                     .then(data => {
                         if (data && data.success) {
                             console.log('Xóa nhiều sản phẩm thành công:', productIds);
-                            window.location.reload(); // Reload trang nếu không redirect
+                            window.location.reload();
                         } else if (data) {
                             console.error('Xóa nhiều sản phẩm thất bại:', data.message);
                             alert('Không thể xóa các sản phẩm. Vui lòng thử lại.');
@@ -321,6 +327,32 @@
                     alert('Vui lòng chọn ít nhất một sản phẩm để xóa.');
                 }
             });
+        });
+
+        // Xử lý chuyển sang trang thanh toán
+        checkoutBtn.on('click', function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của link
+            const checkedItems = cartItemCheckbox.filter(':checked');
+            if (checkedItems.length === 0) {
+                alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
+                return;
+            }
+
+            const selectedProducts = [];
+            checkedItems.each(function () {
+                const $checkbox = jQuery(this);
+                selectedProducts.push({
+                    productId: $checkbox.data('product-id'),
+                    name: $checkbox.data('name'),
+                    price: $checkbox.data('price'),
+                    quantity: $checkbox.data('quantity'),
+                    image: $checkbox.data('image')
+                });
+            });
+
+            // Chuyển dữ liệu sang trang thanh toán qua query string
+            const queryString = jQuery.param({ products: JSON.stringify(selectedProducts) });
+            window.location.href = `/me/pay?${queryString}`;
         });
 
         // Khởi tạo lần đầu

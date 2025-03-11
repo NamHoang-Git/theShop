@@ -394,8 +394,43 @@ class MeController {
   }
 
   // [GET] /pay
-  pay(req, res, next) {
-    res.render("me/pay.hbs", { isFooterOnlyPage: true });
+  async pay(req, res, next) {
+    try {
+        // Lấy dữ liệu từ query string
+        const productsData = req.query.products;
+        let products = [];
+        let totalAmount = 0;
+
+        if (productsData) {
+            products = JSON.parse(decodeURIComponent(productsData));
+            products.forEach(product => {
+                totalAmount += product.price * product.quantity;
+            });
+        }
+
+        // Dữ liệu tĩnh cho thông tin khách hàng (có thể lấy từ session hoặc database)
+        const user = {
+            email: 'ngokhoangnam4268@gmail.com',
+            fullName: 'Ngô Kim Hoàng Nam',
+            phone: '0383376601',
+            address: '......................',
+            ward: '',
+            district: '',
+            city: ''
+        };
+
+        // Render trang thanh toán
+        res.render('me/pay.hbs', {
+            isFooterOnlyPage: true,
+            user,
+            products,
+            totalAmount,
+            formatCurrency: (price) => price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '₫',
+            multiply: (a, b) => a * b
+        });
+    } catch (error) {
+        next(error);
+    }
   }
 
   // [PATCH] /me/cart/update-quantity/:productId

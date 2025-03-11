@@ -41,117 +41,76 @@
                     <div class="col l-4">
                         <div class="info">
                             <h3>Thông tin khách hàng</h3>
-                            <div class="content__info">
+                            <div class="content__info customer-info">
                                 <form action="">
                                     <table>
                                         <tr>
-                                            <td>
-                                                <h4>Email</h4>
-                                            </td>
-
-                                            <td>
-                                                <li>
-                                                    <input disabled type="email" id="email" name="email" value="ngokhoangnam4268@gmail.com">
-                                                </li>
-                                            </td>
+                                            <td><h4>Email</h4></td>
+                                            <td><li><input disabled type="email" id="email" name="email" value="{{user.email}}"></li></td>
                                         </tr>
-
                                         <tr>
-                                            <td>
-                                                <h4>Họ và tên</h4>
-                                            </td>
-
-                                            <td>
-                                                <li>
-                                                    <input disabled type="text" id="name" name="name" value="Ngô Kim Hoàng Nam">
-                                                </li>
-                                            </td>
+                                            <td><h4>Họ và tên</h4></td>
+                                            <td><li><input disabled type="text" id="name" name="name" value="{{user.fullName}}"></li></td>
                                         </tr>
-
                                         <tr>
-                                            <td>
-                                                <h4>Số điện thoại</h4>
-                                            </td>
-
-                                            <td>
-                                                <li>
-                                                    <input disabled type="tel" id="tel" name="tel" value="0383376601">
-                                                </li>
-                                            </td>
+                                            <td><h4>Số điện thoại</h4></td>
+                                            <td><li><input disabled type="tel" id="tel" name="tel" value="{{user.phone}}"></li></td>
                                         </tr>
                                     </table>
                                 </form>
                             </div>
                             <div class="btn-change">
-                                <button type="button" class="btn">Thay đổi</button>
+                                <button type="button" class="btn change-btn" data-target="customer-info">Thay đổi</button>
                             </div>
 
                             <div class="line"></div>
 
-                            <h3>
-                                <i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng
-                            </h3>
-                            <div class="content__info">
+                            <h3><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3>
+                            <div class="content__info address-info">
                                 <form action="">
                                     <table>
                                         <tr>
-                                            <td>
-                                                <h4>Địa chỉ</h4>
-                                            </td>
-
-                                            <td>
-                                                <li>
-                                                    <input disabled type="text" id="address" name="address" value="......................">
-                                                </li>
-                                            </td>
+                                            <td><h4>Địa chỉ</h4></td>
+                                            <td><li><input disabled type="text" id="address" name="address" value="{{user.address}}"></li></td>
                                         </tr>
                                     </table>
                                 </form>
                                 <div class="location">
                                     <li>
-                                        <p>Phường</p>
-                                        <select id="ward" name="ward">
-                                            <option value="">.....</option>
-                                            <script>
-                                                for (let i = 1; i <= 31; i++) {
-                                                    document.write(`<option value="${i}">${i}</option>`);
-                                                }
-                                            </script>
+                                        <p>Thành phố</p>
+                                        <select id="city" name="city" disabled>
+                                            <option value="">Chọn thành phố</option>
                                         </select>
                                     </li>
                                     <li>
                                         <p>Huyện</p>
-                                        <select id="district" name="district">
-                                            <option value="">.....</option>
-                                            <script>
-                                                for (let i = 1; i <= 31; i++) {
-                                                    document.write(`<option value="${i}">${i}</option>`);
-                                                }
-                                            </script>
+                                        <select id="district" name="district" disabled>
+                                            <option value="">Chọn huyện</option>
                                         </select>
                                     </li>
                                     <li>
-                                        <p>Thành phố</p>
-                                        <select id="city" name="city">
-                                            <option value="">.....</option>
-                                            <script>
-                                                for (let i = 1; i <= 31; i++) {
-                                                    document.write(`<option value="${i}">${i}</option>`);
-                                                }
-                                            </script>
+                                        <p>Phường</p>
+                                        <select id="ward" name="ward" disabled>
+                                            <option value="">Chọn phường</option>
                                         </select>
                                     </li>
                                 </div>
                                 <div class="payment__method">
                                     <p>Phương thức thanh toán:</p>
-                                    <div class="method">
+                                    <div class="method default-payment" data-payment-method="cash">
                                         <p>Thanh toán khi nhận hàng</p>
-                                        <input type="checkbox" class="cart__check-input" name="" id="" checked>
+                                        <input type="checkbox" class="cart__check-input" name="" id="" checked disabled>
+                                    </div>
+                                    <div class="method payment-select" style="display: none;">
+                                        <select name="paymentMethod" id="paymentMethod">
+                                            <option value="cash">Thanh toán khi nhận hàng</option>
+                                            <option value="bank">Thanh toán qua ngân hàng</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="btn-change">
-                                <button type="button" class="btn">Thay đổi</button>
+                                <button type="button" class="btn change-btn" data-target="address-info">Thay đổi</button>
                             </div>
                         </div>
                     </div>
@@ -167,76 +126,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td scope="col">
-                                            <div class="pay__product">
-                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
-                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
-                                            </div>
-                                        </td>
-                                        <td scope="col">3.490.000₫</td>
-                                        <td scope="col">2</td>
-                                    </tr>
-                                    <tr class="total__price">
-                                        <td></td>
-                                        <td colspan="">Thành tiền:</td>
-                                        <td colspan="">6.980.000₫</td>
-                                    </tr>
-
+                                    {{#each products}}
                                     <tr>
                                         <td>
                                             <div class="pay__product">
-                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
-                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
+                                                <img src="/{{image}}" alt="">
+                                                <p>{{name}}</p>
                                             </div>
                                         </td>
-                                        <td>3.490.000₫</td>
-                                        <td>2</td>
+                                        <td>{{formatCurrency price}}₫</td>
+                                        <td>{{quantity}}</td>
+                                        <tr class="total__price">
+                                            <td></td>
+                                            <td colspan="2">Thành tiền:</td>
+                                            <td colspan="2">{{formatCurrency (multiply price quantity)}}₫</td>
+                                        </tr>
                                     </tr>
-                                    <tr class="total__price">
-                                        <td></td>
-                                        <td colspan="">Thành tiền:</td>
-                                        <td colspan="">6.980.000₫</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="pay__product">
-                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
-                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
-                                            </div>
-                                        </td>
-                                        <td>3.490.000₫</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr class="total__price">
-                                        <td></td>
-                                        <td colspan="">Thành tiền:</td>
-                                        <td colspan="">6.980.000₫</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="pay__product">
-                                                <img src="http://localhost:3000/img/Products/iphone-16-pro-titan-tu-nhien.png" alt="">
-                                                <p>Apple iPhone 16 Pro Max 256GB Chính hãng VN/A</p>
-                                            </div>
-                                        </td>
-                                        <td>3.490.000₫</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr class="total__price">
-                                        <td></td>
-                                        <td colspan="">Thành tiền:</td>
-                                        <td colspan="">6.980.000₫</td>
-                                    </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                             <div class="pay__product-footer">
                                 <div class="line"></div>
                                 <div class="total__payment">
                                     <p>Tổng thanh toán</p>
-                                    <p>6.980.000₫</p>
+                                    <p>{{formatCurrency totalAmount}}₫</p>
                                 </div>
                                 <button type="submit" class="btn">Thanh toán</button>
                             </div>
@@ -247,3 +160,135 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        // Xử lý nút "Thay đổi" cho từng khu vực
+        jQuery('.change-btn').on('click', function () {
+            const $btn = jQuery(this);
+            const targetClass = $btn.data('target'); // Lấy class của khu vực cần thay đổi
+            const $infoInputs = jQuery(`.${targetClass} input, .${targetClass} select`).not('#district, #ward'); // Chọn input và select trong khu vực tương ứng
+            const $defaultPayment = jQuery(`.${targetClass} .default-payment`);
+            const $paymentSelect = jQuery(`.${targetClass} .payment-select`);
+            const isDisabled = $infoInputs.first().prop('disabled');
+
+            if (isDisabled) {
+                // Chuyển sang chế độ chỉnh sửa
+                $infoInputs.prop('disabled', false);
+                if ($defaultPayment.length && $paymentSelect.length) {
+                    $defaultPayment.hide();
+                    $paymentSelect.show();
+                }
+                $btn.text('Lưu');
+            } else {
+                // Lưu và quay lại chế độ đọc
+                $infoInputs.prop('disabled', true);
+                if ($defaultPayment.length && $paymentSelect.length) {
+                    $paymentSelect.hide();
+                    const selectedMethod = $paymentSelect.find('#paymentMethod').val();
+                    $defaultPayment.show().find('p').text($paymentSelect.find('#paymentMethod option[value="' + selectedMethod + '"]').text());
+                    $defaultPayment.data('payment-method', selectedMethod);
+                }
+                $btn.text('Thay đổi');
+            }
+        });
+
+        // Đặt giá trị mặc định cho phương thức thanh toán
+        const defaultPaymentMethod = 'cash';
+        jQuery('.default-payment').data('payment-method', defaultPaymentMethod);
+        jQuery('#paymentMethod').val(defaultPaymentMethod);
+    });
+
+    // Dữ liệu tĩnh về tỉnh/thành phố, quận/huyện, phường/xã
+    const locations = {
+        "Hà Nội": {
+            "Quận Ba Đình": ["Phường Phúc Xá", "Phường Trúc Bạch", "Phường Vĩnh Phúc"],
+            "Quận Hoàn Kiếm": ["Phường Hàng Bạc", "Phường Hàng Bồ", "Phường Hàng Buồm"],
+            "Quận Cầu Giấy": ["Phường Dịch Vọng", "Phường Quan Hoa", "Phường Trung Hòa"]
+        },
+        "TP. Hồ Chí Minh": {
+            "Quận 1": ["Phường Bến Nghé", "Phường Bến Thành", "Phường Cầu Kho"],
+            "Quận 3": ["Phường Võ Thị Sáu", "Phường 6", "Phường 7"],
+            "Quận Bình Thạnh": ["Phường 1", "Phường 2", "Phường 3"]
+        },
+        "Đà Nẵng": {
+            "Quận Hải Châu": ["Phường Hải Châu 1", "Phường Hải Châu 2", "Phường Thanh Bình"],
+            "Quận Sơn Trà": ["Phường An Hải Bắc", "Phường An Hải Tây", "Phường Nại Hiên Đông"],
+            "Quận Ngũ Hành Sơn": ["Phường Hòa Hải", "Phường Hòa Quý", "Phường Mỹ An"]
+        },
+        "Hải Phòng": {
+            "Quận Lê Chân": ["Phường An Biên", "Phường Dư Hàng", "Phường Đông Hải"],
+            "Quận Ngô Quyền": ["Phường Máy Chai", "Phường Lạc Viên", "Phường Cầu Tre"],
+            "Quận Kiến An": ["Phường Bắc Sơn", "Phường Nam Sơn", "Phường Quán Trữ"]
+        },
+        "Cần Thơ": {
+            "Quận Ninh Kiều": ["Phường Cái Khế", "Phường Hưng Lợi", "Phường Xuân Khánh"],
+            "Quận Bình Thủy": ["Phường An Thới", "Phường Bình Thủy", "Phường Long Hòa"],
+            "Quận Ô Môn": ["Phường Châu Văn Liêm", "Phường Long Hưng", "Phường Thới An"]
+        }
+    };
+
+    // Lấy thẻ select
+    const citySelect = document.getElementById("city");
+    const districtSelect = document.getElementById("district");
+    const wardSelect = document.getElementById("ward");
+
+    // Load danh sách tỉnh/thành phố
+    function loadCities() {
+        citySelect.innerHTML = '<option value="">Chọn thành phố</option>';
+        for (let city in locations) {
+            let option = document.createElement("option");
+            option.value = city;
+            option.textContent = city;
+            citySelect.appendChild(option);
+        }
+
+        // Disable quận/huyện, phường/xã khi chưa chọn thành phố
+        districtSelect.disabled = true;
+        wardSelect.disabled = true;
+    }
+
+    // Khi chọn tỉnh/thành, load quận/huyện
+    citySelect.addEventListener("change", function () {
+        let selectedCity = this.value;
+        districtSelect.innerHTML = '<option value="">Chọn huyện</option>';
+        wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+        wardSelect.disabled = true;
+
+        if (selectedCity) {
+            districtSelect.disabled = false;
+            for (let district in locations[selectedCity]) {
+                let option = document.createElement("option");
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            }
+        } else {
+            districtSelect.disabled = true;
+            wardSelect.disabled = true;
+        }
+    });
+
+    // Khi chọn quận/huyện, load phường/xã
+    districtSelect.addEventListener("change", function () {
+        let selectedCity = citySelect.value;
+        let selectedDistrict = this.value;
+        wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+
+        if (selectedDistrict) {
+            wardSelect.disabled = false;
+            for (let ward of locations[selectedCity][selectedDistrict]) {
+                let option = document.createElement("option");
+                option.value = ward;
+                option.textContent = ward;
+                wardSelect.appendChild(option);
+            }
+        } else {
+            wardSelect.disabled = true;
+        }
+    });
+
+    // Gọi hàm để load danh sách tỉnh/thành phố khi trang tải xong
+    document.addEventListener("DOMContentLoaded", loadCities);
+</script>
