@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
-import slug from 'mongoose-slug-updater'
+import slug from 'mongoose-slug-updater';
 import mongooseDelete from 'mongoose-delete';
+
+// Add plugins
+mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
@@ -20,8 +23,6 @@ const Product = new Schema({
     slug: { type: String, slug: 'name', unique: true },
 }, { timestamps: true, },);
 
-// Add plugins
-mongoose.plugin(slug);
 Product.plugin(mongooseDelete, {
     deletedAt : true,
     overrideMethods: 'all',

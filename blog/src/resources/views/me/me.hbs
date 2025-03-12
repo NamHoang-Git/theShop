@@ -185,7 +185,9 @@
                 <a href="/me/cart" for="modal__log-checkbox"><i class="shopping-cart-but fa-solid fa-cart-shopping"></i></a>
                 <div class="header__shopping-cart header_arrow-shopping-cart">
                     <div class="header__shopping-cart-content">
+                        {{#if cartItems}}
                         <h3>Sản phẩm trong giỏ hàng</h3>
+                        {{/if}}
                         <ul class="shopping-cart__content-items">
                             {{#each cartItems}} <!-- Dùng cartItems từ res.locals -->
                             <li>
@@ -206,11 +208,13 @@
                             </div>
                             {{/each}}
                         </ul>
+                        {{#if cartItems}}
                         <div class="shopping-cart__content-btn">
                             <a href="/me/cart">
                                 Xem giỏ hàng
                             </a>
                         </div>
+                        {{/if}}
                     </div>
                 </div>
             </div>
@@ -860,10 +864,10 @@
         </div>
     </div>
 
-    <div class="suggest-day">
+    <div class="suggest-day" id="today-suggestions">
         <div class="grid wide">
-            <div class="suggest-day__header">
-                <a href="javascript:void(0)" class="suggest-day__header-text">GỢI Ý HÔM NAY</a>
+            <div class="suggest-day__header-me">
+                <a href="#today-suggestions" class="suggest-day__header-text">GỢI Ý HÔM NAY</a>
             </div>
             <div class="suggest-day__body">
                 <div id="products-container" class="row no-gutters">

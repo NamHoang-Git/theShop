@@ -413,7 +413,7 @@ class MeController {
             email: 'ngokhoangnam4268@gmail.com',
             fullName: 'Ngô Kim Hoàng Nam',
             phone: '0383376601',
-            address: '......................',
+            address: 'Đống Đa',
             ward: '',
             district: '',
             city: ''
@@ -496,6 +496,45 @@ class MeController {
         res.redirect(redirectUrl);
     } catch (error) {
         next(error);
+    }
+  }
+
+  // [DELETE] /me/cart/remove-multiple
+  async removeMultipleFromCart(req, res, next) {
+    try {
+      const cartId = req.cookies.cartId; // Lấy cartId từ cookie
+      const { productIds } = req.body; // Lấy danh sách productIds từ request body
+
+      // Kiểm tra dữ liệu đầu vào
+      if (!cartId) {
+        return res.status(400).json({ success: false, message: 'Thiếu cartId' });
+      }
+      if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
+        return res.status(400).json({ success: false, message: 'Danh sách sản phẩm để xóa không hợp lệ' });
+      }
+
+      // Tìm và cập nhật giỏ hàng: xóa các sản phẩm có productId trong danh sách productIds
+      const cart = await Cart.findOneAndUpdate(
+        { cartId },
+        { $pull: { items: { productId: { $in: productIds } } } }, // Xóa tất cả items có productId trong productIds
+        { new: true } // Trả về giỏ hàng sau khi cập nhật
+      );
+
+      if (!cart) {
+        return res.status(404).json({ success: false, message: 'Không tìm thấy giỏ hàng' });
+      }
+
+      // Trả về phản hồi thành công
+      res.status(200).json({
+        success: true,
+        message: 'Xóa nhiều sản phẩm thành công',
+        updatedCartItems: cart.items.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity
+        }))
+      });
+    } catch (error) {
+      next(error);
     }
   }
 

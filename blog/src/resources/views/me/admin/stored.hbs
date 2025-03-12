@@ -93,7 +93,8 @@
                 <div class="container__admin-stored">
 
                     <table class="table">
-                        <thead> 
+                        <thead>
+                            {{#if storeds}}
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Sản phẩm</th>
@@ -104,43 +105,6 @@
                                     <button type="button" class="btn btn-outline-primary add-btn" data-bs-toggle="modal" data-bs-target="#staticCreate">
                                         <i class="fa-solid fa-circle-plus"></i> Thêm mới
                                     </button>
-
-                                    <!-- Modal Create-->
-                                    <div class="modal fade" id="staticCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCreateLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <form class="modal-content" method="POST" action="/me/admin/stored/createStored">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title" id="staticCreateLabel">Thêm mới</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="create__product-item">
-                                                        <label for="name" class="form-label">Tên sản phẩm</label>
-                                                        <input type="text" class="form-control" id="name" name="name">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="imageURL" class="form-label">URL Hình ảnh</label>
-                                                        <input type="text" class="form-control" id="imageURL" name="imageURL">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="stock" class="form-label">Có thể bán</label>
-                                                        <input type="text" class="form-control" id="stock" name="stock">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="inventory" class="form-label">Tồn kho</label>
-                                                        <input type="text" class="form-control" id="inventory" name="inventory">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="priceOrigin" class="form-label">Đơn giá</label>
-                                                        <input type="text" class="form-control" id="priceOrigin" name="priceOrigin">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </th>
                                 <th>
                                     <button type="button" class="btn filter-btn">
@@ -148,6 +112,7 @@
                                     </button>
                                 </th>
                             </tr>
+                            {{/if}}
                         </thead>
                         <tbody>
                             {{#each storeds}}
@@ -183,8 +148,14 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="7" class="text-center">
-                                    Chưa có sản phẩm nào trong kho.
+                                <td colspan="7" class="text-center page__empty">
+                                    <img src="/img/icon/stored__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Chưa có sản phẩm nào trong kho!</p>
+                                        <button type="button" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#staticCreate">
+                                            Thêm mới <i class="fa-solid fa-circle-plus"></i> 
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}
@@ -192,6 +163,7 @@
                     </table>
                 </div>
 
+                {{#if storeds}}
                 <div class="item-center__quantity">
                     <div class="item-center__quantity-btn">
                         <button class="border">
@@ -203,6 +175,44 @@
                         <button class="border">
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
+                    </div>
+                </div>
+                {{/if}}
+
+                <!-- Modal Create-->
+                <div class="modal fade" id="staticCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCreateLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <form class="modal-content" method="POST" action="/me/admin/stored/createStored">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="staticCreateLabel">Thêm mới</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="create__product-item">
+                                    <label for="name" class="form-label">Tên sản phẩm</label>
+                                    <input type="text" class="form-control" id="name" name="name">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="imageURL" class="form-label">URL Hình ảnh</label>
+                                    <input type="text" class="form-control" id="imageURL" name="imageURL">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="stock" class="form-label">Có thể bán</label>
+                                    <input type="text" class="form-control" id="stock" name="stock">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="inventory" class="form-label">Tồn kho</label>
+                                    <input type="text" class="form-control" id="inventory" name="inventory">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="priceOrigin" class="form-label">Đơn giá</label>
+                                    <input type="text" class="form-control" id="priceOrigin" name="priceOrigin">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Xác nhận</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

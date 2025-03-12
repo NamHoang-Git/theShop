@@ -46,7 +46,7 @@
                                 <i class="fa-solid fa-trash-can"></i>
                                 Thùng Rác
                                 {{#if deletedCount}}
-                                <span class="translate-middle badge rounded-pill bg-danger">
+                                <span class="translate-middle badge rounded-pill">
                                     {{deletedCount}}
                                 </span>
                                 {{/if}}
@@ -107,7 +107,8 @@
                     </div>
 
                     <table class="table">
-                        <thead> 
+                        <thead>
+                            {{#if products}}
                             <tr>
                                 <th scope="col" class="input__check"></th>
                                 <th scope="col">#</th>
@@ -116,6 +117,7 @@
                                 <th scope="col">Thời gian tạo</th>
                                 <th scope="col"></th>
                             </tr>
+                            {{/if}}
                         </thead>
                         <tbody>
                             {{#each products}}
@@ -172,9 +174,14 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="5" class="text-center">
-                                    Chưa có sản phẩm nào.
-                                    <a href="/me/admin/create">Thêm sản phẩm</a>
+                                <td colspan="5" class="text-center page__empty">
+                                    <img src="/img/icon/page__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Chưa có sản phẩm nào!</p>
+                                        <a href="/me/admin/create">         
+                                            Thêm sản phẩm <i class="fa-regular fa-square-plus"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}
@@ -237,6 +244,7 @@
                         const deleteModal = document.getElementById('deleteProductModal');
                         const confirmDeleteBtn = document.getElementById('confirmDelete');
                         const deleteForm = document.forms['deleteForm'];
+                        
                         const checkboxAll = jQuery('#checkbox-all');
                         const productItemCheckbox = jQuery('input[name="productIds[]"]');
                         const checkAllDeleteBtn = jQuery('.btn-checkAll-delete');

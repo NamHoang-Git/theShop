@@ -184,30 +184,34 @@
                <a href="/me/cart" for="modal__log-checkbox"><i class="shopping-cart-but fa-solid fa-cart-shopping"></i></a>
                <div class="header__shopping-cart header_arrow-shopping-cart">
                   <div class="header__shopping-cart-content">
-                        <h3>Sản phẩm trong giỏ hàng</h3>
-                        <ul class="shopping-cart__content-items">
-                           {{#each products}}
-                           <li>
-                              <a href="/products/{{this.slug}}">
-                                    <div class="shopping-cart__content-item-info">
-                                       <img src="/{{this.image}}" alt="">
-                                       <p>{{this.name}}</p>
-                                       {{!-- <span class="quantity">{{this.quantity}}</span> --}}
-                                    </div>
-                                    <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}₫</span>
-                              </a>
-                              {{!-- <button class="remove-item" data-product-id="{{this.productId}}">Xóa</button> --}}
-                           </li>
-                           {{else}}
-                              <div class="header__shopping-cart-content__empty">
-                                    <img src="/img/no-cart.png" alt="" class="header__shopping-cart-img">
-                                    <p class="header__shopping-cart-text">Chưa Có Sản Phẩm</p>
-                              </div>
-                           {{/each}}
-                        </ul>
-                        <div class="shopping-cart__content-btn">
-                           <a href="/me/cart">Xem giỏ hàng</a>
-                        </div>
+                     {{#if products}}
+                     <h3>Sản phẩm trong giỏ hàng</h3>
+                     {{/if}}
+                     <ul class="shopping-cart__content-items">
+                        {{#each products}}
+                        <li>
+                           <a href="/products/{{this.slug}}">
+                                 <div class="shopping-cart__content-item-info">
+                                    <img src="/{{this.image}}" alt="">
+                                    <p>{{this.name}}</p>
+                                    {{!-- <span class="quantity">{{this.quantity}}</span> --}}
+                                 </div>
+                                 <span class="shopping-cart__content-item-price">{{formatCurrency this.price}}₫</span>
+                           </a>
+                           {{!-- <button class="remove-item" data-product-id="{{this.productId}}">Xóa</button> --}}
+                        </li>
+                        {{else}}
+                           <div class="header__shopping-cart-content__empty">
+                                 <img src="/img/no-cart.png" alt="" class="header__shopping-cart-img">
+                                 <p class="header__shopping-cart-text">Chưa Có Sản Phẩm</p>
+                           </div>
+                        {{/each}}
+                     </ul>
+                     {{#if products}}
+                     <div class="shopping-cart__content-btn">
+                        <a href="/me/cart">Xem giỏ hàng</a>
+                     </div>
+                     {{/if}}
                   </div>
                </div>
             </div>
@@ -320,37 +324,22 @@
                      </div>
                   </div>
 
+                  {{#if product.productType.length}}
                   <div class="item-center__contain-center">
                      <h4 class="item-content__e-header">
-                        Màu Sắc
+                        Loại sản phẩm
                      </h4>
                      <div class="item-button">
+                        {{#each product.productType}}
                         <button class="active">
-                           <img
-                              src="https://storage.googleapis.com/a1aa/image/MVjpS2nrvVDnSQiJeyVyoY6zy93Tik4SCQNcDs_AEFY.jpg"
-                              alt=""
-                           />
-                           Titan Đen
+                           <img src="https://storage.googleapis.com/a1aa/image/MVjpS2nrvVDnSQiJeyVyoY6zy93Tik4SCQNcDs_AEFY.jpg" alt=""/>
+                           {{this}}
                            <i class="fa-solid fa-square-check"></i>
                         </button>
-                        <button>
-                           <img
-                              src="https://storage.googleapis.com/a1aa/image/YKc54DFi6TujexIM5-uCwqJjP_71Ew279IItOo-8Y6g.jpg"
-                              alt=""
-                           />
-                           Titan Trắng
-                           <i class="fa-solid fa-square-check"></i>
-                        </button>
-                        <button>
-                           <img
-                              src="https://storage.googleapis.com/a1aa/image/bTfYvJJQmlA3XKQ-Y4JXNUgXe2IuJFmzs88rTyux3rQ.jpg"
-                              alt=""
-                           />
-                           Titan Tự Nhiên
-                           <i class="fa-solid fa-square-check"></i>
-                        </button>
+                        {{/each}}
                      </div>
                   </div>
+                  {{/if}}
 
                   <div class="item-center__contain-center">
                      <h4 class="item-content__e-header">

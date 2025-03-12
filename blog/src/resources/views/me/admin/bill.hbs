@@ -93,7 +93,8 @@
                 <div class="container__admin-bill">
 
                     <table class="table">
-                        <thead> 
+                        <thead>
+                            {{#if clients}}
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Mã hoá đơn</th>
@@ -105,70 +106,6 @@
                                     <button type="button" class="btn btn-outline-primary add-btn" data-bs-toggle="modal" data-bs-target="#staticCreate">
                                         <i class="fa-solid fa-circle-plus"></i> Thêm mới
                                     </button>
-
-                                    <!-- Modal Create-->
-                                    <div class="modal fade" id="staticCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCreateLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <form class="modal-content" method="POST" action="/me/admin/bill/createBill">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title" id="staticCreateLabel">Thêm mới</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="create__product-item">
-                                                        <label for="code" class="form-label">Mã đơn</label>
-                                                        <input type="text" class="form-control" id="code" name="code">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="codeBill" class="form-label">Mã hoá đơn</label>
-                                                        <input type="text" class="form-control" id="codeBill" name="codeBill">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="name" class="form-label">Khách hàng</label>
-                                                        <input type="text" class="form-control" id="name" name="name">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="phone" class="form-label">Số điện thoại</label>
-                                                        <input type="text" class="form-control" id="phone" name="phone">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="location" class="form-label">Địa điểm</label>
-                                                        <input type="text" class="form-control" id="location" name="location">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="date" class="form-label">Ngày</label>
-                                                        <input type="text" class="form-control" id="date" name="date">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="time" class="form-label">Thời gian</label>
-                                                        <input type="text" class="form-control" id="time" name="time">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="totalPrice" class="form-label">Thành tiền</label>
-                                                        <input type="text" class="form-control" id="totalPrice" name="totalPrice">
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="paymentStatus" class="form-label">Trạng thái thanh toán</label>
-                                                        <select class="form-control" name="paymentStatus" id="paymentStatus">
-                                                            <option value="Đã thanh toán">Đã thanh toán</option>
-                                                            <option value="Chưa thanh toán">Chưa thanh toán</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="create__product-item">
-                                                        <label for="shippingStatus" class="form-label">Trạng thái giao hàng</label>
-                                                        <select class="form-control" name="shippingStatus" id="shippingStatus">
-                                                            <option value="Giao hàng thành công">Giao hàng thành công</option>
-                                                            <option value="Đang giao hàng">Đang giao hàng</option>
-                                                            <option value="Chưa giao hàng">Chưa giao hàng</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </th>
                                 <th>
                                     <button type="button" class="btn filter-btn">
@@ -176,6 +113,7 @@
                                     </button>
                                 </th>
                             </tr>
+                            {{/if}}
                         </thead>
                         <tbody>
                             {{#each clients}}
@@ -240,8 +178,14 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="9" class="text-center">
-                                    Chưa có hoá đơn nào.
+                                <td colspan="9" class="text-center page__empty">
+                                    <img src="/img/icon/stored__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Chưa có hoá đơn nào!</p>
+                                        <button type="button" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#staticCreate">
+                                            Thêm mới <i class="fa-solid fa-circle-plus"></i> 
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}
@@ -249,6 +193,7 @@
                     </table>
                 </div>
 
+                {{#if clients}}
                 <div class="item-center__quantity">
                     <div class="item-center__quantity-btn">
                         <button class="border">
@@ -260,6 +205,71 @@
                         <button class="border">
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
+                    </div>
+                </div>
+                {{/if}}
+
+                <!-- Modal Create-->
+                <div class="modal fade" id="staticCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCreateLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <form class="modal-content" method="POST" action="/me/admin/bill/createBill">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="staticCreateLabel">Thêm mới</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body modal__create">
+                                <div class="create__product-item">
+                                    <label for="code" class="form-label">Mã đơn</label>
+                                    <input type="text" class="form-control" id="code" name="code">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="codeBill" class="form-label">Mã hoá đơn</label>
+                                    <input type="text" class="form-control" id="codeBill" name="codeBill">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="name" class="form-label">Khách hàng</label>
+                                    <input type="text" class="form-control" id="name" name="name">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="phone" class="form-label">Số điện thoại</label>
+                                    <input type="text" class="form-control" id="phone" name="phone">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="location" class="form-label">Địa điểm</label>
+                                    <input type="text" class="form-control" id="location" name="location">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="date" class="form-label">Ngày</label>
+                                    <input type="text" class="form-control" id="date" name="date">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="time" class="form-label">Thời gian</label>
+                                    <input type="text" class="form-control" id="time" name="time">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="totalPrice" class="form-label">Thành tiền</label>
+                                    <input type="text" class="form-control" id="totalPrice" name="totalPrice">
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="paymentStatus" class="form-label">Trạng thái thanh toán</label>
+                                    <select class="form-control" name="paymentStatus" id="paymentStatus">
+                                        <option value="Đã thanh toán">Đã thanh toán</option>
+                                        <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                    </select>
+                                </div>
+                                <div class="create__product-item">
+                                    <label for="shippingStatus" class="form-label">Trạng thái giao hàng</label>
+                                    <select class="form-control" name="shippingStatus" id="shippingStatus">
+                                        <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                        <option value="Đang giao hàng">Đang giao hàng</option>
+                                        <option value="Chưa giao hàng">Chưa giao hàng</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Xác nhận</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

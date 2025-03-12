@@ -37,7 +37,8 @@
     <div class="container__cart-content">
         <div class="grid wide">
             <table class="table">
-                <thead> 
+                <thead>
+                    {{#if cartItems}}
                     <tr>
                         <th scope="col">Sản phẩm</th>
                         <th scope="col">Đơn giá</th>
@@ -45,6 +46,7 @@
                         <th scope="col">Số tiền</th>
                         <th scope="col"></th>
                     </tr>
+                    {{/if}}
                 </thead>
                 <tbody>
                     {{#each cartItems}}
@@ -100,10 +102,23 @@
                             </div>
                         </td>
                     </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="5" class="text-center page__empty">
+                                <img src="/img/icon/cart__empty.png" alt="">
+                                <div class="page__empty-info">
+                                    <p>Chưa có sản phẩm nào trong giỏ hàng!</p>
+                                    <a href="/me#today-suggestions">
+                                        Tìm kiếm sản phẩm <i class="fa-solid fa-magnifying-glass"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                     {{/each}}
                 </tbody>
             </table>
 
+            {{#if cartItems}}
             <div class="container__cart-footer">
                 <div class="select__option">
                     <div class="option">
@@ -120,6 +135,7 @@
                     </a>
                 </div>
             </div>
+            {{/if}}
         </div>
     </div>
 </div>

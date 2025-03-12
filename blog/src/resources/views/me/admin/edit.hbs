@@ -91,41 +91,43 @@
 
                 <div class="create__product">
                     <form class="mt-4" method="POST" action="/me/admin/{{product._id}}?_method=PUT">
-                        <div class="create__product-item">
-                            <label for="name" class="form-label">Tên sản phẩm</label>
-                            <input type="text" class="form-control" value="{{product.name}}" id="name" name="name">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="imageURL" class="form-label">URL Hình ảnh</label>
-                            <input type="text" class="form-control" value="{{product.imageURL}}" id="imageURL" name="imageURL">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="=discount" class="form-label">Giảm giá</label>
-                            <input type="text" class="form-control" value="{{product.discount}}" id="discount" name="=discount">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="sold" class="form-label">Số lượng đã bán</label>
-                            <input type="text" class="form-control" value="{{product.sold}}" id="sold" name="sold">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="price" class="form-label">Giá bán</label>
-                            <input type="text" class="form-control" value="{{product.price}}" id="price" name="price">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="priceOrigin" class="form-label">Giá gốc</label>
-                            <input type="text" class="form-control" value="{{product.priceOrigin}}" id="priceOrigin" name="priceOrigin">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="star" class="form-label">Sao đánh giá</label>
-                            <input type="text" class="form-control" value="{{product.star}}" id="star" name="star">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="reviews" class="form-label">Lượt đánh giá</label>
-                            <input type="text" class="form-control" value="{{product.reviews}}" id="reviews" name="reviews">
-                        </div>
-                        <div class="create__product-item">
-                            <label for="stock" class="form-label">Sản phẩm trong kho</label>
-                            <input type="text" class="form-control" value="{{product.stock}}" id="stock" name="stock">
+                        <div class="form__body">
+                            <div class="create__product-item">
+                                <label for="name" class="form-label">Tên sản phẩm</label>
+                                <input type="text" class="form-control" value="{{product.name}}" id="name" name="name">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="imageURL" class="form-label">URL Hình ảnh</label>
+                                <input type="text" class="form-control" value="{{product.imageURL}}" id="imageURL" name="imageURL">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="=discount" class="form-label">Giảm giá</label>
+                                <input type="text" class="form-control" value="{{product.discount}}" id="discount" name="=discount">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="sold" class="form-label">Số lượng đã bán</label>
+                                <input type="text" class="form-control" value="{{product.sold}}" id="sold" name="sold">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="price" class="form-label">Giá bán</label>
+                                <input type="text" class="form-control" value="{{product.price}}" id="price" name="price">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="priceOrigin" class="form-label">Giá gốc</label>
+                                <input type="text" class="form-control" value="{{product.priceOrigin}}" id="priceOrigin" name="priceOrigin">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="star" class="form-label">Sao đánh giá</label>
+                                <input type="text" class="form-control" value="{{product.star}}" id="star" name="star">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="reviews" class="form-label">Lượt đánh giá</label>
+                                <input type="text" class="form-control" value="{{product.reviews}}" id="reviews" name="reviews">
+                            </div>
+                            <div class="create__product-item">
+                                <label for="stock" class="form-label">Sản phẩm trong kho</label>
+                                <input type="text" class="form-control" value="{{product.stock}}" id="stock" name="stock">
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-success">Lưu</button>
