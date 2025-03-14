@@ -79,19 +79,19 @@
                                     <li>
                                         <p>Thành phố</p>
                                         <select id="city" name="city" disabled>
-                                            <option value="">Chọn thành phố</option>
+                                            <option value="{{user.city}}">{{user.city}}</option>
                                         </select>
                                     </li>
                                     <li>
                                         <p>Huyện</p>
                                         <select id="district" name="district" disabled>
-                                            <option value="">Chọn huyện</option>
+                                            <option value="{{user.district}}">{{user.district}}</option>
                                         </select>
                                     </li>
                                     <li>
                                         <p>Phường</p>
                                         <select id="ward" name="ward" disabled>
-                                            <option value="">Chọn phường</option>
+                                            <option value="{{user.ward}}">{{user.ward}}</option>
                                         </select>
                                     </li>
                                 </div>
@@ -167,8 +167,8 @@
         // Xử lý nút "Thay đổi" cho từng khu vực
         jQuery('.change-btn').on('click', function () {
             const $btn = jQuery(this);
-            const targetClass = $btn.data('target'); // Lấy class của khu vực cần thay đổi
-            const $infoInputs = jQuery(`.${targetClass} input, .${targetClass} select`).not('#district, #ward'); // Chọn input và select trong khu vực tương ứng
+            const targetClass = $btn.data('target');
+            const $infoInputs = jQuery(`.${targetClass} input, .${targetClass} select`); // Bao gồm tất cả select
             const $defaultPayment = jQuery(`.${targetClass} .default-payment`);
             const $paymentSelect = jQuery(`.${targetClass} .payment-select`);
             const isDisabled = $infoInputs.first().prop('disabled');
@@ -181,9 +181,19 @@
                     $paymentSelect.show();
                 }
                 $btn.text('Lưu');
+
+                // Load lại danh sách city, district, ward khi vào chế độ chỉnh sửa
+                loadCities();
+                const currentCity = citySelect.value || "Đà Nẵng"; // Dùng giá trị từ user hoặc mặc định
+                citySelect.value = currentCity;
+                loadDistricts(currentCity);
+                const currentDistrict = districtSelect.value || "Quận Hải Châu";
+                districtSelect.value = currentDistrict;
+                loadWards(currentCity, currentDistrict);
+                wardSelect.value = wardSelect.value || "Phường Thanh Bình";
             } else {
                 // Lưu và quay lại chế độ đọc
-                $infoInputs.prop('disabled', true);
+                $infoInputs.prop('disabled', true); // Disable tất cả input và select
                 if ($defaultPayment.length && $paymentSelect.length) {
                     $paymentSelect.hide();
                     const selectedMethod = $paymentSelect.find('#paymentMethod').val();
@@ -243,10 +253,32 @@
             option.textContent = city;
             citySelect.appendChild(option);
         }
+    }
 
-        // Disable quận/huyện, phường/xã khi chưa chọn thành phố
-        districtSelect.disabled = true;
-        wardSelect.disabled = true;
+    // Load danh sách quận/huyện
+    function loadDistricts(selectedCity) {
+        districtSelect.innerHTML = '<option value="">Chọn huyện</option>';
+        if (selectedCity && locations[selectedCity]) {
+            for (let district in locations[selectedCity]) {
+                let option = document.createElement("option");
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            }
+        }
+    }
+
+    // Load danh sách phường/xã
+    function loadWards(selectedCity, selectedDistrict) {
+        wardSelect.innerHTML = '<option value="">Chọn phường</option>';
+        if (selectedCity && selectedDistrict && locations[selectedCity][selectedDistrict]) {
+            for (let ward of locations[selectedCity][selectedDistrict]) {
+                let option = document.createElement("option");
+                option.value = ward;
+                option.textContent = ward;
+                wardSelect.appendChild(option);
+            }
+        }
     }
 
     // Khi chọn tỉnh/thành, load quận/huyện
@@ -258,12 +290,7 @@
 
         if (selectedCity) {
             districtSelect.disabled = false;
-            for (let district in locations[selectedCity]) {
-                let option = document.createElement("option");
-                option.value = district;
-                option.textContent = district;
-                districtSelect.appendChild(option);
-            }
+            loadDistricts(selectedCity);
         } else {
             districtSelect.disabled = true;
             wardSelect.disabled = true;
@@ -278,17 +305,9 @@
 
         if (selectedDistrict) {
             wardSelect.disabled = false;
-            for (let ward of locations[selectedCity][selectedDistrict]) {
-                let option = document.createElement("option");
-                option.value = ward;
-                option.textContent = ward;
-                wardSelect.appendChild(option);
-            }
+            loadWards(selectedCity, selectedDistrict);
         } else {
             wardSelect.disabled = true;
         }
     });
-
-    // Gọi hàm để load danh sách tỉnh/thành phố khi trang tải xong
-    document.addEventListener("DOMContentLoaded", loadCities);
 </script>

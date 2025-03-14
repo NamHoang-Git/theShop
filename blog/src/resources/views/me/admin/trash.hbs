@@ -7,7 +7,7 @@
                     <ul class="nav__explore-list">
                         <div class="nav__list-item">
                             <a href="/me/admin/data">
-                                <i class="fa-solid fa-table-list"></i>
+                                <i class="fa-solid fa-clipboard-list"></i>
                                 <p>Sản phẩm</p>
                             </a>
                         </div>
@@ -43,12 +43,16 @@
                         </div>
                         <div class="nav__list-item trash-item active">
                             <a href="/me/admin/trash">
-                                <i class="fa-solid fa-trash-can"></i>
-                                Thùng Rác
                                 {{#if deletedCount}}
-                                <span class="translate-middle badge rounded-pill bg-danger">
-                                    {{deletedCount}}
-                                </span>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-trash-can"></i>
+                                {{/if}}
+                                <p>Thùng Rác</p>
+                                {{#if deletedCount}}
+                                    <span class="translate-middle badge rounded-pill bg-danger">
+                                        {{deletedCount}}
+                                    </span>
                                 {{/if}}
                             </a>
                         </div>
@@ -90,13 +94,13 @@
                     </li>
                 </div>
 
-                <div class="container__admin-data">
+                <div class="container__admin-trash">
                     <table class="table"> {{!-- DATA --}}
                         <thead> 
                             <tr>
-                                {{#if deletedCount}}
+                                {{#if products}}
                                     <th scope="col">#</th>
-                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col" class="table__header-product">Sản phẩm</th>
                                     <th scope="col">Đơn giá</th>
                                     <th scope="col">Thời gian tạo</th>
                                     <th scope="col"></th>
@@ -107,7 +111,7 @@
                             {{#each products}}
                             <tr>
                                 <th scope="row">{{sum @index 1}}</th>
-                                <td>{{this.name}}</td>
+                                <td class="table__body-product">{{this.name}}</td>
                                 <td>{{formatCurrency this.price}}₫</td>
                                 <td>{{this.createdAt}}</td>
                                 <td class="detail__option">
@@ -147,9 +151,11 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="5" class="text-center">
-                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
-                                    <p class="mt-4">Không có sản phẩm nào được xoá !</p>
+                                <td colspan="5" class="text-center page__empty">
+                                    <img src="/img/icon/trash__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Không có sản phẩm nào được xoá!</p>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}
@@ -159,9 +165,9 @@
                     <table class="table"> {{!-- STORED --}}
                         <thead> 
                             <tr>
-                                {{#if deletedCount}}
+                                {{#if storeds}}
                                     <th scope="col">#</th>
-                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col" class="table__header-product">Sản phẩm</th>
                                     <th scope="col">Có thể bán</th>
                                     <th scope="col">Tồn kho</th>
                                     <th scope="col">Đơn giá</th>
@@ -174,7 +180,7 @@
                             {{#each storeds}}
                             <tr>
                                 <th scope="row">{{sum @index 1}}</th>
-                                <td>{{this.name}}</td>
+                                <td class="table__body-product">{{this.name}}</td>
                                 <td>{{this.stock}}</td>
                                 <td>{{this.inventory}}</td>
                                 <td>{{formatCurrency this.priceOrigin}}₫</td>
@@ -212,9 +218,11 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="7" class="text-center">
-                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
-                                    <p class="mt-4">Không có hàng nào trong kho được xoá !</p>
+                                <td colspan="7" class="text-center page__empty">
+                                    <img src="/img/icon/trash__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Không có hàng nào trong kho được xoá!</p>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}
@@ -224,7 +232,7 @@
                     <table class="table"> {{!-- SHIPPING --}}
                         <thead> 
                             <tr>
-                                {{#if deletedCount}}
+                                {{#if clients}}
                                     <th scope="col">#</th>
                                     <th scope="col">Mã đơn</th>
                                     <th scope="col">Khách hàng</th>
@@ -283,9 +291,11 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="7" class="text-center">
-                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
-                                    <p class="mt-4">Không có đơn hàng nào được xoá !</p>
+                                <td colspan="7" class="text-center page__empty">
+                                    <img src="/img/icon/trash__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Không có đơn hàng nào được xoá!</p>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}
@@ -295,7 +305,7 @@
                     <table class="table"> {{!-- BILL --}}
                         <thead> 
                             <tr>
-                                {{#if deletedCount}}
+                                {{#if clients}}
                                     <th scope="col">#</th>
                                     <th scope="col">Mã hoá đơn</th>
                                     <th scope="col">Thời gian</th>
@@ -352,9 +362,11 @@
                             </tr>
                             {{else}}
                             <tr>
-                                <td colspan="7" class="text-center">
-                                    <img class="mt-4" src="https://static-00.iconduck.com/assets.00/stock-out-icon-256x256-2ltyhmsg.png" alt="">
-                                    <p class="mt-4">Không có hoá đơn nào được xoá !</p>
+                                <td colspan="7" class="text-center page__empty">
+                                    <img src="/img/icon/trash__empty.png" alt="">
+                                    <div class="page__empty-info">
+                                        <p>Không có hoá đơn nào được xoá!</p>
+                                    </div>
                                 </td>
                             </tr>
                             {{/each}}

@@ -43,12 +43,16 @@
                         </div>
                         <div class="nav__list-item trash-item">
                             <a href="/me/admin/trash">
-                                <i class="fa-solid fa-trash-can"></i>
-                                Thùng Rác
                                 {{#if deletedCount}}
-                                <span class="translate-middle badge rounded-pill">
-                                    {{deletedCount}}
-                                </span>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-trash-can"></i>
+                                {{/if}}
+                                <p>Thùng Rác</p>
+                                {{#if deletedCount}}
+                                    <span class="translate-middle badge rounded-pill bg-danger">
+                                        {{deletedCount}}
+                                    </span>
                                 {{/if}}
                             </a>
                         </div>

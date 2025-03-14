@@ -414,9 +414,9 @@ class MeController {
             fullName: 'Ngô Kim Hoàng Nam',
             phone: '0383376601',
             address: 'Đống Đa',
-            ward: '',
-            district: '',
-            city: ''
+            ward: 'Phường Thanh Bình',
+            district: 'Quận Hải Châu',
+            city: 'Đà Nẵng'
         };
 
         // Render trang thanh toán
