@@ -110,7 +110,7 @@
                         </button>
                     </div>
 
-                    <table class="table">
+                    {{!-- <table class="table">
                         <thead>
                             {{#if products}}
                             <tr>
@@ -190,7 +190,122 @@
                             </tr>
                             {{/each}}
                         </tbody>
-                    </table>
+                    </table> --}}
+
+                    <div class="grid-container">
+                        <div class="grid-header">
+                            {{#if products}}
+                            <div class="grid-row">
+                                <div class="item-wrapper">
+                                    <div class="grid-row-header input__check"></div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-header">#</div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-header">Sản phẩm</div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-header">Đơn giá</div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-header">Thời gian tạo</div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-header"></div>
+                                </div>
+                            </div>
+                            {{/if}}
+                        </div>
+
+                        <div class="grid-body">
+                            {{#each products}}
+                            <div class="grid-row">
+                                <div class="item-wrapper">
+                                    <div class="grid-row-body input__check">
+                                        <div class="form-check">
+                                            <input class="" type="checkbox" name="productIds[]" value="{{this._id}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-body">
+                                        <p>{{sum @index 1}}</p>
+                                    </div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-body">
+                                        <p>{{this.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-body">
+                                        <p>{{formatCurrency this.price}}₫</p>
+                                    </div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-body">
+                                        <p>{{this.createdAt}}</p>
+                                    </div>
+                                </div>
+                                <div class="item-wrapper">
+                                    <div class="grid-row-body detail__option">
+                                        <button class="btn-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="/me/admin/data/edit/{{this._id}}" class="btn btn-warning">Sửa</a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteProductModal">
+                                                    Xóa
+                                                </button>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <button type="button" class="btn open-detail-modal" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#detailModal"
+                                                        data-bs-id="{{this._id}}"
+                                                        data-bs-name="{{this.name}}"
+                                                        data-bs-price="{{formatCurrency this.price}}"
+                                                        data-bs-price-origin="{{formatCurrency this.priceOrigin}}"
+                                                        data-bs-discount="{{this.discount}}"
+                                                        data-bs-sold="{{formatNumber this.sold}}"
+                                                        data-bs-star="{{this.star}}"
+                                                        data-bs-reviews="{{formatNumber this.reviews}}"
+                                                        data-bs-stock="{{this.stock}}"
+                                                        data-bs-created="{{this.createdAt}}">
+                                                    <i class="fa-solid fa-list"></i> Chi tiết
+                                                </button>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <button type="button" class="btn btn-primary btn-option-box">
+                                                    Tuỳ chọn
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {{else}}
+                            <div class="grid-row">
+                            <div class="text-center page__empty">
+                                <img src="/img/icon/page__empty.png" alt="">
+                                <div class="page__empty-info">
+                                <p>Chưa có sản phẩm nào!</p>
+                                <a href="/me/admin/create">         
+                                    Thêm sản phẩm <i class="fa-regular fa-square-plus"></i>
+                                </a>
+                                </div>
+                            </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
                 </form>
 
                 {{!-- Modal Detail --}}
@@ -301,7 +416,7 @@
 
                         {{!-- Open/Close Option Checkbox --}}
                         btnOpenOptionBox.click(function() {
-                            inputCheck.css('display', 'table-cell');
+                            inputCheck.css('display', 'flex');
                             checkBoxOption.css('display', 'flex');
                         })
 

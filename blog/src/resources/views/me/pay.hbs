@@ -117,34 +117,35 @@
 
                     <div class="col l-8">
                         <div class="product">
-                            <table class="table">
-                                <thead> 
-                                    <tr>
-                                        <th scope="col">Sản phẩm</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Số lượng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div class="grid-container">
+                                <div class="grid-header">
+                                    <div class="grid-row">
+                                        <div class="grid-row-header">Sản phẩm</div>
+                                        <div class="grid-row-header">Đơn giá</div>
+                                        <div class="grid-row-header">Số lượng</div>
+                                    </div>
+                                </div>
+
+                                <div class="grid-body">
                                     {{#each products}}
-                                    <tr>
-                                        <td>
+                                    <div class="grid-row">
+                                        <div class="grid-row-body">
                                             <div class="pay__product">
                                                 <img src="/{{image}}" alt="">
                                                 <p>{{name}}</p>
                                             </div>
-                                        </td>
-                                        <td>{{formatCurrency price}}₫</td>
-                                        <td>{{quantity}}</td>
-                                        <tr class="total__price">
-                                            <td></td>
-                                            <td colspan="2">Thành tiền:</td>
-                                            <td colspan="2">{{formatCurrency (multiply price quantity)}}₫</td>
-                                        </tr>
-                                    </tr>
+                                        </div>
+                                        <div class="grid-row-body">{{formatCurrency price}}₫</div>
+                                        <div class="grid-row-body">{{quantity}}</div>
+                                        <div class="grid-row total__price">
+                                            <div class="grid-row-body"></div>
+                                            <div class="grid-row-body">Thành tiền:</div>
+                                            <div class="grid-row-body">{{formatCurrency (multiply price quantity)}}₫</div>
+                                        </div>
+                                    </div>
                                     {{/each}}
-                                </tbody>
-                            </table>
+                                </div>
+                            </div>
                             <div class="pay__product-footer">
                                 <div class="line"></div>
                                 <div class="total__payment">
